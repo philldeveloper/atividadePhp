@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BankRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BankRepository::class)]
-class Bank
+#[ORM\Entity(repositoryClass: ClientRepository::class)]
+class Client
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,7 +15,6 @@ class Bank
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
 
     public function getId(): ?int
     {
