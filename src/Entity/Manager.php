@@ -16,6 +16,9 @@ class Manager
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+    private ?Agency $agency = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,23 @@ class Manager
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAgency(): ?Agency
+    {
+        return $this->agency;
+    }
+
+    public function setAgency(Agency $agency): self
+    {
+        // set the owning side of the relation if necessary
+        if ($agency->getManager() !== $this) {
+            $agency->setManager($this);
+        }
+
+        $this->agency = $agency;
 
         return $this;
     }
