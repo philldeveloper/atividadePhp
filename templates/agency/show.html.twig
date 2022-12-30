@@ -3,7 +3,7 @@
 {% block title %}Agency{% endblock %}
 
 {% block body %}
-    <h1>Agency</h1>
+    <h1>Agencia {{agency.number}}</h1>
 
     <table class="table">
         <tbody>
@@ -12,23 +12,26 @@
                 <td>{{ agency.id }}</td>
             </tr>
             <tr>
-                <th>Number</th>
+                <th>Numero</th>
                 <td>{{ agency.number }}</td>
             </tr>
             <tr>
-                <th>Bank</th>
+                <th>Banco</th>
                 <td>{{ agency.bank ? agency.bank.name : 'NA' }}</td>
             </tr>
             <tr>
-                <th>Manager</th>
+                <th>Gerente</th>
                 <td>{{ agency.manager ? agency.manager.name : 'NA' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_agency_index') }}">back to list</a>
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_agency_index') }}">Voltar a Lista</a>
+        <a class="btn btn-dark" href="{{ path('app_agency_edit', {'id': agency.id}) }}">Editar Agencia</a>
+    </div>
 
-    <a href="{{ path('app_agency_edit', {'id': agency.id}) }}">edit</a>
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
 
     {{ include('agency/_delete_form.html.twig') }}
 {% endblock %}

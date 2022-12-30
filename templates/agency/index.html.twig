@@ -13,10 +13,10 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Number</th>
-                    <th>Bank</th>
-                    <th>Manager</th>
-                    <th>actions</th>
+                    <th>Número</th>
+                    <th>Banco</th>
+                    <th>Gerente</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,8 +27,12 @@
                     <td>{{ agency.bank ? agency.bank.name : 'NA' }}</td>
                     <td>{{ agency.manager ? agency.manager.name : 'NA' }}</td>
                     <td>
-                        <a href="{{ path('app_agency_show', {'id': agency.id}) }}">show</a>
-                        <a href="{{ path('app_agency_edit', {'id': agency.id}) }}">edit</a>
+                        <a class="btn btn-sm" href="{{ path('app_agency_show', {'id': agency.id}) }}">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a class="btn btn-sm" href="{{ path('app_agency_edit', {'id': agency.id}) }}">
+                            <i class="fa fa-edit"></i>
+                        </a>
                     </td>
                 </tr>
             {% else %}

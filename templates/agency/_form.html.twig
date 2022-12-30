@@ -1,4 +1,27 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div>{{ form_errors(form) }}</div>
+    <div>
+        {{ form_label(form.number, 'Informe o numero da Agencia', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.number, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.bank, 'Selecione o Banco da Agencia', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.bank, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.manager, 'Selecione o Gerente da Agencia', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.manager, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_agency_index') }}">Voltar para a Lista</a>
+        <button class="btn btn-dark" type="submit">{{ button_label|default('Salvar') }}</button>
+    </div>
 {{ form_end(form) }}
