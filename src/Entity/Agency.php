@@ -23,7 +23,7 @@ class Agency
     private ?Bank $bank = null;
 
     #[ORM\OneToOne(inversedBy: 'agency', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Manager $manager = null;
 
     #[ORM\OneToMany(mappedBy: 'agency', targetEntity: Account::class, orphanRemoval: true)]
@@ -103,5 +103,9 @@ class Agency
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->number;
     }
 }
