@@ -3,33 +3,46 @@
 {% block title %}Client index{% endblock %}
 
 {% block body %}
-    <h1>Client index</h1>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center my-5">
+            <h1>Lista de Clientes</h1>
+            <a href="{{ path('app_client_new') }}" class="btn btn-primary">Criar Cliente</a>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.id }}</td>
-                <td>{{ client.name }}</td>
-                <td>
-                    <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-                    <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>
+                            <i class="badge bg-primary">{{ client.id }}</i>
+                        </td>
+                        <td>{{ client.name }}</td>
+                        <td>
+                            <a class="btn btn-sm" href="{{ path('app_client_show', {'id': client.id}) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-sm" href="{{ path('app_client_edit', {'id': client.id}) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="text-center">
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <a href="{{ path('app_client_new') }}">Create new</a>
+        
+    </div>
 {% endblock %}

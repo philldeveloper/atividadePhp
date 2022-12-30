@@ -3,37 +3,46 @@
 {% block title %}Agency index{% endblock %}
 
 {% block body %}
-    <h1>Agency index</h1>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center my-5">
+            <h1>Lista de Agencias</h1>
+            <a href="{{ path('app_agency_new') }}" class="btn btn-primary">Criar Agencia</a>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Number</th>
-                <th>Bank</th>
-                <th>Manager</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for agency in agencies %}
-            <tr>
-                <td>{{ agency.id }}</td>
-                <td>{{ agency.number }}</td>
-                <td>{{ agency.bank ? agency.bank.name : 'NA' }}</td>
-                <td>{{ agency.manager ? agency.manager.name : 'NA' }}</td>
-                <td>
-                    <a href="{{ path('app_agency_show', {'id': agency.id}) }}">show</a>
-                    <a href="{{ path('app_agency_edit', {'id': agency.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Number</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for agency in agencies %}
+                    <tr>
+                        <td>
+                            <i class="badge bg-primary">{{ agency.id }}</i>
+                        </td>
+                        <td>{{ agency.number }}</td>
+                        <td>
+                            <a class="btn btn-sm" href="{{ path('app_agency_show', {'id': agency.id}) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-sm" href="{{ path('app_agency_edit', {'id': agency.id}) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="text-center">
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <a href="{{ path('app_agency_new') }}">Create new</a>
+        
+    </div>
 {% endblock %}

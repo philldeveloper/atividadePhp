@@ -1,39 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Manager index{% endblock %}
+{% block title %}Gerente index{% endblock %}
 
 {% block body %}
-    <h1>Manager index</h1>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center my-5">
+            <h1>Lista de Gerentes</h1>
+            <a href="{{ path('app_manager_new') }}" class="btn btn-primary">Criar Gerente</a>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Agency</th>
-                <th>Bank</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for manager in managers %}
-            <tr>
-                <td>{{ manager.id }}</td>
-                <td>{{ manager.name }}</td>
-                <td>{{ manager.agency ? manager.agency.number : 'NA' }}</td>
-                <td>{{ manager.agency and manager.agency.bank ? manager.agency.bank.name : 'NA' }}</td>
-                <td>
-                    <a href="{{ path('app_manager_show', {'id': manager.id}) }}">show</a>
-                    <a href="{{ path('app_manager_edit', {'id': manager.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for manager in managers %}
+                    <tr>
+                        <td>
+                            <i class="badge bg-primary">{{ manager.id }}</i>
+                        </td>
+                        <td>{{ manager.name }}</td>
+                        <td>
+                            <a class="btn btn-sm" href="{{ path('app_manager_show', {'id': manager.id}) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-sm" href="{{ path('app_manager_edit', {'id': manager.id}) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="text-center">
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <a href="{{ path('app_manager_new') }}">Create new</a>
+        
+    </div>
 {% endblock %}
