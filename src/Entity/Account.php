@@ -31,9 +31,13 @@ class Account
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts')]
     private Collection $clients;
 
+    #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]
+    private Collection $transactions;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,5 +122,35 @@ class Account
     
     public function __toString() {
         return $this->number;
+    }
+
+    /**
+     * @return Collection<int, Transaction>
+     */
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions->add($transaction);
+            $transaction->setAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transactions->removeElement($transaction)) {
+            // set the owning side to null (unless already changed)
+            if ($transaction->getAccount() === $this) {
+                $transaction->setAccount(null);
+            }
+        }
+
+        return $this;
     }
 }
