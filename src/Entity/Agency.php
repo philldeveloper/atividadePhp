@@ -19,7 +19,7 @@ class Agency
     private ?string $number = null;
 
     #[ORM\ManyToOne(inversedBy: 'agencies')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Bank $bank = null;
 
     #[ORM\OneToOne(inversedBy: 'agency', cascade: ['persist', 'remove'])]
