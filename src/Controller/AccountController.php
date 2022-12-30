@@ -69,7 +69,7 @@ class AccountController extends AbstractController
     #[Route('/{id}', name: 'app_account_delete', methods: ['POST'])]
     public function delete(Request $request, Account $account, AccountRepository $accountRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$account->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
             $accountRepository->remove($account, true);
         }
 

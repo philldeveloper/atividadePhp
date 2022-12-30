@@ -15,9 +15,8 @@ class TransactionType extends AbstractType
             ->add('operation')
             ->add('value')
             ->add('description')
-            ->add('date')
-            ->add('account')
-        ;
+            // ->add('date')
+            ->add('account');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

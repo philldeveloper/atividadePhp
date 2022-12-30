@@ -21,9 +21,9 @@
             <tr>
                 <td>{{ transaction.id }}</td>
                 <td>{{ transaction.operation }}</td>
-                <td>{{ transaction.value }}</td>
+                <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                 <td>{{ transaction.description }}</td>
-                <td>{{ transaction.date ? transaction.date|date('Y-m-d') : '' }}</td>
+                <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>
                 <td>
                     <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}">show</a>
                     <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>

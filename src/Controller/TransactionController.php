@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Form\TransactionType;
 use App\Repository\TransactionRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,22 @@ class TransactionController extends AbstractController
         $form = $this->createForm(TransactionType::class, $transaction);
         $form->handleRequest($request);
 
+        $transaction->setDate(new DateTime());
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $operation = $transaction->getOperation();
+            $acountBalance = $transaction->getAccount()->getBalance();
+            $transactionValue = $transaction->getValue();
+
+            if ($operation == 'debito') {
+                if ($transactionValue > $acountBalance) {
+                    return new Response('valor maior do que o saldo');
+                }
+                $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
+            } else if ($operation == 'credito') {
+                $transaction->getAccount()->setBalance($acountBalance + $transactionValue);
+            }
+
             $transactionRepository->save($transaction, true);
 
             return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
@@ -69,7 +85,7 @@ class TransactionController extends AbstractController
     #[Route('/{id}', name: 'app_transaction_delete', methods: ['POST'])]
     public function delete(Request $request, Transaction $transaction, TransactionRepository $transactionRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$transaction->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $transaction->getId(), $request->request->get('_token'))) {
             $transactionRepository->remove($transaction, true);
         }
 
