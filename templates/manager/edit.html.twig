@@ -3,11 +3,10 @@
 {% block title %}Edit Manager{% endblock %}
 
 {% block body %}
-    <h1>Edit Manager</h1>
+    <h1>Editar Gerente</h1>
 
-    {{ include('manager/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('manager/_form.html.twig', {'button_label': 'Atualizar'}) }}
 
-    <a href="{{ path('app_manager_index') }}">back to list</a>
-
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
     {{ include('manager/_delete_form.html.twig') }}
 {% endblock %}

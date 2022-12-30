@@ -3,7 +3,7 @@
 {% block title %}Manager{% endblock %}
 
 {% block body %}
-    <h1>Manager</h1>
+    <h1>Gerente {{manager.name}}</h1>
 
     <table class="table">
         <tbody>
@@ -26,9 +26,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_manager_index') }}">back to list</a>
+    <div class="d-flex justify-content-between align-items-center">
+        <a class="btn btn-outline-dark" href="{{ path('app_manager_index') }}">Voltar para a Lista</a>
+        <a class="btn btn-dark" href="{{ path('app_manager_edit', {'id': manager.id}) }}">Editar Gerente</a>
+    </div>
 
-    <a href="{{ path('app_manager_edit', {'id': manager.id}) }}">edit</a>
-
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
     {{ include('manager/_delete_form.html.twig') }}
 {% endblock %}
