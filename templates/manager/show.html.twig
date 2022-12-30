@@ -15,6 +15,14 @@
                 <th>Name</th>
                 <td>{{ manager.name }}</td>
             </tr>
+            <tr>
+                <th>Agency</th>
+                <td>{{ manager.agency ? manager.agency.number : 'NA' }}</td>
+            </tr>
+            <tr>
+                <th>Bank</th>
+                <td>{{ manager.agency and manager.agency.bank ? manager.agency.bank.name : 'NA' }}</td>
+            </tr>
         </tbody>
     </table>
 

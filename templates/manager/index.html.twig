@@ -10,6 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Agency</th>
+                <th>Bank</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +20,8 @@
             <tr>
                 <td>{{ manager.id }}</td>
                 <td>{{ manager.name }}</td>
+                <td>{{ manager.agency ? manager.agency.number : 'NA' }}</td>
+                <td>{{ manager.agency and manager.agency.bank ? manager.agency.bank.name : 'NA' }}</td>
                 <td>
                     <a href="{{ path('app_manager_show', {'id': manager.id}) }}">show</a>
                     <a href="{{ path('app_manager_edit', {'id': manager.id}) }}">edit</a>
