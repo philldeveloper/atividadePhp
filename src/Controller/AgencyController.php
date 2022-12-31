@@ -9,9 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+#[IsGranted('ROLE_USER')]
 #[Route('/agency')]
 class AgencyController extends AbstractController
 {
@@ -23,6 +25,7 @@ class AgencyController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/new', name: 'app_agency_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgencyRepository $agencyRepository): Response
     {
@@ -40,8 +43,6 @@ class AgencyController extends AbstractController
             'agency' => $agency,
             'form' => $form,
         ]);
-
-        // return new Response("Olá mundo");
     }
 
     #[Route('/{id}', name: 'app_agency_show', methods: ['GET'])]
@@ -52,6 +53,8 @@ class AgencyController extends AbstractController
         ]);
     }
 
+    
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_agency_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Agency $agency, AgencyRepository $agencyRepository): Response
     {
@@ -69,7 +72,8 @@ class AgencyController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/{id}', name: 'app_agency_delete', methods: ['POST'])]
     public function delete(Request $request, Agency $agency, AgencyRepository $agencyRepository): Response
     {

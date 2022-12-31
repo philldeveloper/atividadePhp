@@ -23,6 +23,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/new', name: 'app_manager_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ManagerRepository $managerRepository): Response
     {
@@ -50,6 +51,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/{id}/edit', name: 'app_manager_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Manager $manager, ManagerRepository $managerRepository): Response
     {
@@ -68,6 +70,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/{id}', name: 'app_manager_delete', methods: ['POST'])]
     public function delete(Request $request, Manager $manager, ManagerRepository $managerRepository): Response
     {

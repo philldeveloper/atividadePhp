@@ -99,6 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function isGranted($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
+
     public function __toString() {
         return $this->email;
     }

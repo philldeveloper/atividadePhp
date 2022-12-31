@@ -10,7 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+#[IsGranted('ROLE_USER')]
 #[Route('/transaction')]
 class TransactionController extends AbstractController
 {
@@ -23,13 +28,19 @@ class TransactionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_transaction_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TransactionRepository $transactionRepository): Response
+    public function new(Request $request, TransactionRepository $transactionRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+
+        if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException('Unable to access this page!');
+        }
+
         $transaction = new Transaction();
         $form = $this->createForm(TransactionType::class, $transaction);
         $form->handleRequest($request);
 
         $transaction->setDate(new DateTime());
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $operation = $transaction->getOperation();
