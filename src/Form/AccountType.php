@@ -6,6 +6,7 @@ use App\Entity\Account;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AccountType extends AbstractType
 {
@@ -14,7 +15,13 @@ class AccountType extends AbstractType
         $builder
             ->add('number')
             ->add('balance')
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Conta Corrente' => 1,
+                    'Conta Poupança' => 2,
+                    'Conta Salário' => 3,
+                ],
+            ])
             ->add('agency')
             ->add('clients')
         ;

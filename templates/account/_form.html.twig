@@ -1,4 +1,39 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div>{{ form_errors(form) }}</div>
+    <div>
+        {{ form_label(form.number, 'Informe o numero da Conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.number, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.balance, 'Informe o valor do saldo inicial', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.balance, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.type, 'Informe o tipo de conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.agency, 'Selecione a agencia da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.clients, 'Selecione o cliente da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.clients, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_account_index') }}">Voltar para a Lista</a>
+        <button class="btn btn-dark" type="submit">{{ button_label|default('Salvar') }}</button>
+    </div>
 {{ form_end(form) }}

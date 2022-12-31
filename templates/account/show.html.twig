@@ -3,32 +3,35 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
-    <h1>Account</h1>
+    <h1>Conta <span class="lead fw-bold">{{ account.number }}</span></h1>
 
     <table class="table">
-        <tbody>
+        <tbody> 
             <tr>
                 <th>Id</th>
                 <td>{{ account.id }}</td>
             </tr>
             <tr>
-                <th>Number</th>
+                <th>Numero da Conta</th>
                 <td>{{ account.number }}</td>
             </tr>
             <tr>
-                <th>Balance</th>
+                <th>Saldo Atual</th>
                 <td>{{ account.balance }}</td>
             </tr>
             <tr>
-                <th>Type</th>
+                <th>Tipo de Conta</th>
                 <td>{{ account.type }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_account_index') }}">back to list</a>
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_account_index') }}">Voltar a Lista</a>
+        <a class="btn btn-dark" href="{{ path('app_account_edit', {'id': account.id}) }}">Editar Conta</a>
+    </div>
 
-    <a href="{{ path('app_account_edit', {'id': account.id}) }}">edit</a>
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
 
     {{ include('account/_delete_form.html.twig') }}
 {% endblock %}

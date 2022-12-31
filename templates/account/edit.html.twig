@@ -3,11 +3,11 @@
 {% block title %}Edit Account{% endblock %}
 
 {% block body %}
-    <h1>Edit Account</h1>
+    <h1>Editar Conta</h1>
 
-    {{ include('account/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('account/_form.html.twig', {'button_label': 'Atualizar'}) }}
 
-    <a href="{{ path('app_account_index') }}">back to list</a>
-
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
+    
     {{ include('account/_delete_form.html.twig') }}
 {% endblock %}
