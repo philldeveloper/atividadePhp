@@ -6,7 +6,7 @@ controllers:
 
 app_index:
     path: /
-    controller: App\Controller\BankController::index
+    controller: App\Controller\HomeController::index
 
 app_logout:
     path: /logout

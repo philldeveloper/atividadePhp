@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_ADMIN')]
 #[Route('/bank')]
 class BankController extends AbstractController
-{
+{   
     #[Route('/', name: 'app_bank_index', methods: ['GET'])]
     public function index(BankRepository $bankRepository): Response
     {
@@ -21,9 +23,13 @@ class BankController extends AbstractController
         ]);
     }
 
+    // #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/new', name: 'app_bank_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BankRepository $bankRepository): Response
-    {
+    {   
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
         $bank = new Bank();
         $form = $this->createForm(BankType::class, $bank);
         $form->handleRequest($request);
