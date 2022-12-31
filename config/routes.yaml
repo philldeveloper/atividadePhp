@@ -7,3 +7,7 @@ controllers:
 app_index:
     path: /
     controller: App\Controller\BankController::index
+
+app_logout:
+    path: /logout
+    methods: GET

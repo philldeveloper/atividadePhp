@@ -18,23 +18,26 @@
     <body>
         <div class="container">
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none fw-bold">
-                Sistema Bancário 1.0
-            </a>
+                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none fw-bold">
+                    Sistema Bancário 1.0
+                </a>
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{ path('app_bank_index') }}" class="nav-link px-2 link-secondary">Bancos</a></li>
-                <li><a href="{{ path('app_manager_index') }}" class="nav-link px-2 link-dark">Gerentes</a></li>
-                <li><a href="{{ path('app_agency_index') }}" class="nav-link px-2 link-dark">Agencias</a></li>
-                <li><a href="{{ path('app_client_index') }}" class="nav-link px-2 link-dark">Clientes</a></li>
-                <li><a href="{{ path('app_account_index') }}" class="nav-link px-2 link-dark">Contas</a></li>
-                <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
-            </ul>
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{{ path('app_bank_index') }}" class="nav-link px-2 link-secondary">Bancos</a></li>
+                    <li><a href="{{ path('app_manager_index') }}" class="nav-link px-2 link-dark">Gerentes</a></li>
+                    <li><a href="{{ path('app_agency_index') }}" class="nav-link px-2 link-dark">Agencias</a></li>
+                    <li><a href="{{ path('app_client_index') }}" class="nav-link px-2 link-dark">Clientes</a></li>
+                    <li><a href="{{ path('app_account_index') }}" class="nav-link px-2 link-dark">Contas</a></li>
+                    <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
+                </ul>
 
-            <div class="col-md-3 text-end">
-                <a href="{{ path('app_register') }}" type="button" class="btn btn-outline-dark">Registrar</a>
-                <a href="#" type="button" class="btn btn-dark">Fazer Login</a>
-            </div>
+                <div class="col-md-3 text-end">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# //ROLE_ADMIN #}
+                        <a href="{{ path('app_logout') }}" type="button" class="btn btn-dark">Sair</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" type="button" class="btn btn-dark">Fazer Login</a>
+                    {% endif %}
+                </div>
             </header>
         </div>
         <div class="container my-4">

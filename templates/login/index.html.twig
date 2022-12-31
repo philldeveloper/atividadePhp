@@ -1,0 +1,30 @@
+{% extends 'login.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="container container-login">
+        <h1 class="py-5">Sistema Bancário 1.0</h1>
+        <div class="form-group">
+            {% if error %}
+                <div class="alert alert-danger py-1 px-2" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <form action="{{ path('app_login') }}" method="POST">
+                <label for="username">Email:</label>
+                <input class="form-control my-2" type="text" id="username" name="_username" value="{{ last_username }}">
+
+                <label for="password">Senha:</label>
+                <input class="form-control my-2" type="password" id="password" name="_password">
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="d-grid mt-5">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+
+            <small class="text-center lead d-flex justify-content-center align-items-center">Ainda não possui Conta? <a href="{{ path('app_register') }}" class="fw-bold nav-link px-2">Cadastre-se.</a> </small>
+        </div>
+    </div>
+{% endblock %}

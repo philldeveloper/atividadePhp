@@ -4,11 +4,12 @@
 
 {% block body %}
     <div class="container container-login">
-        <h1>Sistema Bancário 1.0</h1>
-        <h3 class="lead">Cadastrar Novo Usuário</h3>
-        <br>
-
+        <h1 class="py-5">Sistema Bancário 1.0</h1>
         <div class="form-group">
+            {# {% if error %}
+                <div class="alert alert-danger py-1 px-2" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %} #}
+
             {{ form_start(registrationForm) }}
 
                 {{ form_row(registrationForm.email, {'attr': {'class': 'form-control my-2'}}) }}
@@ -22,6 +23,8 @@
                     <button type="submit" class="btn btn-primary ">Registrar</button>
                 </div>
             {{ form_end(registrationForm) }}
+
+            <small class="text-center mx-auto justify-content-center lead d-flex align-items-center">Já possui conta? <a href="{{ path('app_login') }}" class="fw-bold nav-link px-2">Fazer Login.</a> </small>
         </div>
     </div>
 {% endblock %}
