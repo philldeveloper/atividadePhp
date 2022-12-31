@@ -13,6 +13,7 @@
 
 ## Doc para saber se é admin ou user na hora de logar: is_granted('ROLE_ADMIN')
 # https://symfonycasts.com/screencast/symfony2-ep2/twig-security-is-authenticated
+# https://symfony.com/doc/current/security.html
 
 
 ## PERSMISSIONS ADDED
@@ -20,3 +21,7 @@
 - ('ROLE_USER') PODE VER, CRIAR, EDITAR APENAS TRANSAÇOES
 # TO DO:
 - ('ROLE_MANAGER') PODE VER, CRIAR, EDITAR ITEMS ESPECÍFICOS
+
+
+## ADDING PERMS TO A USER IN DATABASE
+ROLES = ["ROLE_EXAMPLE"] WHERE EXAMPLE IS ADMIN OR USER
