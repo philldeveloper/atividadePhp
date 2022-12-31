@@ -18,7 +18,7 @@
     <body>
         <div class="container">
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none fw-bold">
+                <a href="/" class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none fw-bold">
                     Sistema Bancário 1.0
                 </a>
 
@@ -31,8 +31,9 @@
                     <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
                 </ul>
 
-                <div class="col-md-3 text-end">
+                <div class="col-md-5 text-end d-flex flex-row flex-wrap align-items-center justify-content-end">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# //ROLE_ADMIN #}
+                        <small class="fw-bold me-5">Olá, {{app.user}}</small>
                         <a href="{{ path('app_logout') }}" type="button" class="btn btn-dark">Sair</a>
                     {% else %}
                         <a href="{{ path('app_login') }}" type="button" class="btn btn-dark">Fazer Login</a>
