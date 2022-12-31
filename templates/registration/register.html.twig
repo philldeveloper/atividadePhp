@@ -1,0 +1,27 @@
+{% extends 'login.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container container-login">
+        <h1>Sistema Bancário 1.0</h1>
+        <h3 class="lead">Cadastrar Novo Usuário</h3>
+        <br>
+
+        <div class="form-group">
+            {{ form_start(registrationForm) }}
+
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control my-2'}}) }}
+                {{ form_row(registrationForm.plainPassword, {label: 'Senha', 'attr': {'class': 'form-control my-2'}}) }}
+
+                <div class="py-3">
+                    {{ form_row(registrationForm.agreeTerms, {label: 'Concordo com os Termos.', 'attr': {'class': 'd-inline-flex ms-2 my-2'}}) }}
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary ">Registrar</button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

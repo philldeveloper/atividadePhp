@@ -1,0 +1,24 @@
+.container-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    flex: 1 1 auto;
+    height: 99vh;
+}
+
+.container-login h1 {
+    color: black !important;
+    margin-top: auto!important;
+    
+    text-align: center;
+}
+
+.container-login .form-group {
+    row-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto!important;
+    width: 100%;
+    max-width: 380px;
+}
