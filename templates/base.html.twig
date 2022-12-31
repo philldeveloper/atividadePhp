@@ -39,7 +39,6 @@
 
                 <div class="col-md-5 text-end d-flex flex-row flex-wrap align-items-center justify-content-end">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <small class="fw-bold me-5">Olá, {{app.user}}</small>
                         <a href="{{ path('app_logout') }}" type="button" class="btn btn-dark">Sair</a>
                     {% else %}
                         <a href="{{ path('app_login') }}" type="button" class="btn btn-dark">Fazer Login</a>
