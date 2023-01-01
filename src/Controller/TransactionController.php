@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted('PUBLIC_ACCESS')]
 #[Route('/transaction')]
 class TransactionController extends AbstractController
 {
@@ -40,8 +40,7 @@ class TransactionController extends AbstractController
         $form->handleRequest($request);
 
         $transaction->setDate(new DateTime());
-
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $operation = $transaction->getOperation();
             $acountBalance = $transaction->getAccount()->getBalance();

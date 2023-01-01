@@ -7,5 +7,9 @@
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <h2>Olá, {{ app.user }}</h2>
     {% endif %}
+    {% if is_granted('PUBLIC_ACCESS') %}
+        <h2>Bem vindo</h2>
+        <small class="lead py-2">Você está acessando este serviço sem estar cadastrado. Faça <a href="{{path('app_login')}}" class="btn-link">Login</a> para poder realizar saques, consultar agências e muito mais.</small>
+    {% endif %}
 </div>
 {% endblock %}

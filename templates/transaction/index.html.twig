@@ -23,7 +23,7 @@
             {% for transaction in transactions %}
                 <tr>
                     <td>{{ transaction.id }}</td>
-                    <td>{{ transaction.operation is same as '1' ? 'Crédito' : transaction.operation is same as '2' ? 'Débito' : 'Transferencia'}}</td>
+                    <td>{{ transaction.operation is same as '1' ? 'Saque' : transaction.operation is same as '2' ? 'Depósito' : 'Transferencia'}}</td>
                     <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>

@@ -36,8 +36,9 @@
 
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('app_agency_index') }}" class="nav-link px-2 link-dark">Agencias</a></li>
-                        <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
                     {% endif %}
+                    
+                    <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
                 </ul>
 
                 <div class="col-md-4 text-end d-flex flex-row flex-wrap align-items-center justify-content-end">

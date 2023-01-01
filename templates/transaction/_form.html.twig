@@ -4,7 +4,19 @@
         {{ form_label(form.operation, 'Selecione o tipo de operação', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
     <div>
-        {{ form_widget(form.operation, {'attr': {'class': 'form-control'}}) }}
+        <!-- {{ form_widget(form.operation, {'attr': {'class': 'form-control'}}) }} -->
+
+        <select id="transaction_operation" name="transaction[operation]" class="form-control">
+            {% if is_granted('PUBLIC_ACCESS') %}
+            <option value="2">Depósito</option>
+            {% endif %}
+            
+            {% if is_granted('ROLE_USER') %}
+            <option value="1">Saque</option>
+            <option value="2">Depósito</option>
+            <option value="3">Transferência</option>
+            {% endif %}
+        </select>
     </div>
     <div>
         {{ form_label(form.value, 'Informe o Valor da Transação', {'label_attr': {'class': 'fw-bold py-3'}}) }}
