@@ -75,8 +75,12 @@ class TransactionController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_transaction_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Transaction $transaction, TransactionRepository $transactionRepository): Response
+    public function edit(Request $request, Transaction $transaction, TransactionRepository $transactionRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+        if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException('Unable to access this page!');
+        }
+
         $form = $this->createForm(TransactionType::class, $transaction);
         $form->handleRequest($request);
 
