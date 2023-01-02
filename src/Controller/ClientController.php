@@ -29,8 +29,9 @@ class ClientController extends AbstractController
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $clientRepository->save($client, true);
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);

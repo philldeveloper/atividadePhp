@@ -21,6 +21,10 @@ class Client
     #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'clients')]
     private Collection $accounts;
 
+    #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
@@ -69,5 +73,17 @@ class Client
 
     public function __toString() {
         return $this->name;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

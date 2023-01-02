@@ -42,7 +42,14 @@ class AccountController extends AbstractController
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
 
+        
+
+        // $account->setUser('algumaCoisa');
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            dd($account);
+
             $accountRepository->save($account, true);
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
