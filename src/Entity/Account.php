@@ -28,7 +28,7 @@ class Account
     #[ORM\JoinColumn(nullable: false)]
     private ?Agency $agency = null;
 
-    #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts')]
+    #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts', fetch:"EAGER")]
     private Collection $clients;
 
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]

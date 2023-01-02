@@ -5,21 +5,33 @@ namespace App\Controller;
 use App\Entity\Account;
 use App\Form\AccountType;
 use App\Repository\AccountRepository;
+use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_USER')]
 #[Route('/account')]
 class AccountController extends AbstractController
 {
     #[Route('/', name: 'app_account_index', methods: ['GET'])]
-    public function index(AccountRepository $accountRepository): Response
+    public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+        
+        /** @var \App\Entity\User $user */
+         $user = $this->getUser();
+
+        if ($authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->render('account/index.html.twig', [
+                'accounts' => $accountRepository->findAll(),
+            ]);
+        }
+
         return $this->render('account/index.html.twig', [
-            'accounts' => $accountRepository->findAll(),
+            'accounts' => $accountRepository->findBy(['id' => $user->getId()]),
         ]);
     }
 
