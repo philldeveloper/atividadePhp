@@ -12,6 +12,7 @@
 
             {{ form_start(registrationForm) }}
 
+                {{ form_row(registrationForm.name, {'attr': {'class': 'form-control my-2'}}) }}
                 {{ form_row(registrationForm.email, {'attr': {'class': 'form-control my-2'}}) }}
                 {{ form_row(registrationForm.plainPassword, {label: 'Senha', 'attr': {'class': 'form-control my-2'}}) }}
 

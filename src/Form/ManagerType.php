@@ -13,6 +13,7 @@ class ManagerType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('user')
             ->add('agency')
         ;
     }

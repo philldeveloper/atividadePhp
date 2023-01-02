@@ -32,6 +32,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Client $client = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Manager $manager = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function __toString() {
-        return $this->email;
+        return $this->name;
     }
 
     public function getClient(): ?Client
@@ -124,6 +130,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getManager(): ?Manager
+    {
+        return $this->manager;
+    }
+
+    public function setManager(Manager $manager): self
+    {
+        // set the owning side of the relation if necessary
+        if ($manager->getUser() !== $this) {
+            $manager->setUser($this);
+        }
+
+        $this->manager = $manager;
 
         return $this;
     }

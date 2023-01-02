@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Manager;
+use App\Entity\User;
 use App\Form\ManagerType;
 use App\Repository\ManagerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/manager')]
@@ -32,6 +34,10 @@ class ManagerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $manager->getUser();
+            $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
+
             $managerRepository->save($manager, true);
 
             return $this->redirectToRoute('app_manager_index', [], Response::HTTP_SEE_OTHER);
