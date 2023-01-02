@@ -42,13 +42,8 @@ class AccountController extends AbstractController
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
 
-        
-
-        // $account->setUser('algumaCoisa');
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            dd($account);
 
             $accountRepository->save($account, true);
 
@@ -56,6 +51,7 @@ class AccountController extends AbstractController
         }
 
         return $this->renderForm('account/new.html.twig', [
+            array('user' => 'lorem ipsum'),
             'account' => $account,
             'form' => $form,
         ]);

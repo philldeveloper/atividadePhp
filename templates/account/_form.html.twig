@@ -22,14 +22,19 @@
         {{ form_label(form.agency, 'Selecione a agencia da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
     <div>
-        {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.agency, {'attr': {'class': 'form-control mb-5'}}) }}
     </div>
-    <div>
+
+
+    {# <div>
         {{ form_label(form.clients, 'Selecione o cliente da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
-    </div>
-    <div>
-        {{ form_widget(form.clients, {'attr': {'class': 'form-control'}}) }}
-    </div>
+    </div> #}
+
+    {% if is_granted('ROLE_USER') is same as true %}
+        <select id="account_clients" name="account[clients][]" class="form-control">
+            <option value={{app.user.id}}>{{app.user.name}}</option>
+        </select>
+    {% endif %}
 
 
     <div class="d-flex align-items-center justify-content-between py-3">
