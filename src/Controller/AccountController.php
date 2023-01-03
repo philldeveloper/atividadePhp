@@ -20,9 +20,9 @@ class AccountController extends AbstractController
     #[Route('/', name: 'app_account_index', methods: ['GET'])]
     public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        
+
         /** @var \App\Entity\User $user */
-         $user = $this->getUser();
+        $user = $this->getUser();
 
         if ($authChecker->isGranted('ROLE_ADMIN')) {
             return $this->render('account/index.html.twig', [
@@ -45,8 +45,7 @@ class AccountController extends AbstractController
         if ($authChecker->isGranted('ROLE_USER')) {
             $account->setIsActive(1);
             $form->getData()->setIsActive(1);
-
-        }else {
+        } else {
             $account->setIsActive(0);
             $form->getData()->setIsActive(0);
         }
@@ -90,10 +89,15 @@ class AccountController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_account_delete', methods: ['POST'])]
-    public function delete(Request $request, Account $account, AccountRepository $accountRepository): Response
+    public function delete(Request $request, Account $account, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
-            $accountRepository->remove($account, true);
+        if ($authChecker->isGranted('ROLE_ADMIN')) {
+            if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
+                $accountRepository->remove($account, true);
+            }
+        } else if ($authChecker->isGranted('ROLE_USER')) {
+            $account->setIsActive(0);
+            $accountRepository->save($account, true);
         }
 
         return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);

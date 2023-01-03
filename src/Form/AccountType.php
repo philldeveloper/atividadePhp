@@ -13,7 +13,8 @@ class AccountType extends AbstractType
 {
     protected $auth;
 
-    public function __construct(AuthorizationCheckerInterface $auth) {
+    public function __construct(AuthorizationCheckerInterface $auth)
+    {
         $this->auth = $auth;
     }
 
@@ -30,9 +31,8 @@ class AccountType extends AbstractType
                 ],
             ])
             ->add('agency')
-            ->add('clients')
-        ;
-        
+            ->add('clients');
+
         // if($this->auth->isGranted('ROLE_ADMIN')) {
         //     $builder
         //         ->add('number')

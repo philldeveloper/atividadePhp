@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
 
             $client = new Client();
             $client->setName($user->getName());
-            
+
             $user->setClient($client);
 
             // encode the plain password

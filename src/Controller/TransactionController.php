@@ -52,13 +52,19 @@ class TransactionController extends AbstractController
 
             if ($operation == 1) {  // SAQUE
                 if ($transactionValue > $acountBalance) {
-                    return new Response('valor maior do que o saldo');
+                    throw new AccessDeniedException('Valor maior do que o saldo.');
                 }
                 $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
             } else if ($operation == 2) {   // DEPOSITO
                 $transaction->getAccount()->setBalance($acountBalance + $transactionValue);
             } else if ($operation == 3) {   // TRANSFERENCIA
-                // TODO:
+                $targetAccountBalance = $transaction->getTargetAccount()->getBalance();
+
+                if ($transactionValue > $acountBalance) {
+                    throw new AccessDeniedException('Valor maior do que o saldo.');
+                }
+                $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
+                $transaction->getTargetAccount()->setBalance($targetAccountBalance + $transactionValue);
             }
 
             $transactionRepository->save($transaction, true);
@@ -66,7 +72,7 @@ class TransactionController extends AbstractController
             return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transaction/new.html.twig', [
+        return $this->render('transaction/new.html.twig', [
             'transaction' => $transaction,
             'form' => $form,
         ]);
@@ -96,7 +102,7 @@ class TransactionController extends AbstractController
             return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transaction/edit.html.twig', [
+        return $this->render('transaction/edit.html.twig', [
             'transaction' => $transaction,
             'form' => $form,
         ]);

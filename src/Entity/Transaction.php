@@ -33,6 +33,9 @@ class Transaction
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     private ?Client $client = null;
 
+    #[ORM\ManyToOne]
+    private ?Account $targetAccount = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Transaction
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getTargetAccount(): ?Account
+    {
+        return $this->targetAccount;
+    }
+
+    public function setTargetAccount(?Account $targetAccount): self
+    {
+        $this->targetAccount = $targetAccount;
 
         return $this;
     }

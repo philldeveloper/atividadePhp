@@ -37,6 +37,12 @@
         {{ form_widget(form.account, {'attr': {'class': 'form-control'}}) }}
     </div>
     <div>
+        {{ form_label(form.targetAccount, 'Selecione a conta destino', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.targetAccount, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
         {{ form_label(form.client, 'Selecione um Cliente', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
     <div>
