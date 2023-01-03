@@ -36,22 +36,28 @@ class AccountController extends AbstractController
     }
 
     #[Route('/new', name: 'app_account_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AccountRepository $accountRepository): Response
+    public function new(Request $request, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         $account = new Account();
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
 
+        if ($authChecker->isGranted('ROLE_USER')) {
+            $account->setIsActive(1);
+            $form->getData()->setIsActive(1);
+
+        }else {
+            $account->setIsActive(0);
+            $form->getData()->setIsActive(0);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $accountRepository->save($account, true);
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('account/new.html.twig', [
-            array('user' => 'lorem ipsum'),
             'account' => $account,
             'form' => $form,
         ]);

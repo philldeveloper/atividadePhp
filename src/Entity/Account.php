@@ -34,6 +34,9 @@ class Account
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]
     private Collection $transactions;
 
+    #[ORM\Column]
+    private ?bool $isActive = null;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -150,6 +153,18 @@ class Account
                 $transaction->setAccount(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
