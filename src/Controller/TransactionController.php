@@ -21,7 +21,7 @@ class TransactionController extends AbstractController
 {
     #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
     public function index(TransactionRepository $transactionRepository): Response
-    {   
+    {
         // $user = $transactionRepository->findBy(['id' => 2]);
         // dd($user->getAccount()->getNumber());
         // dd($user->getId());
@@ -44,19 +44,21 @@ class TransactionController extends AbstractController
         $form->handleRequest($request);
 
         $transaction->setDate(new DateTime());
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $operation = $transaction->getOperation();
             $acountBalance = $transaction->getAccount()->getBalance();
             $transactionValue = $transaction->getValue();
 
-            if ($operation == 'debito') {
+            if ($operation == 1) {  // SAQUE
                 if ($transactionValue > $acountBalance) {
                     return new Response('valor maior do que o saldo');
                 }
                 $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
-            } else if ($operation == 'credito') {
+            } else if ($operation == 2) {   // DEPOSITO
                 $transaction->getAccount()->setBalance($acountBalance + $transactionValue);
+            } else if ($operation == 3) {   // TRANSFERENCIA
+                // TODO:
             }
 
             $transactionRepository->save($transaction, true);

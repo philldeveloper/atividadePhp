@@ -21,7 +21,13 @@
             </tr>
             <tr>
                 <th>Tipo de Conta</th>
-                <td>{{ account.type }}</td>
+                {% if account.type == 1 %}
+                    <td>Conta Corrente</td>
+                {% elseif account.type == 2 %}
+                    <td>Conta Poupança</td>
+                {% elseif account.type == 3 %}
+                    <td>Conta Salário</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Clientes</th>
