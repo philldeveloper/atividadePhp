@@ -25,7 +25,11 @@
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ transaction.date ? transaction.date|date('Y-m-d') : '' }}</td>
+                <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Criado por</th>
+                <td>{{ transaction.client.name }}</td>
             </tr>
         </tbody>
     </table>

@@ -23,6 +23,12 @@
                 <th>Tipo de Conta</th>
                 <td>{{ account.type }}</td>
             </tr>
+            <tr>
+                <th>Clientes</th>
+                <td>
+                    {{ account.clients|join(', ') }}
+                </td>
+            </tr>
         </tbody>
     </table>
 
