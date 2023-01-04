@@ -34,3 +34,7 @@ ROLES = ["ROLE_EXAMPLE"] WHERE EXAMPLE IS ADMIN OR USER
 * Users with the ROLE_ADMIN role will also have the ROLE_USER role. 
 * Users with ROLE_SUPER_ADMIN, will automatically have ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH and ROLE_USER (inherited from ROLE_ADMIN).
 * https://symfony.com/doc/current/security.html
+
+
+## RODANDO AS FIXTURES
+- NO TERMINAL, EXECUTE: php bin/console doctrine:fixtures:load
