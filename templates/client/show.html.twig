@@ -16,6 +16,18 @@
                 <td>{{ client.name }}</td>
             </tr>
             <tr>
+                <th>Endereço</th>
+                <td>{{ client.address }}</td>
+            </tr>
+            <tr>
+                <th>Telefone</th>
+                <td>{{ client.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ client.user.email }}</td>
+            </tr>
+            <tr>
                 <th>Contas</th>
                 <td>
                     {{ client.accounts|join(', ') }}

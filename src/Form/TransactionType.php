@@ -10,28 +10,34 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class TransactionType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
-            ->add('operation', ChoiceType::class, [
-                'choices' => [
-                    'SAQUE' => 1,
-                    'DEPOSITO' => 2,
-                    'TRANSFERENCIA' => 3,
-                ],
-            ])
+            // ->add('operation', ChoiceType::class, [
+            //     'choices' => [
+            //         'SAQUE' => 1,
+            //         'DEPOSITO' => 2,
+            //         'TRANSFERENCIA' => 3,
+            //     ],
+            // ])
             ->add('value')
-            ->add('description')
-            // ->add('date')
+            ->add('description', null, [
+                'help' => 'Informe uma pequena descrição da transação',
+            ])
             ->add('account')
             ->add('client')
-            ->add('targetAccount');
+            ->add('targetAccount')
+        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Transaction::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

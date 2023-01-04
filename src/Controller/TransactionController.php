@@ -46,7 +46,10 @@ class TransactionController extends AbstractController
         $transaction->setDate(new DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $operation = $transaction->getOperation();
+
+            $operation = (int)$form->getExtraData()['operation'];
+            $transaction->setOperation($operation);
+
             $acountBalance = $transaction->getAccount()->getBalance();
             $transactionValue = $transaction->getValue();
 

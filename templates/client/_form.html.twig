@@ -7,6 +7,18 @@
         {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
     </div>
     <div>
+        {{ form_label(form.address, 'Informe um Endereço', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.phone, 'Informe um Telefone', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+    </div>
+    <div>
+        {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div>
         {{ form_label(form.accounts, 'Selecione uma conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
     <div>

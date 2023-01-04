@@ -28,6 +28,12 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Transaction::class)]
     private Collection $transactions;
 
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+    #[ORM\Column]
+    private ?int $phone = null;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
@@ -117,6 +123,30 @@ class Client
                 $transaction->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
