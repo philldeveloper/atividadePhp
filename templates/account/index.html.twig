@@ -4,21 +4,23 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de Contas</h1>
-        <a href="{{ path('app_account_new') }}" class="btn btn-primary">Criar Conta</a>
+        <h3>Lista de Contas</h3>
+        <a href="{{ path('app_account_new') }}" class="btn btn-outline-dark fw-bold">Criar Conta</a>
     </div>
+    <hr>
 
-    <div class="table-responsive">
+    <div class="table-responsive mt-5">
         <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Number</th>
-                    <th>Ações</th>
-                    <th>Saldo</th>
+                    <th>Número da Conta</th>
+                    <th>Saldo Atual</th>
+                    <th>Agencia | Banco</th>
                     {% if is_granted('ROLE_ADMIN') %}
                         <th>Status</th>
                     {% endif %}
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +30,11 @@
                         <i class="badge bg-primary">{{ account.id }}</i>
                     </td>
                     <td>{{ account.number }}</td>
+                    <td>{{ account.balance|format_currency('BRL') }}</td>
+                    <td>{{ account.agency }} - {{account.agency.bank}}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
+                    {% endif %}
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_account_show', {'id': account.id}) }}">
                             <i class="fa fa-eye"></i>
@@ -36,14 +43,10 @@
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>
-                    <td>{{ account.balance }}</td>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
-                    {% endif %}
                 </tr>
             {% else %}
                 <tr class="text-center">
-                    <td colspan="3">no records found</td>
+                    <td colspan={{6}}>Não há contas cadastradas.</td>
                 </tr>
             {% endfor %}
             </tbody>

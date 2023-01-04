@@ -4,10 +4,12 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de Transações</h1>
-        <a href="{{ path('app_transaction_new') }}" class="btn btn-primary">Criar Transação</a>
+        <h3>Lista de Transações</h3>
+        <a href="{{ path('app_transaction_new') }}" class="btn btn-outline-dark fw-bold">Criar Transação</a>
     </div>
-    <div class="table-responsive">
+    <hr>
+
+    <div class="table-responsive mt-5">
         <table class="table">
             <thead>
                 <tr>
@@ -16,9 +18,9 @@
                     <th>Valor</th>
                     <th>Descriçao</th>
                     <th>Data da Transação</th>
+                    <th>Criado Por</th>
+                    <th>Privilégios</th>
                     <th>Ações</th>
-                    <th>user</th>
-                    <th>name</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +31,8 @@
                     <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>
+                    <td>{{transaction.client.name}}</td>
+                    <td>{{transaction.client.user.roles[0]}}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_transaction_show', {'id': transaction.id}) }}">
                             <i class="fa fa-eye"></i>
@@ -37,12 +41,10 @@
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>
-                    <td>{{transaction.client.user.roles[0]}}</td>
-                    <td>{{transaction.client.name}}</td>
                 </tr>
             {% else %}
-                <tr>
-                    <td colspan="8">no records found</td>
+                <tr class="text-center">
+                    <td colspan="8">Não há transações realizadas.</td>
                 </tr>
             {% endfor %}
             </tbody>

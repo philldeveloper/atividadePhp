@@ -4,16 +4,18 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de Bancos</h1>
-        <a href="{{ path('app_bank_new') }}" class="btn btn-primary">Criar Banco</a>
+        <h3>Lista de Bancos</h3>
+        <a href="{{ path('app_bank_new') }}" class="btn btn-outline-dark fw-bold">Criar Banco</a>
     </div>
+    <hr>
 
-    <div class="table-responsive">
+    <div class="table-responsive mt-5">
         <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
+                    <th>Nome do Banco</th>
+                    <th>Agências</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -23,13 +25,14 @@
                     <td>
                         <i class="badge bg-primary">{{ bank.id }}</i>
                     </td>
-                    <td>{{ bank.name }}</td>
+                    <td class="text-uppercase">{{ bank.name }}</td>
+                    <td>{{ bank.agencies|length }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_bank_show', {'id': bank.id}) }}">
                             <i class="fa fa-eye"></i>
                         </a>
                         <a class="btn btn-sm" href="{{ path('app_bank_edit', {'id': bank.id}) }}">
-                            <i class="fa fa-edit"></i>
+                          <i class="fa fa-edit"></i>
                         </a>
                     </td>
                 </tr>

@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Saldo Atual</th>
-                <td>{{ account.balance }}</td>
+                <td>{{ account.balance|format_currency('BRL') }}</td>
             </tr>
             <tr>
                 <th>Tipo de Conta</th>
@@ -28,6 +28,14 @@
                 {% elseif account.type == 3 %}
                     <td>Conta Salário</td>
                 {% endif %}
+            </tr>
+            <tr>
+                <th>Agência</th>
+                <td>{{ account.agency }}</td>
+            </tr>
+            <tr>
+                <th>Banco</th>
+                <td>{{ account.agency.bank }}</td>
             </tr>
             <tr>
                 <th>Clientes</th>

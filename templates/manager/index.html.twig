@@ -4,16 +4,17 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de Gerentes</h1>
-        <a href="{{ path('app_manager_new') }}" class="btn btn-primary">Criar Gerente</a>
+        <h3>Lista de Gerentes</h3>
+        <a href="{{ path('app_manager_new') }}" class="btn btn-outline-dark fw-bold">Criar Gerente</a>
     </div>
-
-    <div class="table-responsive">
+    <hr>
+    <div class="table-responsive mt-5">
         <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
+                    <th>Nome</th>
+                    <th>Agencia | Banco</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <i class="badge bg-primary">{{ manager.id }}</i>
                     </td>
                     <td>{{ manager.name }}</td>
+                    <td>{{ manager.agency }} - {{ manager.agency.bank }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_manager_show', {'id': manager.id}) }}">
                             <i class="fa fa-eye"></i>

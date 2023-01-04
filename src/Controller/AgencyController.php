@@ -53,6 +53,12 @@ class AgencyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            // dd($form->getData()->getId());
+            // $agency->setNumber($agency->getId());
+            // $agency->setName($form->get('name')->getData());
+            
             $agencyRepository->save($agency, true);
 
             return $this->redirectToRoute('app_agency_index', [], Response::HTTP_SEE_OTHER);

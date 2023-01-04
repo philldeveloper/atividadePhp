@@ -15,6 +15,7 @@ class Agency
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\GeneratedValue]
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
@@ -28,6 +29,9 @@ class Agency
 
     #[ORM\OneToMany(mappedBy: 'agency', targetEntity: Account::class, orphanRemoval: true)]
     private Collection $account;
+
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
 
     public function __construct()
     {
@@ -107,5 +111,17 @@ class Agency
 
     public function __toString() {
         return $this->number;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
     }
 }

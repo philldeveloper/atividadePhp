@@ -15,6 +15,7 @@ class AgencyType extends AbstractType
             ->add('number')
             ->add('bank')
             ->add('manager')
+            ->add('address')
         ;
     }
 
