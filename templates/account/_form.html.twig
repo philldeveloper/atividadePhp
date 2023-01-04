@@ -24,20 +24,17 @@
     <div>
         {{ form_widget(form.agency, {'attr': {'class': 'form-control'}}) }}
     </div>
-    <div>
-        {{ form_label(form.clients, 'Selecione o cliente da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
-    </div>
 
-    <div>
-        {{ form_widget(form.clients, {'attr': {'class': 'form-control mb-5'}}) }}
-    </div>
+    {% if is_granted('ROLE_ADMIN') is same as true %}
+        <div>
+            {{ form_label(form.clients, 'Selecione o cliente da conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
+        </div>
+        <div>
+            {{ form_widget(form.clients, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    {% endif %}
 
-    {# {% if is_granted('ROLE_USER') is same as true %}
-        <select id="account_clients" name="account[clients][]" class="form-control">
-            <option value={{app.user.id}}>{{app.user.name}}</option>
-        </select>
-    {% endif %} #}
-
+    {# <input type="hidden" name="auth_id" value={{app.user.id}} /> #}
 
     <div class="d-flex align-items-center justify-content-between py-3">
         <a class="btn btn-outline-dark" href="{{ path('app_account_index') }}">Voltar para a Lista</a>

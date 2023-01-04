@@ -29,6 +29,7 @@ class Account
     private ?Agency $agency = null;
 
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts', fetch: "EAGER")] //inserir depois--> nullable: false
+    #[ORM\JoinTable(name:'client_account')]
     private Collection $clients;
 
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]

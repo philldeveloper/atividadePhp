@@ -17,12 +17,13 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[Route('/account')]
 class AccountController extends AbstractController
 {
+    /** @var \App\Entity\User $user */
+    
     #[Route('/', name: 'app_account_index', methods: ['GET'])]
     public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
-    {
-
-        /** @var \App\Entity\User $user */
+    {        
         $user = $this->getUser();
+        // dd($user->getClient()->getAccounts());
 
         if ($authChecker->isGranted('ROLE_ADMIN')) {
             return $this->render('account/index.html.twig', [
@@ -31,7 +32,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/index.html.twig', [
-            'accounts' => $accountRepository->findBy(['id' => $user->getId()]),
+            'accounts' => $user->getClient()->getAccounts(),
         ]);
     }
 
@@ -43,14 +44,21 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($authChecker->isGranted('ROLE_USER')) {
+
+            $user = $this->getUser()->getClient();
+
+            $account->addClient($user);
             $account->setIsActive(1);
+
             $form->getData()->setIsActive(1);
         } else {
+
             $account->setIsActive(0);
             $form->getData()->setIsActive(0);
         }
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $accountRepository->save($account, true);
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);

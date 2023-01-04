@@ -28,6 +28,8 @@ class RegistrationController extends AbstractController
 
             $client = new Client();
             $client->setName($user->getName());
+            $client->setAddress('');
+            $client->setPhone(0);
 
             $user->setClient($client);
 

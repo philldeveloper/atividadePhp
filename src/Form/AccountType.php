@@ -20,49 +20,35 @@ class AccountType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('number')
-            ->add('balance')
-            ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'Conta Corrente' => 1,
-                    'Conta Poupança' => 2,
-                    'Conta Salário' => 3,
-                ],
-            ])
-            ->add('agency')
-            ->add('clients');
+        if($this->auth->isGranted('ROLE_ADMIN')){
+            $builder
+                ->add('number')
+                ->add('balance')
+                ->add('type', ChoiceType::class, [
+                    'choices' => [
+                        'Conta Corrente' => 1,
+                        'Conta Poupança' => 2,
+                        'Conta Salário' => 3,
+                    ],
+                ])
+                ->add('agency')
+                ->add('clients')
+            ;
 
-        // if($this->auth->isGranted('ROLE_ADMIN')) {
-        //     $builder
-        //         ->add('number')
-        //         ->add('balance')
-        //         ->add('type', ChoiceType::class, [
-        //             'choices' => [
-        //                 'Conta Corrente' => 1,
-        //                 'Conta Poupança' => 2,
-        //                 'Conta Salário' => 3,
-        //             ],
-        //         ])
-        //         ->add('agency')
-        //         ->add('clients')
-        //     ;
-
-        // }else if ($this->auth->isGranted('ROLE_USER')) {
-
-        //     $builder
-        //         ->add('number')
-        //         ->add('balance')
-        //         ->add('type', ChoiceType::class, [
-        //             'choices' => [
-        //                 'Conta Corrente' => 1,
-        //                 'Conta Poupança' => 2,
-        //                 'Conta Salário' => 3,
-        //             ],
-        //         ])
-        //         ->add('agency')
-        //     ;
-        // }
+        }else {
+            $builder
+                ->add('number')
+                ->add('balance')
+                ->add('type', ChoiceType::class, [
+                    'choices' => [
+                        'Conta Corrente' => 1,
+                        'Conta Poupança' => 2,
+                        'Conta Salário' => 3,
+                    ],
+                ])
+                ->add('agency')
+            ;
+        }
 
     }
 
@@ -70,6 +56,7 @@ class AccountType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Account::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

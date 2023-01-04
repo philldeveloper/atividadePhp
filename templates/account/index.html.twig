@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for account in accounts %}
+            {% for account in accounts|sort((a, b) => a.number <=> b.number) %}
                 <tr>
                     {# <td>
                         <i class="badge bg-primary">{{ account.id }}</i>

@@ -18,7 +18,7 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'clients')]
+    #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'clients', fetch: 'EAGER')]
     private Collection $accounts;
 
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
