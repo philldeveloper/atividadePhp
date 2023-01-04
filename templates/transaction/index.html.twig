@@ -7,13 +7,13 @@
         <h3>Lista de Transações</h3>
         <a href="{{ path('app_transaction_new') }}" class="btn btn-outline-dark fw-bold">Criar Transação</a>
     </div>
-    <hr>
 
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Transações</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
+                    {# <th>Id</th> #}
                     <th>Tipo de Operação</th>
                     <th>Valor</th>
                     <th>Descriçao</th>
@@ -26,7 +26,7 @@
             <tbody>
             {% for transaction in transactions %}
                 <tr>
-                    <td>{{ transaction.id }}</td>
+                    {# <td>{{ transaction.id }}</td> #}
                     <td>{{ transaction.operation is same as '1' ? 'Saque' : transaction.operation is same as '2' ? 'Depósito' : 'Transferencia'}}</td>
                     <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                     <td>{{ transaction.description }}</td>

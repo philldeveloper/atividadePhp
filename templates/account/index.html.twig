@@ -7,13 +7,13 @@
         <h3>Lista de Contas</h3>
         <a href="{{ path('app_account_new') }}" class="btn btn-outline-dark fw-bold">Criar Conta</a>
     </div>
-    <hr>
 
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Contas</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
+                    {# <th>Id</th> #}
                     <th>Número da Conta</th>
                     <th>Saldo Atual</th>
                     <th>Agencia | Banco</th>
@@ -26,9 +26,9 @@
             <tbody>
             {% for account in accounts %}
                 <tr>
-                    <td>
+                    {# <td>
                         <i class="badge bg-primary">{{ account.id }}</i>
-                    </td>
+                    </td> #}
                     <td>{{ account.number }}</td>
                     <td>{{ account.balance|format_currency('BRL') }}</td>
                     <td>{{ account.agency }} - {{account.agency.bank}}</td>

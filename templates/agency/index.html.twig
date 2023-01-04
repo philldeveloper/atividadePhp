@@ -7,13 +7,14 @@
         <h3>Lista de Agencias</h3>
         <a href="{{ path('app_agency_new') }}" class="btn btn-outline-dark fw-bold">Criar Agencia</a>
     </div>
-    <hr>
+    {# <hr> #}
 
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Agencias</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
+                    {# <th>Id</th> #}
                     <th>Número</th>
                     <th>Banco</th>
                     <th>Contas</th>
@@ -26,7 +27,7 @@
             <tbody>
             {% for agency in agencies %}
                 <tr>
-                    <td>{{ agency.id }}</td>
+                    {# <td>{{ agency.id }}</td> #}
                     <td>{{ agency.number }}</td>
                     <td>{{ agency.bank ? agency.bank.name : 'NA' }}</td>
                     <td>{{ agency.account|length }}</td>

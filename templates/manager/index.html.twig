@@ -7,23 +7,23 @@
         <h3>Lista de Gerentes</h3>
         <a href="{{ path('app_manager_new') }}" class="btn btn-outline-dark fw-bold">Criar Gerente</a>
     </div>
-    <hr>
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Gerentes</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Agencia | Banco</th>
-                    <th>Ações</th>
+                    {# <th scope="col">Id</th> #}
+                    <th scope="col">Nome</th>
+                    <th scope="col">Agencia | Banco</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
             {% for manager in managers %}
                 <tr>
-                    <td>
+                    {# <td>
                         <i class="badge bg-primary">{{ manager.id }}</i>
-                    </td>
+                    </td> #}
                     <td>{{ manager.name }}</td>
                     <td>{{ manager.agency }} - {{ manager.agency.bank }}</td>
                     <td>

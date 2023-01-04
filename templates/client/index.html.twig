@@ -7,13 +7,14 @@
         <h3>Lista de Clientes (usuários)</h3>
         <a href="{{ path('app_client_new') }}" class="btn btn-outline-dark fw-bold">Criar Cliente</a>
     </div>
-    <hr>
+    {# <hr> #}
 
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Clientes</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
+                    {# <th>Id</th> #}
                     <th>Nome</th>
                     <th>Privilégios</th>
                     <th>Ações</th>
@@ -22,9 +23,9 @@
             <tbody>
             {% for client in clients %}
                 <tr>
-                    <td>
+                    {# <td>
                         <i class="badge bg-primary">{{ client.id }}</i>
-                    </td>
+                    </td> #}
                     <td>{{ client.name }}</td>
                     <td>{{ client.user.roles|join(', ') }}</td>
                     <td>

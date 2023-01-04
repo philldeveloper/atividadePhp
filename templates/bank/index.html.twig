@@ -7,24 +7,25 @@
         <h3>Lista de Bancos</h3>
         <a href="{{ path('app_bank_new') }}" class="btn btn-outline-dark fw-bold">Criar Banco</a>
     </div>
-    <hr>
+    {# <hr> #}
 
-    <div class="table-responsive mt-5">
-        <table class="table">
-            <thead>
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-borderless table-striped">
+            <caption class="mt-4">Lista de Bancos</caption>
+            <thead class="fs-5 border-top">
                 <tr>
-                    <th>Id</th>
-                    <th>Nome do Banco</th>
-                    <th>Agências</th>
-                    <th>Ações</th>
+                    {# <th scope="col">Id</th> #}
+                    <th scope="col">Nome do Banco</th>
+                    <th scope="col">Agências</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
             {% for bank in banks %}
                 <tr>
-                    <td>
+                    {# <td>
                         <i class="badge bg-primary">{{ bank.id }}</i>
-                    </td>
+                    </td> #}
                     <td class="text-uppercase">{{ bank.name }}</td>
                     <td>{{ bank.agencies|length }}</td>
                     <td>
