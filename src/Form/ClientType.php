@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,10 @@ class ClientType extends AbstractType
             ->add('name')
             ->add('address')
             ->add('phone')
-            ->add('accounts')
+            ->add('accounts', null, [
+                'by_reference' => false,
+            ])
+            ->add('user')
         ;
     }
 

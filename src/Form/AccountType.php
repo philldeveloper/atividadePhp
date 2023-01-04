@@ -32,7 +32,9 @@ class AccountType extends AbstractType
                     ],
                 ])
                 ->add('agency')
-                ->add('clients')
+                ->add('clients', null, [
+                    'by_reference' => false,
+                ])
             ;
 
         }else {

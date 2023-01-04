@@ -26,12 +26,11 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $client = new Client();
-            $client->setName($user->getName());
-            $client->setAddress('');
-            $client->setPhone(0);
-
-            $user->setClient($client);
+            // $client = new Client();
+            // $client->setName($user->getName());
+            // $client->setAddress('');
+            // $client->setPhone(0);
+            // $user->setClient($client);
 
             // encode the plain password
             $user->setPassword(
