@@ -16,6 +16,8 @@
                 <tr>
                     {# <th>Id</th> #}
                     <th>Nome</th>
+                    <th>Email</th>
+                    <th>Contas</th>
                     <th>Privilégios</th>
                     <th>Ações</th>
                 </tr>
@@ -27,6 +29,8 @@
                         <i class="badge bg-primary">{{ client.id }}</i>
                     </td> #}
                     <td>{{ client.name }}</td>
+                    <td>{{ client.user.email }}</td>
+                    <td>{{ client.accounts|length }}</td>
                     <td>{{ client.user.roles|join(', ') }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_client_show', {'id': client.id}) }}">
