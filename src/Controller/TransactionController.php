@@ -17,15 +17,15 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[IsGranted('PUBLIC_ACCESS')]
 #[Route('/transaction')]
+
 class TransactionController extends AbstractController
-{
+{   
+    /** @var \App\Entity\User $user */
+    
+
     #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
     public function index(TransactionRepository $transactionRepository): Response
     {
-        // $user = $transactionRepository->findBy(['id' => 2]);
-        // dd($user->getAccount()->getNumber());
-        // dd($user->getId());
-
         return $this->render('transaction/index.html.twig', [
             'transactions' => $transactionRepository->findAll(),
         ]);
@@ -49,6 +49,13 @@ class TransactionController extends AbstractController
 
             $operation = (int)$form->getExtraData()['operation'];
             $transaction->setOperation($operation);
+
+            //se o user estiver logado, ele é passado como cliente para a transação
+            if ($authChecker->isGranted('ROLE_USER')) {
+                $user = $this->getUser();
+
+                $transaction->setClient($user->getClient());
+            }
 
             $acountBalance = $transaction->getAccount()->getBalance();
             $transactionValue = $transaction->getValue();

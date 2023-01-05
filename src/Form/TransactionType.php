@@ -15,19 +15,12 @@ class TransactionType extends AbstractType
     {
 
         $builder
-            // ->add('operation', ChoiceType::class, [
-            //     'choices' => [
-            //         'SAQUE' => 1,
-            //         'DEPOSITO' => 2,
-            //         'TRANSFERENCIA' => 3,
-            //     ],
-            // ])
             ->add('value')
             ->add('description', null, [
                 'help' => 'Informe uma pequena descrição da transação',
             ])
             ->add('account')
-            ->add('client')
+            // ->add('client')
             ->add('targetAccount')
         ;
 
