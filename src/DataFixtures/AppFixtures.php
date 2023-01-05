@@ -7,6 +7,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 use App\Entity\User;
+use App\Entity\Bank;
+use App\Entity\Agency;
 
 class AppFixtures extends Fixture
 {
@@ -19,7 +21,16 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $managerObject): void
     {
-        
+        //CREATE A DEFAULT BANK
+        $bank = new Bank();
+        $bank->setName('Default Bank');
+
+        //CREATE A DEFAULT AGENCY
+        $agency = new Agency();
+        $agency->setNumber(1234);
+        $agency->setAddress('Rua João Paulo XII');
+        $agency->setBank($bank);
+
         //ROLE_SUPER_ADMIN
         $admin = new User();
         $admin->setName('admin');
@@ -41,6 +52,7 @@ class AppFixtures extends Fixture
         $user->setPassword($this->hasher->hashPassword($user, '123456'));
         $user->setRoles(['ROLE_USER']);
 
+        $managerObject->persist($bank);
         $managerObject->persist($admin);
         $managerObject->persist($manager);
         $managerObject->persist($user);
