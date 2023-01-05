@@ -113,9 +113,9 @@ class Account
     {
 
         if (!$this->clients->contains($client)) {
-            
+
             $this->clients->add($client);
-            $this->clients[] = $client;
+            // $this->clients[] = $client;
 
             $client->addAccount($this);
         }

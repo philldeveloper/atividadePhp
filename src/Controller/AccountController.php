@@ -18,14 +18,14 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class AccountController extends AbstractController
 {
     /** @var \App\Entity\User $user */
-    
+
     #[Route('/', name: 'app_account_index', methods: ['GET'])]
     public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
-    {        
+    {
         $user = $this->getUser();
         $accounts = [];
 
-        if($user->getClient()){
+        if ($user->getClient()) {
             $accounts = $user->getClient()->getAccounts();
         }
 
@@ -50,27 +50,15 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
         $form->getData()->setIsActive(1);
 
-        // if ($authChecker->isGranted('ROLE_USER')) {
+        $user = $this->getUser();
 
-        //     $user = $this->getUser()->getClient();
-        //     $account->addClient($user);
-        //     $clientes = $form->getData()->getClients();
-            
-        //     if ($authChecker->isGranted('ROLE_ADMIN')) {
-        //         $account->setClients($clientes);
-        //     }
-            
-        //     $account->setIsActive(1);
-        //     $form->getData()->setIsActive(1);
+        if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
+            $client = $user->getClient();
+            $account->addClient($client);
+        }
 
-        // } else {
-
-        //     $account->setIsActive(0);
-        //     $form->getData()->setIsActive(0);
-        // }
-        
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $accountRepository->save($account, true);
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
