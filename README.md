@@ -36,5 +36,8 @@ ROLES = ["ROLE_EXAMPLE"] WHERE EXAMPLE IS ADMIN OR USER
 * https://symfony.com/doc/current/security.html
 
 
-## RODANDO AS FIXTURES
-- NO TERMINAL, EXECUTE: php bin/console doctrine:fixtures:load
+## EXECUTANDO  O PROJETO
+- Crie um banco chamado "atividade_php".
+- php bin/console make:migration
+- php bin/console doctrine:migrations:migrate
+- php bin/console doctrine:fixtures:load
