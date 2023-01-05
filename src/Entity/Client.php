@@ -6,6 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -16,6 +17,11 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Nome do Cliente não pode estar vazio.")
+     * @Assert\Length(min=3, max=255, minMessage="O nome do Cliente precisa pelo menos 3 caracteres.")
+     */
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'clients', fetch: 'EAGER')]
@@ -23,15 +29,29 @@ class Client
 
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @Assert\NotBlank(message="O valor Usuário do Cliente não pode estar vazio.")
+     */
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Transaction::class)]
     private Collection $transactions;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Endereço do Cliente não pode estar vazio.")
+     * @Assert\Length(min=3, max=255, minMessage="O endereço do Cliente precisa pelo menos 3 caracteres.")
+     */
     private ?string $address = null;
 
     #[ORM\Column]
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="O valor Telefone do Cliente não pode estar vazio.")
+     * @Assert\Length(min=9, minMessage="O valor Telefone do Cliente deverá ser de no mínimo 9 números.")
+     * @Assert\PositiveOrZero(message="O valor Telefone do Cliente deve ser positivo ou zero.")
+     */
     private ?int $phone = null;
 
     public function __construct()

@@ -15,7 +15,7 @@ class Agency
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\GeneratedValue]
+    // #[ORM\GeneratedValue]
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
@@ -109,7 +109,8 @@ class Agency
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->number;
     }
 
