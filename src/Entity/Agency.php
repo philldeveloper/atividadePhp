@@ -6,6 +6,7 @@ use App\Repository\AgencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AgencyRepository::class)]
 class Agency
@@ -15,23 +16,41 @@ class Agency
     #[ORM\Column]
     private ?int $id = null;
 
-    // #[ORM\GeneratedValue]
+    /**
+        * @ORM\Column(type="integer")
+        * @Assert\NotBlank(message="O valor Número da Agência não pode estar vazio.")
+        * @Assert\Length(min=4, minMessage="O valor Número da Agência deverá ser de no mínimo 4 números.")
+        * @Assert\PositiveOrZero(message="O valor Número da Agência deve ser positivo ou zero.")
+    */
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
+    /**
+        * @Assert\NotBlank(message="O valor Banco não pode estar vazio.")
+    */
     #[ORM\ManyToOne(inversedBy: 'agencies')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Bank $bank = null;
 
+    /**
+        * @Assert\NotBlank(message="O valor Gerente da Agência não pode estar vazio.")
+    */
     #[ORM\OneToOne(inversedBy: 'agency', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Manager $manager = null;
 
+    /**
+        * @ORM\Column(type="string")
+        * @Assert\NotBlank(message="O valor Endereço da Agência não pode estar vazio.")
+        * @Assert\Length(min=4, minMessage="O valor Endereço da Agência deverá ser de no mínimo 4 caracteres.")
+    */
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+
     #[ORM\OneToMany(mappedBy: 'agency', targetEntity: Account::class, orphanRemoval: true)]
     private Collection $account;
 
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
 
     public function __construct()
     {
