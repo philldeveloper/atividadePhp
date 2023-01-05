@@ -22,3 +22,27 @@
     width: 100%;
     max-width: 380px;
 }
+
+.quicksand-font {
+    font-family: 'Quicksand', sans-serif !important;
+}
+
+h1.quicksand-font {
+    font-weight: 300 !important;
+    font-size: 3rem !important;
+}
+
+
+input.form-login:-webkit-autofill,
+input.form-login:-webkit-autofill:hover,
+input.form-login:-webkit-autofill:focus,
+input.form-login:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input.form-login:focus{
+    outline: 0;
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

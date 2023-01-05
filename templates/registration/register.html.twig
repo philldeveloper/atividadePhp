@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container container-login">
-        <h1 class="py-5">Sistema Bancário 1.0</h1>
+        <h1 class="py-5 quicksand-font">my<b>Bank</b></h1>
         <div class="form-group">
             {# {% if error %}
                 <div class="alert alert-danger py-1 px-2" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -12,20 +12,31 @@
 
             {{ form_start(registrationForm) }}
 
-                {{ form_row(registrationForm.name, {'attr': {'class': 'form-control my-2'}}) }}
-                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control my-2'}}) }}
-                {{ form_row(registrationForm.plainPassword, {label: 'Senha', 'attr': {'class': 'form-control my-2'}}) }}
+                {# {{ form_row(registrationForm.name, {'attr': {'class': 'form-control border-dark border-bottom border-0 rounded-0 bg-white form-login my-2'}}) }} #}
+                {# {{ form_row(registrationForm.email, {'attr': {'class': 'form-control border-dark border-bottom border-0 rounded-0 bg-white form-login mt-4'}}) }} #}
+                {# {{ form_row(registrationForm.plainPassword, {label: 'Senha', 'attr': {'class': 'form-control border-dark border-bottom border-0 rounded-0 bg-white form-login my-2'}}) }} #}
 
-                <div class="py-3">
-                    {{ form_row(registrationForm.agreeTerms, {label: 'Concordo com os Termos.', 'attr': {'class': 'd-inline-flex ms-2 my-2'}}) }}
+                {{ form_label(registrationForm.name, null, {'label': 'Nome:', 'label_attr': {'class': 'fw-bold'} }) }}
+                {{ form_widget(registrationForm.name, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+                <br>
+                {{ form_label(registrationForm.email, null, {'label': 'Email:', 'label_attr': {'class': 'fw-bold'} }) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+                <br>
+                {{ form_label(registrationForm.plainPassword, null, {'label': 'Informe uma senha:', 'label_attr': {'class': 'fw-bold'} }) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+
+
+                <div class="pb-5 pt-4">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'd-inline-flex my-2'}}) }}
+                    {{ form_label(registrationForm.agreeTerms, null, {'label': 'Eu concordo com os termos deste aplicativo.', 'label_attr': {'class': ''} }) }}
                 </div>
 
                 <div class="d-grid mt-3">
-                    <button type="submit" class="btn btn-primary ">Registrar</button>
+                    <button type="submit" class="btn btn-outline-dark">Registrar</button>
                 </div>
             {{ form_end(registrationForm) }}
 
-            <small class="text-center mx-auto justify-content-center lead d-flex align-items-center">Já possui conta? <a href="{{ path('app_login') }}" class="fw-bold nav-link px-2">Fazer Login.</a> </small>
+            <small class="text-center d-flex justify-content-center align-items-center quicksand-font">Já possui Conta? <a href="{{ path('app_login') }}" class="fw-bold nav-link px-2 text-dark">Fazer Login.</a> </small>
         </div>
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h3>Lista de Clientes (usuários)</h3>
+        <h3>Lista de Clientes</h3>
         <a href="{{ path('app_client_new') }}" class="btn btn-outline-dark fw-bold">Criar Cliente</a>
     </div>
     {# <hr> #}
@@ -18,7 +18,6 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Contas</th>
-                    <th>Privilégios</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -31,7 +30,6 @@
                     <td>{{ client.name }}</td>
                     <td>{{ client.user.email }}</td>
                     <td>{{ client.accounts|length }}</td>
-                    <td>{{ client.user.roles|join(', ') }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_client_show', {'id': client.id}) }}">
                             <i class="fa fa-eye"></i>
@@ -43,7 +41,7 @@
                 </tr>
             {% else %}
                 <tr class="text-center">
-                    <td colspan="3">no records found</td>
+                    <td colspan="4">Não há clientes cadastrados.</td>
                 </tr>
             {% endfor %}
             </tbody>

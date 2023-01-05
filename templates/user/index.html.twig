@@ -1,45 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bank index{% endblock %}
+{% block title %}Users List index{% endblock %}
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h3>Lista de Bancos</h3>
-        <a href="{{ path('app_bank_new') }}" class="btn btn-outline-dark fw-bold">Criar Banco</a>
+        <h3>Lista de Usuários</h3>
     </div>
     {# <hr> #}
 
     <div class="table-responsive-sm mt-4">
         <table class="table table-borderless table-striped">
-            <caption class="mt-4">Lista de Bancos</caption>
+            <caption class="mt-4">Lista de Usuários</caption>
             <thead class="fs-5 border-top">
                 <tr>
-                    {# <th scope="col">Id</th> #}
-                    <th scope="col">Nome do Banco</th>
-                    <th scope="col">Agências</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Privilégios</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Cliente?</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-            {% for bank in banks %}
+            {% for user in users %}
                 <tr>
+                    <td class="fw-bold">{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.client is same as null ? 'Não' : 'Sim'}}</td>
+                    <td>-</td>
                     {# <td>
-                        <i class="badge bg-primary">{{ bank.id }}</i>
-                    </td> #}
-                    <td class="text-uppercase">{{ bank.name }}</td>
-                    <td>{{ bank.agencies|length }}</td>
-                    <td>
                         <a class="btn btn-sm" href="{{ path('app_bank_show', {'id': bank.id}) }}">
                             <i class="fa fa-eye"></i>
                         </a>
                         <a class="btn btn-sm" href="{{ path('app_bank_edit', {'id': bank.id}) }}">
                           <i class="fa fa-edit"></i>
                         </a>
-                    </td>
+                    </td> #}
                 </tr>
             {% else %}
                 <tr class="text-center">
-                    <td colspan="3" class="text-center">Não há bancos cadastrados.</td>
+                    <td colspan="4" class="text-center">Não há Usuários cadastrados.</td>
                 </tr>
             {% endfor %}
             </tbody>

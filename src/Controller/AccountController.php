@@ -23,7 +23,11 @@ class AccountController extends AbstractController
     public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {        
         $user = $this->getUser();
-        // dd($user->getClient()->getAccounts());
+        $accounts = [];
+
+        if($user->getClient()){
+            $accounts = $user->getClient()->getAccounts();
+        }
 
         if ($authChecker->isGranted('ROLE_ADMIN')) {
             return $this->render('account/index.html.twig', [
@@ -32,7 +36,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/index.html.twig', [
-            'accounts' => $user->getClient()->getAccounts(),
+            'accounts' => $accounts,
         ]);
     }
 
