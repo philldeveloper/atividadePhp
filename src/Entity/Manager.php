@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ManagerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ManagerRepository::class)]
 class Manager
@@ -14,14 +15,25 @@ class Manager
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+        * @ORM\Column(type="string")
+        * @Assert\NotBlank(message="O valor Nome do Gerente não pode estar vazio.")
+        * @Assert\Length(min=3, max=255, minMessage="O nome do Gerente precisa pelo menos 3 caracteres.")
+    */
     private ?string $name = null;
-
-    #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
-    private ?Agency $agency = null;
 
     #[ORM\OneToOne(inversedBy: 'manager', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    /**
+        * @ORM\Column(type="string")
+        * @Assert\NotBlank(message="O valor Usuário da Conta não pode estar vazio.")
+    */
     private ?User $user = null;
+
+    
+    #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+    private ?Agency $agency = null;
+
 
     public function getId(): ?int
     {

@@ -5,7 +5,21 @@
 
 
 {{ form_start(form) }}
-    <div>{{ form_errors(form) }}</div>
+    {# <div>{{ form_errors(form) }}</div> #}
+
+    {% if not form.vars.valid %}
+    <ul class="text-danger mt-3 list-unstyled">
+        {# Loop through every form item #}
+        {% for child in form.children %}
+            {# Display the errors of the form item #}
+            {% for error in child.vars.errors %}
+                <li> <i class="fa fa-exclamation-circle fa-1x me-2"></i> {{error.message}}</li>
+            {% endfor %}
+        {%endfor%}
+    </ul>
+    {%endif%}
+
+    
     <div>
         {{ form_label(form.name, 'Digite o nome', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
