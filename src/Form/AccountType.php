@@ -6,8 +6,12 @@ use App\Entity\Account;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
+// use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AccountType extends AbstractType
 {
@@ -22,25 +26,45 @@ class AccountType extends AbstractType
     {
         if($this->auth->isGranted('ROLE_ADMIN')){
             $builder
-                ->add('number')
-                ->add('balance')
+                ->add('number', IntegerType::class, [
+                    'label' => false,
+                    'required' => false,
+                    // 'constraints' => new NotBlank(),
+                ])
+                ->add('balance', IntegerType::class, [
+                    'label' => false,
+                    'required' => false
+                ])
                 ->add('type', ChoiceType::class, [
                     'choices' => [
                         'Conta Corrente' => 1,
                         'Conta Poupança' => 2,
                         'Conta Salário' => 3,
                     ],
+                    'label' => false,
+                    'required' => false
                 ])
-                ->add('agency')
+                ->add('agency', null, [
+                    'label' => false,
+                    'required' => false
+                ])
                 ->add('clients', null, [
                     'by_reference' => false,
+                    'label' => false,
+                    'required' => false
                 ])
             ;
 
         }else {
             $builder
-                ->add('number')
-                ->add('balance')
+                ->add('number', IntegerType::class, [
+                    'label' => false,
+                    'required' => false
+                ])
+                ->add('balance', IntegerType::class, [
+                    'label' => false,
+                    'required' => false
+                ])
                 ->add('type', ChoiceType::class, [
                     'choices' => [
                         'Conta Corrente' => 1,
@@ -48,7 +72,10 @@ class AccountType extends AbstractType
                         'Conta Salário' => 3,
                     ],
                 ])
-                ->add('agency')
+                ->add('agency', null, [
+                    'label' => false,
+                    'required' => false
+                ])
             ;
         }
 

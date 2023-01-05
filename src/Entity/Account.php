@@ -6,6 +6,7 @@ use App\Repository\AccountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
 class Account
@@ -15,17 +16,38 @@ class Account
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+        * @ORM\Column(type="integer")
+        * @Assert\NotBlank(message="O valor Número da Conta não pode estar vazio.")
+        * @Assert\Length(min=4, minMessage="O valor Número da Conta deverá ser de no mínimo 4 números.")
+        * @Assert\PositiveOrZero(message="O valor Número da Conta deve ser positivo ou zero.")
+    */
     #[ORM\Column(length: 255)]
-    private ?string $number = null;
+    private ?int $number = null;
 
+    /**
+        * @ORM\Column(type="integer")
+        * @Assert\NotBlank(message="O valor Saldo não pode estar vazio.")
+        * @Assert\PositiveOrZero(message="O valor Saldo deve ser positivo ou zero.")
+        * @Assert\Length(min=1, max=255)
+    */
     #[ORM\Column(length: 255)]
-    private ?string $balance = null;
+    private ?int $balance = null;
 
+    /**
+        * @ORM\Column(type="string")
+        * @Assert\NotBlank(message="O valor Tipo de Conta não pode estar vazio.")
+        * @Assert\Length(min=1, max=255)
+    */
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'account')]
     #[ORM\JoinColumn(nullable: false)]
+    /**
+        * @ORM\JoinColumn(nullable="false")
+        * @Assert\NotBlank(message="O valor Agência da Conta não pode estar vazio.")
+    */
     private ?Agency $agency = null;
 
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts', fetch: "EAGER")] //inserir depois--> nullable: false
@@ -48,24 +70,24 @@ class Account
         return $this->id;
     }
 
-    public function getNumber(): ?string
+    public function getNumber(): ?int
     {
         return $this->number;
     }
 
-    public function setNumber(string $number): self
+    public function setNumber(int $number): self
     {
         $this->number = $number;
 
         return $this;
     }
 
-    public function getBalance(): ?string
+    public function getBalance(): ?int
     {
         return $this->balance;
     }
 
-    public function setBalance(string $balance): self
+    public function setBalance(int $balance): self
     {
         $this->balance = $balance;
 

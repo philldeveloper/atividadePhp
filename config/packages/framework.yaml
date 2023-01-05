@@ -18,6 +18,11 @@ framework:
     php_errors:
         log: true
 
+    # validation:
+    #     mapping:
+    #         paths:
+    #             - "%kernel.project_dir%/config/validation/"
+
 when@test:
     framework:
         test: true
