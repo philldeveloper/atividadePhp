@@ -1,3 +1,12 @@
 .quicksand-font {
     font-family: 'Quicksand', sans-serif !important;
 }
+
+th {
+    font-weight: 500 !important;
+}
+
+.text-dark-25{
+    color: #212529b0 !important;
+
+}

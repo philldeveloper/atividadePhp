@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h3>Lista de Agencias</h3>
+        <h3>Lista de Agencias ({{agencies|length}})</h3>
         <a href="{{ path('app_agency_new') }}" class="btn btn-outline-dark fw-bold">Criar Agencia</a>
     </div>
     {# <hr> #}

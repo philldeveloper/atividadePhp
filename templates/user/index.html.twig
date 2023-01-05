@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center">
-        <h3>Lista de Usuários</h3>
+        <h3>Lista de Usuários ({{users|length}})</h3>
     </div>
     {# <hr> #}
 
@@ -13,12 +13,12 @@
             <caption class="mt-4">Lista de Usuários</caption>
             <thead class="fs-5 border-top">
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Privilégios</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Cliente?</th>
-                    <th scope="col">Ações</th>
+                    <th>Id</th>
+                    <th>Nome <i class="fa-solid ms-2 text-dark-25 fa-user-tag"></i></th>
+                    <th>Privilégios <i class="fa-solid ms-2 text-dark-25 fa-sliders"></i></th>
+                    <th>Email <i class="fa-regular ms-2 text-dark-25 fa-envelope"></i></th>
+                    <th>Cliente? <i class="fa-solid ms-2 text-dark-25 fa-user-check"></i></th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
