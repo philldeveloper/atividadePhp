@@ -28,10 +28,14 @@
 
     <div class="d-flex align-items-center justify-content-between py-3">
         <a class="btn btn-outline-dark" href="{{ path('app_agency_index') }}">Voltar a Lista</a>
-        <a class="btn btn-dark" href="{{ path('app_agency_edit', {'id': agency.id}) }}">Editar Agencia</a>
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a class="btn btn-dark" href="{{ path('app_agency_edit', {'id': agency.id}) }}">Editar Agencia</a>
+        {% endif %}
     </div>
 
-    <h2 class="border-bottom py-3 my-3">Ações</h2>
-
-    {{ include('agency/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <h2 class="border-bottom py-3 my-3">Ações</h2>
+        {{ include('agency/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

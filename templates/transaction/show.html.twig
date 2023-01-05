@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <th>Criado por</th>
-                <td>{{ transaction.client.name }}</td>
+                <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
             </tr>
         </tbody>
     </table>
@@ -37,10 +37,10 @@
 
     <div class="d-flex align-items-center justify-content-between py-3">
         <a class="btn btn-outline-dark" href="{{ path('app_transaction_index') }}">Voltar a Lista</a>
-        <a class="btn btn-dark" href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">Editar Transação</a>
+        {# <a class="btn btn-dark" href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">Editar Transação</a> #}
     </div>
 
-    <h2 class="border-bottom py-3 my-3">Ações</h2>
 
-    {{ include('transaction/_delete_form.html.twig') }}
+    {# <h2 class="border-bottom py-3 my-3">Ações</h2>
+    {{ include('transaction/_delete_form.html.twig') }} #}
 {% endblock %}

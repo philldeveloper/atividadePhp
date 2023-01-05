@@ -81,7 +81,8 @@ class Client
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 
@@ -108,9 +109,9 @@ class Client
     public function addTransaction(Transaction $transaction): self
     {
         if (!$this->transactions->contains($transaction)) {
-            
+
             $this->transactions->add($transaction);
-            $this->transactions[] = $transaction;
+            // $this->transactions[] = $transaction;
 
             $transaction->setClient($this);
         }

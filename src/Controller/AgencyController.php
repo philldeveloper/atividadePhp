@@ -58,7 +58,7 @@ class AgencyController extends AbstractController
             // dd($form->getData()->getId());
             // $agency->setNumber($agency->getId());
             // $agency->setName($form->get('name')->getData());
-            
+
             $agencyRepository->save($agency, true);
 
             return $this->redirectToRoute('app_agency_index', [], Response::HTTP_SEE_OTHER);
@@ -79,7 +79,7 @@ class AgencyController extends AbstractController
     }
 
 
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/{id}/edit', name: 'app_agency_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Agency $agency, AgencyRepository $agencyRepository): Response
     {

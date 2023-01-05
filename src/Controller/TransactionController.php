@@ -92,32 +92,35 @@ class TransactionController extends AbstractController
     #[Route('/{id}/edit', name: 'app_transaction_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Transaction $transaction, TransactionRepository $transactionRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException('Unable to access this page!');
-        }
+        throw new AccessDeniedException('Unable to access this page.');
 
-        $form = $this->createForm(TransactionType::class, $transaction);
-        $form->handleRequest($request);
+        // if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        //     throw new AccessDeniedException('Unable to access this page!');
+        // }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $transactionRepository->save($transaction, true);
+        // $form = $this->createForm(TransactionType::class, $transaction);
+        // $form->handleRequest($request);
 
-            return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
-        }
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $transactionRepository->save($transaction, true);
 
-        return $this->render('transaction/edit.html.twig', [
-            'transaction' => $transaction,
-            'form' => $form,
-        ]);
+        //     return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+        // return $this->render('transaction/edit.html.twig', [
+        //     'transaction' => $transaction,
+        //     'form' => $form,
+        // ]);
     }
 
     #[Route('/{id}', name: 'app_transaction_delete', methods: ['POST'])]
     public function delete(Request $request, Transaction $transaction, TransactionRepository $transactionRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $transaction->getId(), $request->request->get('_token'))) {
-            $transactionRepository->remove($transaction, true);
-        }
+        throw new AccessDeniedException('Unable to access this page.');
+        // if ($this->isCsrfTokenValid('delete' . $transaction->getId(), $request->request->get('_token'))) {
+        //     $transactionRepository->remove($transaction, true);
+        // }
 
-        return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
+        // return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
     }
 }
