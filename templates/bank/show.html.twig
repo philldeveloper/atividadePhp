@@ -3,7 +3,7 @@
 {% block title %}Bank{% endblock %}
 
 {% block body %}
-    <h1>Bank</h1><hr>
+    <h1>{{bank.name}}</h1><hr>
 
     <table class="table">
         <tbody>
@@ -12,8 +12,12 @@
                 <td>{{ bank.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nome</th>
                 <td>{{ bank.name }}</td>
+            </tr>
+            <tr>
+                <th>Agencias Vinculadas</th>
+                <td>{{ bank.agencies|length }}</td>
             </tr>
         </tbody>
     </table>
