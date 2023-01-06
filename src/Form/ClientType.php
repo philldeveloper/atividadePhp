@@ -30,17 +30,19 @@ class ClientType extends AbstractType
             ->add('accounts', null, [
                 'by_reference' => false,
                 'required' => false,
-            ])
-            ->add('user', null, [
-                'label' => false,
-                'required' => false,
             ]);
+            // ->add('user', null, [
+            //     'label' => false,
+            //     'required' => false,
+            //        'mapped' => false
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Client::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

@@ -29,9 +29,6 @@ class Client
 
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    /**
-     * @Assert\NotBlank(message="O valor Usuário do Cliente não pode estar vazio.")
-     */
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Transaction::class)]
