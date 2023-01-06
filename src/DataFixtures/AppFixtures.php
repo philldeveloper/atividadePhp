@@ -9,6 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use App\Entity\Bank;
 use App\Entity\Agency;
+use App\Entity\Manager;
 
 class AppFixtures extends Fixture
 {
@@ -21,6 +22,28 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $managerObject): void
     {
+        
+        //CREATE A DEFAULT USER AS ROLE_SUPER_ADMIN
+        $userAdmin = new User();
+        $userAdmin->setName('admin');
+        $userAdmin->setEmail('admin@email.com');
+        $userAdmin->setPassword($this->hasher->hashPassword($userAdmin, '123456'));
+        $userAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+
+        //CREATE A DEFAULT USER AS ROLE_ADMIN
+        $userManager = new User();
+        $userManager->setName('manager');
+        $userManager->setEmail('manager@email.com');
+        $userManager->setPassword($this->hasher->hashPassword($userManager, '123456'));
+        $userManager->setRoles(['ROLE_ADMIN']);
+
+        //CREATE A DEFAULT USER AS ROLE_USER
+        $user = new User();
+        $user->setName('user');
+        $user->setEmail('user@email.com');
+        $user->setPassword($this->hasher->hashPassword($user, '123456'));
+        $user->setRoles(['ROLE_USER']);
+
         //CREATE A DEFAULT BANK
         $bank = new Bank();
         $bank->setName('Default Bank');
@@ -31,31 +54,19 @@ class AppFixtures extends Fixture
         $agency->setAddress('Rua João Paulo XII');
         $agency->setBank($bank);
 
-        //ROLE_SUPER_ADMIN
-        $admin = new User();
-        $admin->setName('admin');
-        $admin->setEmail('admin@email.com');
-        $admin->setPassword($this->hasher->hashPassword($admin, '123456'));
-        $admin->setRoles(['ROLE_SUPER_ADMIN']);
+        //CREATE A DEFAULT MANAGER
+        $manager = new Manager();
+        $manager->setName("manager");
+        $manager->setUser($userManager);
+        $manager->setAgency($agency);
 
-        //ROLE_ADMIN
-        $manager = new User();
-        $manager->setName('manager');
-        $manager->setEmail('manager@email.com');
-        $manager->setPassword($this->hasher->hashPassword($manager, '123456'));
-        $manager->setRoles(['ROLE_ADMIN']);
-
-        //ROLE_USER
-        $user = new User();
-        $user->setName('user');
-        $user->setEmail('user@email.com');
-        $user->setPassword($this->hasher->hashPassword($user, '123456'));
-        $user->setRoles(['ROLE_USER']);
-
-        $managerObject->persist($bank);
-        $managerObject->persist($admin);
-        $managerObject->persist($manager);
+        $managerObject->persist($userAdmin);
+        $managerObject->persist($userManager);
         $managerObject->persist($user);
+        $managerObject->persist($bank);
+        $managerObject->persist($agency);
+        $managerObject->persist($manager);
+
         $managerObject->flush();
     }
 }
