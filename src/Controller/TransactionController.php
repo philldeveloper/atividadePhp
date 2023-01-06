@@ -19,9 +19,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[Route('/transaction')]
 
 class TransactionController extends AbstractController
-{   
+{
     /** @var \App\Entity\User $user */
-    
+
 
     #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
     public function index(TransactionRepository $transactionRepository): Response
@@ -73,8 +73,13 @@ class TransactionController extends AbstractController
                 if ($transactionValue > $acountBalance) {
                     throw new AccessDeniedException('Valor maior do que o saldo.');
                 }
-                $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
-                $transaction->getTargetAccount()->setBalance($targetAccountBalance + $transactionValue);
+
+                if ($transaction->getAccount()->getId() !== $transaction->getTargetAccount()->getId()) {
+                    $transaction->getAccount()->setBalance($acountBalance - $transactionValue);
+                    $transaction->getTargetAccount()->setBalance($targetAccountBalance + $transactionValue);
+                } else {
+                    throw new AccessDeniedException('Não é possível fazer transferência para a mesma conta.');
+                }
             }
 
             $transactionRepository->save($transaction, true);

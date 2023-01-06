@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -21,9 +22,20 @@ class Transaction
     #[ORM\JoinColumn(nullable: false)]
     private ?Account $account = null;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="O valor da Transação não pode estar vazio.")
+     * @Assert\PositiveOrZero(message="O valor da Transação deve ser positivo ou zero.")
+     * @Assert\Length(min=1, max=255)
+     */
     #[ORM\Column]
     private ?int $value = null;
 
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Descrição da Transação não pode estar vazia.")
+     * @Assert\Length(min=3, max=255, minMessage="A Descrição da Transação precisa pelo menos 3 caracteres.")
+     */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
