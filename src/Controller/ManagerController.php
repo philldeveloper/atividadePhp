@@ -6,17 +6,21 @@ use App\Entity\Manager;
 use App\Entity\User;
 use App\Form\ManagerType;
 use App\Repository\ManagerRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/manager')]
 class ManagerController extends AbstractController
 {
+    /** @var \App\Entity\User $user */
+
     #[Route('/', name: 'app_manager_index', methods: ['GET'])]
     public function index(ManagerRepository $managerRepository): Response
     {
@@ -27,13 +31,31 @@ class ManagerController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/new', name: 'app_manager_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ManagerRepository $managerRepository): Response
+    public function new(Request $request, ManagerRepository $managerRepository, UserRepository $userRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         $manager = new Manager();
         $form = $this->createForm(ManagerType::class, $manager);
         $form->handleRequest($request);
 
+        //pega o id do user logado
+        $userClient = $this->getUser()->getId(); 
+
+
+        //retorna uma lista de usuários que não são gerentes
+        $managersList = array_filter($userRepository->findAll(), function($el) {
+            return $el->getManager() == null && !$this->isGranted('ROLE_SUPER_ADMIN');
+        });
+
+        // dd($managersList);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //encontra no repositorio o objeto usuário selecionado no front
+            $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
+
+            //atribui o objeto usuário para o cliente
+            $manager->setUser($formUser[0]);
+
 
             $user = $manager->getUser();
             $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
@@ -46,6 +68,8 @@ class ManagerController extends AbstractController
         return $this->renderForm('manager/new.html.twig', [
             'manager' => $manager,
             'form' => $form,
+            'lista' => $managersList,
+            'userClient' => $userClient,
         ]);
     }
 

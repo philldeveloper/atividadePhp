@@ -26,7 +26,6 @@ class Manager
     #[ORM\JoinColumn(nullable: false)]
     /**
         * @ORM\Column(type="string")
-        * @Assert\NotBlank(message="O valor Usuário da Conta não pode estar vazio.")
     */
     private ?User $user = null;
 

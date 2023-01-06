@@ -38,7 +38,7 @@ class ClientController extends AbstractController
 
         //retorna uma lista de usuários que não são clientes
         $usersList = array_filter($userRepository->findAll(), function($el) {
-            return $el->getClient() == null;
+            return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
         });
 
         

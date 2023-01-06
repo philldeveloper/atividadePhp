@@ -18,10 +18,10 @@ class ManagerType extends AbstractType
                 'label' => false,
                 'required' => false,
             ])
-            ->add('user', null, [
-                'label' => false,
-                'required' => false,
-            ])
+            // ->add('user', null, [
+            //     'label' => false,
+            //     'required' => false,
+            // ])
             ->add('agency', null, [
                 'label' => false,
                 'required' => false,
@@ -33,6 +33,7 @@ class ManagerType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Manager::class,
+            'allow_extra_fields' => true
         ]);
     }
 }
