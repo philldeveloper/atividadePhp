@@ -45,23 +45,26 @@ class AccountController extends AbstractController
     public function new(Request $request, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         $account = new Account();
-        $account->setIsActive(1);
-
+        
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
-        $form->getData()->setIsActive(1);
 
+        
         $user = $this->getUser();
-
+        
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
             $client = $user->getClient();
-
-            // if($client == null) {
-            //     throw new AccessDeniedException('Impossível criar uma conta. Solicite acesso ao gerente da sua agência.');
-            // }
-
+                
             if($client){
                 $account->addClient($client);
+                $account->setIsActive(1);
+                $form->getData()->setIsActive(1);
+
+            }else if ($client == null){
+                //throw new AccessDeniedException('Impossível criar uma conta. Solicite acesso ao gerente da sua agência.');
+                
+                $account->setIsActive(0);
+                $form->getData()->setIsActive(0);
             }
         }
 
