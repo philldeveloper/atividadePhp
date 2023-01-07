@@ -49,15 +49,31 @@
                         <li><a href="{{ path('app_agency_index') }}" class="nav-link px-2 link-dark">Agencias</a></li>
                     {% endif %}
 
-                    {# {% if is_granted('ACCESS_PUBLIC') %}
-                    {% endif %} #}
-                    <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
-                    
+                    {% if is_granted('ROLE_USER') %}
+                        <li><a href="{{ path('app_transaction_index') }}" class="nav-link px-2 link-dark">Transações</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_transaction_new') }}" class="nav-link px-2 link-dark">Transações</a></li>
+                    {% endif %}
+
+                    {% if not is_granted('ROLE_USER') %}
+                        <li><a href="{{ path('app_account_new') }}" class="nav-link px-2 link-dark">SOLICITE UMA CONTA</a></li>
+                    {% endif %}
                 </ul>
 
                 <div class="col-md-3 text-end d-flex flex-row flex-wrap align-items-center justify-content-end">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ path('app_logout') }}" type="button" class="btn btn-outline-dark fw-bold">Sair</a>
+                        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fw-bold text-dark d-flex align-items-center gap-1" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                    <span>{{app.user.name}} |</span>
+                                    <i class="fa-regular fa-circle-user fa-fw"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end quicksand-font" aria-labelledby="navbarDropdown" data-bs-popper="none">
+                                    <li><a class="dropdown-item" href="#!">Meu Perfil</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Sair</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     {% else %}
                         <a href="{{ path('app_login') }}" type="button" class="btn btn-outline-dark">Fazer Login</a>
                     {% endif %}

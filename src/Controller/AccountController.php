@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/account')]
@@ -54,11 +55,17 @@ class AccountController extends AbstractController
 
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
             $client = $user->getClient();
-            $account->addClient($client);
+
+            // if($client == null) {
+            //     throw new AccessDeniedException('Impossível criar uma conta. Solicite acesso ao gerente da sua agência.');
+            // }
+
+            if($client){
+                $account->addClient($client);
+            }
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $accountRepository->save($account, true);
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);

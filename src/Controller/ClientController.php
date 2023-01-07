@@ -72,20 +72,37 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Client $client, ClientRepository $clientRepository): Response
+    public function edit(Request $request, Client $client, ClientRepository $clientRepository, UserRepository $userRepository): Response
     {
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $clientRepository->save($client, true);
+        //pega o id do user logado
+        $userClient = $this->getUser()->getId(); 
 
+        //retorna uma lista de usuários que não são clientes
+        $usersList = array_filter($userRepository->findAll(), function($el) {
+            return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
+        });
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //encontra no repositorio o objeto usuário selecionado no front
+            $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
+
+            //atribui o objeto usuário para o cliente
+            $client->setUser($formUser[0]);
+
+
+            $clientRepository->save($client, true);
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('client/edit.html.twig', [
             'client' => $client,
             'form' => $form,
+            'lista' => $usersList,
+            'userClient' => $userClient,
         ]);
     }
 
