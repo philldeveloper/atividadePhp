@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/account')]
@@ -25,6 +26,7 @@ class AccountController extends AbstractController
     #[Route('/', name: 'app_account_index', methods: ['GET'])]
     public function index(AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+
         $user = $this->getUser();
         $accounts = [];
 
@@ -50,12 +52,18 @@ class AccountController extends AbstractController
     #[Route('/new', name: 'app_account_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
+        //use uuid or random value for number account
+        // $uuid = Uuid::v4();
+        $randomValue = rand(1000, 9999);
+
+
         $account = new Account();
         
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
+        $form->getData()->setNumber($randomValue); //adiciona um valor aleatório ao numero da conta
+        $account->setNumber($randomValue); //adiciona um valor aleatório ao numero da conta
 
-        
         $user = $this->getUser();
         
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {

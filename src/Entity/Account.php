@@ -16,14 +16,8 @@ class Account
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-        * @ORM\Column(type="integer")
-        * @Assert\NotBlank(message="O valor Número da Conta não pode estar vazio.")
-        * @Assert\Length(min=4, minMessage="O valor Número da Conta deverá ser de no mínimo 4 números.")
-        * @Assert\PositiveOrZero(message="O valor Número da Conta deve ser positivo ou zero.")
-    */
     #[ORM\Column(length: 255)]
-    private ?int $number = null;
+    private ?string $number = null;
 
     /**
         * @ORM\Column(type="integer")
@@ -74,12 +68,12 @@ class Account
         return $this->id;
     }
 
-    public function getNumber(): ?int
+    public function getNumber(): ?string
     {
         return $this->number;
     }
 
-    public function setNumber(int $number): self
+    public function setNumber(string $number): self
     {
         $this->number = $number;
 
