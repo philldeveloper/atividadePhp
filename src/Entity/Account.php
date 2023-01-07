@@ -59,10 +59,14 @@ class Account
     #[ORM\Column]
     private ?bool $isActive = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'accounts', fetch: "EAGER")]
+    private Collection $users;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
         $this->transactions = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,33 @@ class Account
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeAccount($this);
+        }
 
         return $this;
     }

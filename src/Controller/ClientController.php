@@ -47,6 +47,18 @@ class ClientController extends AbstractController
             //encontra no repositorio o objeto usuário selecionado no front
             $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
 
+            /*-------------------------------*/
+            //seta as contas selecionadas do usuario selecionado como ativa
+            
+            //contas selecionadas:
+            $contasSelecionadas = $form->getData()->getAccounts();
+
+            //usuario selecionado:
+            //usuario selecionado precisa TER uma conta para se tornar cliente.
+            dd($formUser);
+
+            /*-------------------------------*/
+
             //atribui o objeto usuário para o cliente
             $client->setUser($formUser[0]);
 
@@ -110,7 +122,9 @@ class ClientController extends AbstractController
     public function delete(Request $request, Client $client, ClientRepository $clientRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
-            $clientRepository->remove($client, true);
+
+            //ao inves de deletar, precisamos remover apenas o client do USER.
+            $clientRepository->save($client, true);
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);

@@ -38,6 +38,10 @@
                 <td>{{ account.agency.bank }}</td>
             </tr>
             <tr>
+                <th>Usuários</th>
+                <td>{{ account.users|join(', ') }}</td>
+            </tr>
+            <tr>
                 <th>Clientes</th>
                 <td>
                     {{ account.clients|join(', ') }}

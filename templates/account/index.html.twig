@@ -13,28 +13,41 @@
             <caption class="mt-4">Lista de Contas</caption>
             <thead class="fs-5 border-top">
                 <tr>
-                    {# <th>Id</th> #}
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>Id</th>
+                    {% endif %}
                     <th>Número da Conta</th>
+                    <th>Usuários Vinculados</th>
                     <th>Saldo Atual</th>
                     <th>Agencia | Banco</th>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <th>Status</th>
-                    {% endif %}
+                    <th>Status</th>
+                    <th>Conta</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
             {% for account in accounts|sort((a, b) => a.number <=> b.number) %}
                 <tr>
-                    {# <td>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <td>
                         <i class="badge bg-primary">{{ account.id }}</i>
-                    </td> #}
+                    </td>
+                    {% endif %}
                     <td>{{ account.number }}</td>
+                    <td>
+                        {# {{account.users|join(', ')}} | #}
+                        {% for acc in account.users %}
+                            {{acc.email|join(', ')}}
+                        {% endfor %}
+                    </td>
                     <td>{{ account.balance|format_currency('BRL') }}</td>
                     <td>{{ account.agency }} - {{account.agency.bank}}</td>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
-                    {% endif %}
+                    <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-success" href="{{ path('app_account_enable', {'id': account.id}) }}">
+                            HABILITAR
+                        </a>
+                    </td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_account_show', {'id': account.id}) }}">
                             <i class="fa fa-eye"></i>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Account;
+use App\Entity\Client;
 use App\Form\AccountType;
 use App\Repository\AccountRepository;
 use App\Repository\ClientRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/account')]
@@ -28,7 +30,11 @@ class AccountController extends AbstractController
 
         if ($user->getClient()) {
             $accounts = $user->getClient()->getAccounts();
+        }else if ($user->getClient() == null) {
+            $accounts = $user->getAccounts();
         }
+
+        // dd($accountRepository->findAll());
 
         if ($authChecker->isGranted('ROLE_ADMIN')) {
             return $this->render('account/index.html.twig', [
@@ -53,8 +59,14 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
+            
+            //se for apenas user, seta ele mesmo como user, e deixa cliente em branco
+            $form->getData()->addUser($user);
+            $account->addUser($user);
+            
+            /*--------------------------------*/
             $client = $user->getClient();
-                
+            
             if($client){
                 $account->addClient($client);
                 $account->setIsActive(1);
@@ -62,7 +74,7 @@ class AccountController extends AbstractController
 
             }else if ($client == null){
                 //throw new AccessDeniedException('Impossível criar uma conta. Solicite acesso ao gerente da sua agência.');
-                
+
                 $account->setIsActive(0);
                 $form->getData()->setIsActive(0);
             }
@@ -117,6 +129,39 @@ class AccountController extends AbstractController
             $account->setIsActive(0);
             $accountRepository->save($account, true);
         }
+
+        return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{id}/activate', name: 'app_account_enable', methods: ['GET', 'POST'])]
+    public function enableAccount(Request $request, EntityManagerInterface $entityManager, Account $account, AccountRepository $accountRepository): Response
+    {
+        /** @var \App\Entity\Client $client */
+
+        $conta = $accountRepository->find($account->getId());
+
+        $userAccount = $conta->getUsers()[0];
+
+        if(count($account->getClients()) == 0) {
+            //criar cliente para esta conta
+
+            $client = new Client();
+            $client->setName($userAccount->getName());
+            $client->setAddress('');
+            $client->setPhone(00000000);
+            $client->setUser($userAccount);
+
+            $account->addClient($client);
+
+            $entityManager->persist($client);
+            $entityManager->persist($userAccount);
+            $entityManager->flush();
+        }
+        
+
+        $account->setIsActive(1);
+        $accountRepository->save($account, true);
 
         return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
     }
