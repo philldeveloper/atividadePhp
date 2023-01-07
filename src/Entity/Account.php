@@ -7,10 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
 class Account
 {
+    
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->clients = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
+
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -55,13 +67,6 @@ class Account
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'accounts', fetch: "EAGER")]
     private Collection $users;
-
-    public function __construct()
-    {
-        $this->clients = new ArrayCollection();
-        $this->transactions = new ArrayCollection();
-        $this->users = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {

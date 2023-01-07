@@ -5,11 +5,11 @@ namespace App\DataFixtures;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-
 use App\Entity\User;
 use App\Entity\Bank;
 use App\Entity\Agency;
 use App\Entity\Manager;
+use DateTime;
 
 class AppFixtures extends Fixture
 {
@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
         $userAdmin->setEmail('admin@email.com');
         $userAdmin->setPassword($this->hasher->hashPassword($userAdmin, '123456'));
         $userAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        // $userAdmin->setCreatedAt(new \DateTime());
+        // $userAdmin->setUpdatedAt(new \DateTime());
 
         //CREATE A DEFAULT USER AS ROLE_ADMIN
         $userManager = new User();
@@ -36,6 +38,8 @@ class AppFixtures extends Fixture
         $userManager->setEmail('manager@email.com');
         $userManager->setPassword($this->hasher->hashPassword($userManager, '123456'));
         $userManager->setRoles(['ROLE_ADMIN']);
+        // $userManager->setCreatedAt(new \DateTime());
+        // $userManager->setUpdatedAt(new \DateTime());
 
         //CREATE A DEFAULT USER AS ROLE_USER
         $user = new User();
@@ -43,6 +47,8 @@ class AppFixtures extends Fixture
         $user->setEmail('user@email.com');
         $user->setPassword($this->hasher->hashPassword($user, '123456'));
         $user->setRoles(['ROLE_USER']);
+        // $user->setCreatedAt(new \DateTime());
+        // $user->setUpdatedAt(new \DateTime());
 
         //CREATE A DEFAULT BANK
         $bank = new Bank();

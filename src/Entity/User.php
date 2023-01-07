@@ -3,17 +3,24 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Já existe conta associada a este email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+ 
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,14 +46,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Manager $manager = null;
-
-    #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'users', fetch: 'EAGER')]
-    private Collection $accounts;
-
-    public function __construct()
-    {
-        $this->accounts = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -127,11 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->name;
     }
 
-    // public function __toString()
-    // {
-    //     return $this->number;
-    // }
-
     public function getClient(): ?Client
     {
         return $this->client;
@@ -179,26 +173,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Account>
+     * @ORM\PreUpdate
      */
-    public function getAccounts(): Collection
-    {
-        return $this->accounts;
-    }
-
-    public function addAccount(Account $account): self
-    {
-        if (!$this->accounts->contains($account)) {
-            $this->accounts->add($account);
-        }
-
-        return $this;
-    }
-
-    public function removeAccount(Account $account): self
-    {
-        $this->accounts->removeElement($account);
-
-        return $this;
+    public function setUpdatedAtValue() {
+        $this->setUpdatedAt(new \DateTime());
     }
 }

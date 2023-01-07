@@ -7,10 +7,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
 {
+    
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->accounts = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+    }
+
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -50,12 +61,6 @@ class Client
      * @Assert\PositiveOrZero(message="O valor Telefone do Cliente deve ser positivo ou zero.")
      */
     private ?int $phone = null;
-
-    public function __construct()
-    {
-        $this->accounts = new ArrayCollection();
-        $this->transactions = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {

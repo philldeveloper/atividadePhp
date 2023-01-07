@@ -37,7 +37,9 @@ ROLES = ["ROLE_EXAMPLE"] WHERE EXAMPLE IS ADMIN OR USER
 
 
 ## EXECUTANDO  O PROJETO
-- Crie um banco chamado "atividade_php".
+- configure o .env para ter um banco chamado "atividade_php".
+<!-- - symfony console doctrine:database:drop --force (se já existir um banco) -->
+- symfony console doctrine:database:create
 - php bin/console make:migration
 - php bin/console doctrine:migrations:migrate
 - php bin/console doctrine:fixtures:load
