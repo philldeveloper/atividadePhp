@@ -35,7 +35,7 @@
                     <td>{{ transaction.account.number }}</td>
                     <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                     <td>{{ transaction.description }}</td>
-                    <td>{{ transaction.date ? transaction.date|date('d/m/Y - h:m:s') : '' }}</td>
+                    <td>{{ transaction.createdAt|date('d/m/Y g:i:s (A)', "America/Sao_Paulo") }}</td>
                     <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
                     <td>{{ transaction.client ? transaction.client.user.roles[0] : 'NA' }}</td>
                     <td>

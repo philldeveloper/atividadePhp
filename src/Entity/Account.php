@@ -59,7 +59,7 @@ class Account
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts', fetch: "EAGER")] //inserir depois--> nullable: false
     private Collection $clients;
 
-    #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]
+    #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class, fetch: 'EAGER')]
     private Collection $transactions;
 
     #[ORM\Column]

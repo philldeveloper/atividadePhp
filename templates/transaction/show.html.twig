@@ -3,7 +3,7 @@
 {% block title %}Transaction{% endblock %}
 
 {% block body %}
-    <h1>Transação</h1>
+    <h1>Transação Bancária</h1>
 
     <table class="table">
         <tbody>
@@ -12,24 +12,44 @@
                 <td>{{ transaction.id }}</td>
             </tr>
             <tr>
-                <th>Operation</th>
-                <td>{{ transaction.operation }}</td>
+                <th>Conta</th>
+                <td><a class="nav-link p-0 fw-bold" href="{{ path('app_account_show', {'id': transaction.account.id}) }}">{{ transaction.account.number }}</a></td>
             </tr>
             <tr>
-                <th>Value</th>
-                <td>{{ transaction.value }}</td>
+                <th>Agência</th>
+                <td><a class="nav-link p-0 fw-bold" href="{{ path('app_agency_show', {'id': transaction.account.agency.id}) }}">{{ transaction.account.agency }}</a></td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Banco</th>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <td><a class="nav-link p-0 fw-bold" href="{{ path('app_bank_show', {'id': transaction.account.agency.bank.id}) }}">{{ transaction.account.agency.bank }}</a></td>
+                    {% else %}
+                    <td>{{ transaction.account.agency.bank }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Operação</th>
+                <td>{{ transaction.operation == 2 ? 'Depósito' : transaction.operation == 1 ? 'Saque' : 'Transferência' }}</td>
+            </tr>
+            <tr>
+                <th>Valor Monetário</th>
+                <td>{{ transaction.value|format_currency('BRL') }}</td>
+            </tr>
+            <tr>
+                <th>Descrição</th>
                 <td>{{ transaction.description }}</td>
             </tr>
             <tr>
-                <th>Date</th>
-                <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>
+                <th>Data</th>
+                <td>{{ transaction.createdAt|date('d/m/Y g:i:s (A)', "America/Sao_Paulo") }}</td>
             </tr>
             <tr>
                 <th>Criado por</th>
-                <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a class="nav-link p-0 fw-bold" href="{{ path('app_client_show', {'id': transaction.client.id}) }}">{{ transaction.client.name }}</a></td>
+                    {% else %}
+                    <td>{{ transaction.client.name }}</td>
+                {% endif %}
             </tr>
         </tbody>
     </table>

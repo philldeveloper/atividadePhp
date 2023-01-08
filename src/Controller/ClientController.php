@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/client')]
@@ -29,50 +30,52 @@ class ClientController extends AbstractController
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ClientRepository $clientRepository, UserRepository $userRepository): Response
     {
-        $client = new Client();
-        $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request);
+        throw new AccessDeniedException('Route not allowed.');
+        
+        // $client = new Client();
+        // $form = $this->createForm(ClientType::class, $client);
+        // $form->handleRequest($request);
 
-        //pega o id do user logado
-        $userClient = $this->getUser()->getId(); 
+        // //pega o id do user logado
+        // $userClient = $this->getUser()->getId(); 
 
-        //retorna uma lista de usuários que não são clientes
-        $usersList = array_filter($userRepository->findAll(), function($el) {
-            return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
-        });
+        // //retorna uma lista de usuários que não são clientes
+        // $usersList = array_filter($userRepository->findAll(), function($el) {
+        //     return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
+        // });
 
         
-        if ($form->isSubmitted() && $form->isValid()) {
+        // if ($form->isSubmitted() && $form->isValid()) {
 
-            //encontra no repositorio o objeto usuário selecionado no front
-            $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
+        //     //encontra no repositorio o objeto usuário selecionado no front
+        //     $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
 
-            /*-------------------------------*/
-            //seta as contas selecionadas do usuario selecionado como ativa
+        //     /*-------------------------------*/
+        //     //seta as contas selecionadas do usuario selecionado como ativa
             
-            //contas selecionadas:
-            $contasSelecionadas = $form->getData()->getAccounts();
+        //     //contas selecionadas:
+        //     $contasSelecionadas = $form->getData()->getAccounts();
 
-            //usuario selecionado:
-            //usuario selecionado precisa TER uma conta para se tornar cliente.
-            dd($formUser);
+        //     //usuario selecionado:
+        //     //usuario selecionado precisa TER uma conta para se tornar cliente.
+        //     dd($formUser);
 
-            /*-------------------------------*/
+        //     /*-------------------------------*/
 
-            //atribui o objeto usuário para o cliente
-            $client->setUser($formUser[0]);
+        //     //atribui o objeto usuário para o cliente
+        //     $client->setUser($formUser[0]);
 
 
-            $clientRepository->save($client, true);
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
-        }
+        //     $clientRepository->save($client, true);
+        //     return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+        // }
 
-        return $this->renderForm('client/new.html.twig', [
-            'client' => $client,
-            'form' => $form,
-            'lista' => $usersList,
-            'userClient' => $userClient,
-        ]);
+        // return $this->renderForm('client/new.html.twig', [
+        //     'client' => $client,
+        //     'form' => $form,
+        //     'lista' => $usersList,
+        //     'userClient' => $userClient,
+        // ]);
     }
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
@@ -86,25 +89,18 @@ class ClientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Client $client, ClientRepository $clientRepository, UserRepository $userRepository): Response
     {
+        
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
-        //pega o id do user logado
-        $userClient = $this->getUser()->getId(); 
-
-        //retorna uma lista de usuários que não são clientes
-        $usersList = array_filter($userRepository->findAll(), function($el) {
-            return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
-        });
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //encontra no repositorio o objeto usuário selecionado no front
-            $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
-
             //atribui o objeto usuário para o cliente
-            $client->setUser($formUser[0]);
+            $userSelected = $clientRepository->find($client->getId());
 
+            $client->setUser($userSelected->getUser());
+            $form->getData()->setUser($userSelected->getUser());
 
             $clientRepository->save($client, true);
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
@@ -113,8 +109,6 @@ class ClientController extends AbstractController
         return $this->renderForm('client/edit.html.twig', [
             'client' => $client,
             'form' => $form,
-            'lista' => $usersList,
-            'userClient' => $userClient,
         ]);
     }
 

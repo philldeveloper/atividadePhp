@@ -26,7 +26,7 @@ class TransactionType extends AbstractType
                 'required' => false,
                 'help' => 'Informe uma pequena descrição da transação',
             ])
-            ->add('account')
+            // ->add('account')
             // ->add('client')
             ->add('targetAccount')
             // ->add('targetAccount', null, [

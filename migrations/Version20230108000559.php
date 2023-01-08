@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230107234843 extends AbstractMigration
+final class Version20230108000559 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -28,6 +28,7 @@ final class Version20230107234843 extends AbstractMigration
         $this->addSql('CREATE TABLE manager (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_FA2425B9A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE transaction (id INT AUTO_INCREMENT NOT NULL, account_id INT NOT NULL, client_id INT DEFAULT NULL, target_account_id INT DEFAULT NULL, operation VARCHAR(255) NOT NULL, value INT NOT NULL, description VARCHAR(255) NOT NULL, date DATE NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_723705D19B6B5FBA (account_id), INDEX IDX_723705D119EB6921 (client_id), INDEX IDX_723705D1A987872B (target_account_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user_account (user_id INT NOT NULL, account_id INT NOT NULL, INDEX IDX_253B48AEA76ED395 (user_id), INDEX IDX_253B48AE9B6B5FBA (account_id), PRIMARY KEY(user_id, account_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL, available_at DATETIME NOT NULL, delivered_at DATETIME DEFAULT NULL, INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE account ADD CONSTRAINT FK_7D3656A4CDEADB2A FOREIGN KEY (agency_id) REFERENCES agency (id)');
         $this->addSql('ALTER TABLE agency ADD CONSTRAINT FK_70C0C6E611C8FB41 FOREIGN KEY (bank_id) REFERENCES bank (id)');
@@ -39,6 +40,8 @@ final class Version20230107234843 extends AbstractMigration
         $this->addSql('ALTER TABLE transaction ADD CONSTRAINT FK_723705D19B6B5FBA FOREIGN KEY (account_id) REFERENCES account (id)');
         $this->addSql('ALTER TABLE transaction ADD CONSTRAINT FK_723705D119EB6921 FOREIGN KEY (client_id) REFERENCES client (id)');
         $this->addSql('ALTER TABLE transaction ADD CONSTRAINT FK_723705D1A987872B FOREIGN KEY (target_account_id) REFERENCES account (id)');
+        $this->addSql('ALTER TABLE user_account ADD CONSTRAINT FK_253B48AEA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE user_account ADD CONSTRAINT FK_253B48AE9B6B5FBA FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE CASCADE');
     }
 
     public function down(Schema $schema): void
@@ -54,6 +57,8 @@ final class Version20230107234843 extends AbstractMigration
         $this->addSql('ALTER TABLE transaction DROP FOREIGN KEY FK_723705D19B6B5FBA');
         $this->addSql('ALTER TABLE transaction DROP FOREIGN KEY FK_723705D119EB6921');
         $this->addSql('ALTER TABLE transaction DROP FOREIGN KEY FK_723705D1A987872B');
+        $this->addSql('ALTER TABLE user_account DROP FOREIGN KEY FK_253B48AEA76ED395');
+        $this->addSql('ALTER TABLE user_account DROP FOREIGN KEY FK_253B48AE9B6B5FBA');
         $this->addSql('DROP TABLE account');
         $this->addSql('DROP TABLE agency');
         $this->addSql('DROP TABLE bank');
@@ -62,6 +67,7 @@ final class Version20230107234843 extends AbstractMigration
         $this->addSql('DROP TABLE manager');
         $this->addSql('DROP TABLE transaction');
         $this->addSql('DROP TABLE user');
+        $this->addSql('DROP TABLE user_account');
         $this->addSql('DROP TABLE messenger_messages');
     }
 }

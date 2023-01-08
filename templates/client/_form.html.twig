@@ -37,33 +37,11 @@
     <div>
         {{ form_widget(form.accounts, {'attr': {'class': 'form-control'}}) }}
     </div>
-    {# <div>
-        {{ form_label(form.user, 'Selecione um Usuário', {'label_attr': {'class': 'fw-bold py-3'}}) }}
-    </div>
-    <div>
-        {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-    </div> #}
-    
-    <div>
-        <label class="fw-bold py-3">Selecione um Usuário:</label>
-        <select id="client_user" name="client[user]" class="form-control text-uppercase">
-            {% for li in lista|filter(li => li.id != userClient) %}
-                <option value={{li.id}}>ID#{{ li.id }} | {{ li.name }} | ({{li.email}})</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="mt-3">
-        {% if lista|length <= 0 %}
-            <label class="text-danger">
-                <i class="fa fa-exclamation-circle me-2"></i> Nao há usuários disponíveis. Não é possível continuar.
-            </label>
-        {% endif %}
-    </div>
 
     <div class="d-flex align-items-center justify-content-between py-5">
         <a class="btn btn-outline-dark" href="{{ path('app_client_index') }}">Voltar para a Lista</a>
-        {% if lista|length > 0 %}
-            <button class="btn btn-dark" type="submit">{{ button_label|default('Salvar') }}</button>
-        {% endif %}
+        {# {% if lista|length > 0 %} #}
+        {# {% endif %} #}
+        <button class="btn btn-dark" type="submit">{{ button_label|default('Salvar') }}</button>
     </div>
 {{ form_end(form) }}
