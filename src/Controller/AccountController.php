@@ -34,6 +34,8 @@ class AccountController extends AbstractController
             $accounts = $user->getClient()->getAccounts();
         }else if ($user->getClient() == null) {
             $accounts = $user->getAccounts();
+
+            // dd($accounts);
         }
 
         // dd($accountRepository->findAll());

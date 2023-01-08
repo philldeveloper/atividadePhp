@@ -22,6 +22,7 @@
                     <th>Agencia | Banco</th>
                     <th>Status</th>
                     <th>Conta</th>
+                    <th>Criado em:</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -43,6 +44,7 @@
                     <td>{{ account.balance|format_currency('BRL') }}</td>
                     <td>{{ account.agency }} - {{account.agency.bank}}</td>
                     <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
+                    <td>{{ account.createdAt }}</td>
                     <td>
                         <a class="btn btn-sm btn-success" href="{{ path('app_account_enable', {'id': account.id}) }}">
                             HABILITAR

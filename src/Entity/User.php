@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,6 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct() {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->accounts = new ArrayCollection();
     }
 
     use TimestampableEntity;
@@ -46,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Manager $manager = null;
+
+    #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'users', fetch: 'EAGER')]
+    private Collection $accounts;
 
     public function getId(): ?int
     {
@@ -177,5 +183,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setUpdatedAtValue() {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @return Collection<int, Account>
+     */
+    public function getAccounts(): Collection
+    {
+        return $this->accounts;
+    }
+
+    public function addAccount(Account $account): self
+    {
+        if (!$this->accounts->contains($account)) {
+            $this->accounts->add($account);
+        }
+
+        return $this;
+    }
+
+    public function removeAccount(Account $account): self
+    {
+        $this->accounts->removeElement($account);
+
+        return $this;
     }
 }

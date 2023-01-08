@@ -124,7 +124,7 @@ class ClientController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
 
             //ao inves de deletar, precisamos remover apenas o client do USER.
-            $clientRepository->save($client, true);
+            $clientRepository->save($client, true); //or remove
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
