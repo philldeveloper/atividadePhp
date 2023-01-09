@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ transaction.date ? transaction.date|date('d/m/Y') : '' }}</td>
+                <td>{{ transaction.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
             </tr>
             <tr>
                 <th>Criado por</th>

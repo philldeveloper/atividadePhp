@@ -45,8 +45,6 @@ class TransactionController extends AbstractController
         $form = $this->createForm(TransactionType::class, $transaction);
         $form->handleRequest($request);
 
-        $transaction->setDate(new DateTime());
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $operation = (int)$form->getExtraData()['operation'];
