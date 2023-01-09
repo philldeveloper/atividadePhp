@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Form\TransactionType;
 use App\Repository\TransactionRepository;
+use App\Repository\AccountRepository;
 use DateTime;
+use App\Entity\Account;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +34,7 @@ class TransactionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_transaction_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TransactionRepository $transactionRepository, AuthorizationCheckerInterface $authChecker): Response
+    public function new(Request $request, TransactionRepository $transactionRepository, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
 
         if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
@@ -48,7 +50,12 @@ class TransactionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $operation = (int)$form->getExtraData()['operation'];
+            $var = (int)$form->getExtraData()['account'];
+
+            $accountSelected = $accountRepository->findBy(['id' => $var]);
+
             $transaction->setOperation($operation);
+            $transaction->setAccount($accountSelected[0]);
 
             //se o user estiver logado, ele é passado como cliente para a transação
             if ($authChecker->isGranted('ROLE_USER')) {
@@ -87,9 +94,11 @@ class TransactionController extends AbstractController
             return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
         return $this->render('transaction/new.html.twig', [
             'transaction' => $transaction,
             'form' => $form,
+            'accounts' => $accountRepository->findBy(['isActive' => 1]),
         ]);
     }
 

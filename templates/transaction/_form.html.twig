@@ -40,12 +40,22 @@
     <div>
         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
     </div>
-    <div>
+    {# <div>
         {{ form_label(form.account, 'Selecione a conta para a transação', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>
     <div>
         {{ form_widget(form.account, {'attr': {'class': 'form-control'}}) }}
+    </div> #}
+
+    <div>
+        <label class="fw-bold py-3">Selecione a conta para a transação:</label>
+        <select id="transaction_account" name="transaction[account]" class="form-control text-uppercase">
+            {% for ac in accounts %}
+                <option value={{ac.id}}>{{ ac.number }} | Ag. {{ac.agency}}</option>
+            {% endfor %}
+        </select>
     </div>
+
     <div>
         {{ form_label(form.targetAccount, 'Selecione a conta destino', {'label_attr': {'class': 'target-label fw-bold py-3'}}) }}
     </div>
