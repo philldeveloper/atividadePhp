@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 use App\Entity\User;
 use App\Entity\Bank;
+use App\Entity\Client;
 use App\Entity\Agency;
 use App\Entity\Manager;
 
@@ -37,12 +38,19 @@ class AppFixtures extends Fixture
         $userManager->setPassword($this->hasher->hashPassword($userManager, '123456'));
         $userManager->setRoles(['ROLE_ADMIN']);
 
-        //CREATE A DEFAULT USER AS ROLE_USER
+        //CREATE A DEFAULT USER and CLIENT AS ROLE_USER
         $user = new User();
         $user->setName('user');
         $user->setEmail('user@email.com');
         $user->setPassword($this->hasher->hashPassword($user, '123456'));
         $user->setRoles(['ROLE_USER']);
+        $client = new Client();
+        $client->setName('default');
+        $client->setAddress('default');
+        $client->setPhone(0);
+        $client->setActive(0);
+        $client->setUser($user);
+        $user->setClient($client);
 
         //CREATE A DEFAULT BANK
         $bank = new Bank();

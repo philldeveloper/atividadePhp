@@ -45,15 +45,17 @@ class AccountController extends AbstractController
     public function new(Request $request, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         $account = new Account();
+        $account->setNumber(rand(1000, 9999));
 
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
 
-
         $user = $this->getUser();
 
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
+
             $client = $user->getClient();
+            
             $account->addClient($client);
 
             if ($client->isActive()) {

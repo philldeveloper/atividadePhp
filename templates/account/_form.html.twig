@@ -12,14 +12,6 @@
         {%endfor%}
     </ul>
     {%endif%}
-
-    <div>
-        {{ form_label(form.number, 'Informe o numero da Conta', {'label_attr': {'class': 'fw-bold py-3'}}) }}
-    </div>
-    <div>
-        {{ form_widget(form.number, {'attr': {'class': 'form-control'}}) }}
-        {# {{ form_errors(form.number) }} #}
-    </div>
     <div>
         {{ form_label(form.balance, 'Informe o valor do saldo inicial', {'label_attr': {'class': 'fw-bold py-3'}}) }}
     </div>

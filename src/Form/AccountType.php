@@ -26,11 +26,6 @@ class AccountType extends AbstractType
     {
         if ($this->auth->isGranted('ROLE_ADMIN')) {
             $builder
-                ->add('number', IntegerType::class, [
-                    'label' => false,
-                    'required' => false,
-                    // 'constraints' => new NotBlank(),
-                ])
                 ->add('balance', IntegerType::class, [
                     'label' => false,
                     'required' => false
@@ -56,10 +51,6 @@ class AccountType extends AbstractType
                 ->add('isActive');
         } else {
             $builder
-                ->add('number', IntegerType::class, [
-                    'label' => false,
-                    'required' => false
-                ])
                 ->add('balance', IntegerType::class, [
                     'label' => false,
                     'required' => false
