@@ -8,9 +8,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
 class Account
 {
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->clients = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+    }
+    
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -57,13 +68,7 @@ class Account
     private Collection $transactions;
 
     #[ORM\Column]
-    private ?bool $isActive = null;
-
-    public function __construct()
-    {
-        $this->clients = new ArrayCollection();
-        $this->transactions = new ArrayCollection();
-    }
+    private ?bool $isActive = null;    
 
     public function getId(): ?int
     {

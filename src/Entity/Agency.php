@@ -7,10 +7,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: AgencyRepository::class)]
 class Agency
 {
+    
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->account = new ArrayCollection();
+    }
+
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -50,12 +60,6 @@ class Agency
 
     #[ORM\OneToMany(mappedBy: 'agency', targetEntity: Account::class, orphanRemoval: true)]
     private Collection $account;
-
-
-    public function __construct()
-    {
-        $this->account = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
