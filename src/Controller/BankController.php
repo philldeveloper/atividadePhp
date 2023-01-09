@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_SUPER_ADMIN')]
 #[Route('/bank')]
 class BankController extends AbstractController
-{   
+{
     #[Route('/', name: 'app_bank_index', methods: ['GET'])]
     public function index(BankRepository $bankRepository): Response
     {
@@ -26,7 +26,7 @@ class BankController extends AbstractController
 
     #[Route('/new', name: 'app_bank_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BankRepository $bankRepository): Response
-    {   
+    {
         // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
@@ -36,6 +36,8 @@ class BankController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bankRepository->save($bank, true);
+
+            $this->addFlash('success', 'Banco criado com sucesso.');
 
             return $this->redirectToRoute('app_bank_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,7 +77,7 @@ class BankController extends AbstractController
     #[Route('/{id}', name: 'app_bank_delete', methods: ['POST'])]
     public function delete(Request $request, Bank $bank, BankRepository $bankRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$bank->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $bank->getId(), $request->request->get('_token'))) {
             $bankRepository->remove($bank, true);
         }
 
