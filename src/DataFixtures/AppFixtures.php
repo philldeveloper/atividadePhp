@@ -63,7 +63,6 @@ class AppFixtures extends Fixture
 
         //CREATE A DEFAULT MANAGER
         $manager = new Manager();
-        $manager->setName("manager");
         $manager->setUser($userManager);
         $manager->setAgency($agency);
 
