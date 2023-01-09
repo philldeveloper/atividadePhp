@@ -149,6 +149,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function removeClient(Client $client): self
+    {
+        dd($client);
+        
+        $this->client->removeElement($client);
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

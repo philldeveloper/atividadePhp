@@ -113,12 +113,17 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
-    public function delete(Request $request, Client $client, ClientRepository $clientRepository): Response
+    public function delete(Request $request, Client $client, ClientRepository $clientRepository, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
 
-            //ao inves de deletar, precisamos remover apenas o client do USER.
-            $clientRepository->save($client, true); //or remove
+            // $userSelected = $userRepository->find($client->getUser()->getId());
+            
+            // //ao inves de deletar, precisamos remover apenas o client do USER.
+            // $userSelected->removeClient($client); //?????
+            // $userRepository->save($userSelected, true);
+
+            $clientRepository->remove($client, true);
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
