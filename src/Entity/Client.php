@@ -51,8 +51,12 @@ class Client
      */
     private ?int $phone = null;
 
+    #[ORM\Column]
+    private ?bool $active = null;
+
     public function __construct()
     {
+        $this->active = false;
         $this->accounts = new ArrayCollection();
         $this->transactions = new ArrayCollection();
     }
@@ -168,6 +172,18 @@ class Client
     public function setPhone(int $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

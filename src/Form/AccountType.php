@@ -24,7 +24,7 @@ class AccountType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if($this->auth->isGranted('ROLE_ADMIN')){
+        if ($this->auth->isGranted('ROLE_ADMIN')) {
             $builder
                 ->add('number', IntegerType::class, [
                     'label' => false,
@@ -53,9 +53,8 @@ class AccountType extends AbstractType
                     'label' => false,
                     'required' => false
                 ])
-            ;
-
-        }else {
+                ->add('isActive');
+        } else {
             $builder
                 ->add('number', IntegerType::class, [
                     'label' => false,
@@ -75,10 +74,8 @@ class AccountType extends AbstractType
                 ->add('agency', null, [
                     'label' => false,
                     'required' => false
-                ])
-            ;
+                ]);
         }
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

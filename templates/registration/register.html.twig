@@ -22,6 +22,12 @@
                 {{ form_label(registrationForm.email, null, {'label': 'Email:', 'label_attr': {'class': 'fw-bold'} }) }}
                 {{ form_widget(registrationForm.email, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
                 <br>
+                {{ form_label(registrationForm.address, null, {'label': 'Endereço:', 'label_attr': {'class': 'fw-bold'} }) }}
+                {{ form_widget(registrationForm.address, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+                <br>
+                {{ form_label(registrationForm.phone, null, {'label': 'Telefone:', 'label_attr': {'class': 'fw-bold'} }) }}
+                {{ form_widget(registrationForm.phone, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+                <br>
                 {{ form_label(registrationForm.plainPassword, null, {'label': 'Informe uma senha:', 'label_attr': {'class': 'fw-bold'} }) }}
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
 

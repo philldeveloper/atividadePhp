@@ -27,15 +27,17 @@ class ClientType extends AbstractType
                 'label' => false,
                 'required' => false,
             ])
-            ->add('accounts', null, [
-                'by_reference' => false,
-                'required' => false,
-            ]);
+            ->add('active')
+            // ->add('accounts', null, [
+            //     'by_reference' => false,
+            //     'required' => false,
+            // ])
             // ->add('user', null, [
             //     'label' => false,
             //     'required' => false,
             //        'mapped' => false
-            // ]);
+            // ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
