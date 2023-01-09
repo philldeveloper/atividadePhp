@@ -84,6 +84,7 @@
             "@auto-scripts"
         ],
         "install-reqs": [
+            "rm -rf migrations/*",
             "symfony console doctrine:database:drop --force",
             "symfony console doctrine:database:create",
             "php bin/console make:migration",
