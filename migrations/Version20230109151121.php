@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230109132739 extends AbstractMigration
+final class Version20230109151121 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,7 +23,7 @@ final class Version20230109132739 extends AbstractMigration
         $this->addSql('CREATE TABLE account (id INT AUTO_INCREMENT NOT NULL, agency_id INT NOT NULL, number INT NOT NULL, balance INT NOT NULL, type VARCHAR(255) NOT NULL, is_active TINYINT(1) NOT NULL, INDEX IDX_7D3656A4CDEADB2A (agency_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE agency (id INT AUTO_INCREMENT NOT NULL, bank_id INT DEFAULT NULL, manager_id INT DEFAULT NULL, number VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, INDEX IDX_70C0C6E611C8FB41 (bank_id), UNIQUE INDEX UNIQ_70C0C6E6783E3463 (manager_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bank (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE client (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, name VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, phone INT NOT NULL, UNIQUE INDEX UNIQ_C7440455A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE client (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, name VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, phone INT NOT NULL, active TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_C7440455A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE client_account (client_id INT NOT NULL, account_id INT NOT NULL, INDEX IDX_2F0B12D919EB6921 (client_id), INDEX IDX_2F0B12D99B6B5FBA (account_id), PRIMARY KEY(client_id, account_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE manager (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, name VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_FA2425B9A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE transaction (id INT AUTO_INCREMENT NOT NULL, account_id INT NOT NULL, client_id INT DEFAULT NULL, target_account_id INT DEFAULT NULL, operation VARCHAR(255) NOT NULL, value INT NOT NULL, description VARCHAR(255) NOT NULL, date DATE NOT NULL, INDEX IDX_723705D19B6B5FBA (account_id), INDEX IDX_723705D119EB6921 (client_id), INDEX IDX_723705D1A987872B (target_account_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

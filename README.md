@@ -37,7 +37,4 @@ ROLES = ["ROLE_EXAMPLE"] WHERE EXAMPLE IS ADMIN OR USER
 
 
 ## EXECUTANDO  O PROJETO
-- Crie um banco chamado "atividade_php".
-- php bin/console make:migration
-- php bin/console doctrine:migrations:migrate
-- php bin/console doctrine:fixtures:load
+- No terminal, execute "composer install-reqs".
