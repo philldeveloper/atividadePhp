@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $managerObject): void
     {
-        
+
         //CREATE A DEFAULT USER AS ROLE_SUPER_ADMIN
         $userAdmin = new User();
         $userAdmin->setName('admin');
@@ -45,7 +45,6 @@ class AppFixtures extends Fixture
         $user->setPassword($this->hasher->hashPassword($user, '123456'));
         $user->setRoles(['ROLE_USER']);
         $client = new Client();
-        $client->setName('default');
         $client->setAddress('default');
         $client->setPhone(0);
         $client->setActive(0);

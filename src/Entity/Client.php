@@ -12,7 +12,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->active = false;
@@ -26,14 +27,6 @@ class Client
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="O valor Nome do Cliente não pode estar vazio.")
-     * @Assert\Length(min=3, max=255, minMessage="O nome do Cliente precisa pelo menos 3 caracteres.")
-     */
-    private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Account::class, inversedBy: 'clients', fetch: 'EAGER')]
     private Collection $accounts;
@@ -70,18 +63,6 @@ class Client
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Account>
      */
@@ -108,7 +89,7 @@ class Client
 
     public function __toString()
     {
-        return $this->name;
+        return $this->user->getName();
     }
 
     public function getUser(): ?User

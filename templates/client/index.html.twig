@@ -29,7 +29,7 @@
                     {# <td>
                         <i class="badge bg-primary">{{ client.id }}</i>
                     </td> #}
-                    <td>{{ client.name }}</td>
+                    <td>{{ client.user.name }}</td>
                     <td>{{ client.user.email }}</td>
                     <td>{{ client.accounts|length }}</td>
                     <td>{{ client.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>

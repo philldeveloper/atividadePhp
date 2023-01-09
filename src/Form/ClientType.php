@@ -16,10 +16,6 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => false,
-                'required' => false,
-            ])
             ->add('address', TextType::class, [
                 'label' => false,
                 'required' => false,
@@ -27,7 +23,7 @@ class ClientType extends AbstractType
             ->add('phone', NumberType::class, [
                 'label' => false,
                 'required' => false,
-                ])
+            ])
             ->add('active', CheckboxType::class, [
                 'label' => false,
                 'required' => false
