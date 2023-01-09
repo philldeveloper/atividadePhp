@@ -9,17 +9,13 @@
     </div>
 
     {% if is_granted('ROLE_USER') and app.user.roles|length == 1 %}
-        {% for account in accounts %}
-            {% if not account.isActive %}
-                <div class="alert alert-warning py-1 my-4" role="alert">
-                    <i class="fa fa-exclamation-circle text-danger me-2"></i>
-                    Atenção! a conta {{account.number}} está inativa. Aguarde a aprovação da conta para começar a realizar transações.
-                </div>
-            {% endif%}
-        {% endfor %}
+        <div class="alert alert-warning py-1 my-4" role="alert">
+            <i class="fa fa-exclamation-circle text-danger me-2"></i>
+            Atenção! a(s) conta(s) {{ accounts|filter(acc => not acc.isActive)|join(', ') }} está(ão) inativa(s). 
+            Aguarde a aprovação da conta para começar a realizar transações.
+        </div>
     {% endif%}
 
-    
     <div class="table-responsive-sm mt-4">
         <table class="table table-borderless table-striped">
             <caption class="mt-4">Lista de Contas</caption>
@@ -27,6 +23,8 @@
                 <tr>
                     {# <th>Id</th> #}
                     <th>Número da Conta</th>
+                    <th>Criado em:</th>
+                    <th>Atualizado em:</th>
                     <th>Saldo Atual</th>
                     <th>Agencia | Banco</th>
                         <th>Status</th>
@@ -40,6 +38,8 @@
                         <i class="badge bg-primary">{{ account.id }}</i>
                     </td> #}
                     <td>{{ account.number }}</td>
+                    <td>{{ account.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
+                    <td>{{ account.updatedAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
                     <td>{{ account.balance|format_currency('BRL') }}</td>
                     <td>{{ account.agency }} - {{account.agency.bank}}</td>
                     <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>

@@ -18,6 +18,8 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Contas</th>
+                    <th>Criado em:</th>
+                    <th>Atualizado em:</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -30,6 +32,8 @@
                     <td>{{ client.name }}</td>
                     <td>{{ client.user.email }}</td>
                     <td>{{ client.accounts|length }}</td>
+                    <td>{{ client.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
+                    <td>{{ client.updatedAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_client_show', {'id': client.id}) }}">
                             <i class="fa fa-eye"></i>
