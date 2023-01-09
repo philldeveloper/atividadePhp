@@ -8,13 +8,16 @@
         <a href="{{ path('app_account_new') }}" class="btn btn-outline-dark fw-bold">Criar Conta</a>
     </div>
 
-    {% if is_granted('ROLE_USER') and app.user.roles|length == 1 %}
+    {% if is_granted('ROLE_USER')
+        and app.user.roles|length == 1
+        and accounts|filter(acc => not acc.isActive)|length > 0
+    %}
         <div class="alert alert-warning py-1 my-4" role="alert">
             <i class="fa fa-exclamation-circle text-danger me-2"></i>
             Atenção! a(s) conta(s) {{ accounts|filter(acc => not acc.isActive)|join(', ') }} está(ão) inativa(s). 
             Aguarde a aprovação da conta para começar a realizar transações.
         </div>
-    {% endif%}
+    {% endif %}
 
     <div class="table-responsive-sm mt-4">
         <table class="table table-borderless table-striped">
@@ -27,7 +30,7 @@
                     <th>Atualizado em:</th>
                     <th>Saldo Atual</th>
                     <th>Agencia | Banco</th>
-                        <th>Status</th>
+                    <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>

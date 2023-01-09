@@ -24,7 +24,7 @@ class TransactionController extends AbstractController
 {
     /** @var \App\Entity\User $user */
 
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
     public function index(TransactionRepository $transactionRepository): Response
     {
@@ -89,7 +89,11 @@ class TransactionController extends AbstractController
 
             $transactionRepository->save($transaction, true);
 
-            return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
+            if ($authChecker->isGranted('ROLE_USER')) {
+                return $this->redirectToRoute('app_transaction_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
 
@@ -100,6 +104,7 @@ class TransactionController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_transaction_show', methods: ['GET'])]
     public function show(Transaction $transaction): Response
     {
@@ -108,6 +113,7 @@ class TransactionController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_transaction_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Transaction $transaction, TransactionRepository $transactionRepository, AuthorizationCheckerInterface $authChecker): Response
     {
