@@ -23,16 +23,8 @@ class Manager
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="O valor Nome do Gerente não pode estar vazio.")
-     * @Assert\Length(min=3, max=255, minMessage="O nome do Gerente precisa pelo menos 3 caracteres.")
-     */
-    private ?string $name = null;
-
     #[ORM\OneToOne(inversedBy: 'manager', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]  // , onDelete: 'CASCADE'
     /**
      * @ORM\Column(type="string")
      */
@@ -47,18 +39,6 @@ class Manager
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getAgency(): ?Agency
@@ -80,7 +60,7 @@ class Manager
 
     public function __toString()
     {
-        return $this->name;
+        return $this->user->getName();
     }
 
     public function getUser(): ?User

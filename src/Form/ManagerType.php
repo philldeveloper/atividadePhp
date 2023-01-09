@@ -17,10 +17,10 @@ class ManagerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => false,
-                'required' => false,
-            ])
+            // ->add('name', TextType::class, [
+            //     'label' => false,
+            //     'required' => false,
+            // ])
             // ->add('user', null, [
             //     'label' => false,
             //     'required' => false,

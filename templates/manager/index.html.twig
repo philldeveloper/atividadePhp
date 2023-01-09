@@ -27,7 +27,7 @@
                     {# <td>
                         <i class="badge bg-primary">{{ manager.id }}</i>
                     </td> #}
-                    <td>{{ manager.name }}</td>
+                    <td>{{ manager.user.name }}</td>
                     <td>{{ manager.agency ? manager.agency : 'NA' }} - {{ manager.agency ? manager.agency.bank : 'NA' }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_manager_show', {'id': manager.id}) }}">

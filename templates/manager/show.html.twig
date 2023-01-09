@@ -3,7 +3,7 @@
 {% block title %}Manager{% endblock %}
 
 {% block body %}
-    <h1>Gerente {{manager.name}}</h1>
+    <h1>Gerente {{manager.user.name}}</h1>
 
     <table class="table">
         <tbody>
@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Name</th>
-                <td>{{ manager.name }}</td>
+                <td>{{ manager.user.name }}</td>
             </tr>
             <tr>
                 <th>Agency</th>

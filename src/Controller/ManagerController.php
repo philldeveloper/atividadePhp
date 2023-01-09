@@ -57,7 +57,7 @@ class ManagerController extends AbstractController
 
             //atribui o objeto usuário para o cliente
             $user = new User();
-            $user->setName($manager->getName());
+            $user->setName($form->get('name')->getData());
             $user->setEmail($form->get('email')->getData());
             $user->setRoles(['ROLE_ADMIN']);
             $user->setPassword(
@@ -106,6 +106,7 @@ class ManagerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->getUser()->setName($form->getExtraData()['name']);
             $manager->getUser()->setEmail($form->getExtraData()['email']);
             $managerRepository->save($manager, true);
 
@@ -117,6 +118,7 @@ class ManagerController extends AbstractController
         return $this->renderForm('manager/edit.html.twig', [
             'manager' => $manager,
             'form' => $form,
+            'name' => $manager->getUser()->getName(),
             'email' => $manager->getUser()->getEmail(),
             'password' => $manager->getUser()->getPassword(),
         ]);

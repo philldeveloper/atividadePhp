@@ -40,7 +40,7 @@
                     {% endfor %}
                     </td> #}
                     <td>{{ agency.address }}</td>
-                    <td>{{ agency.manager ? agency.manager.name : 'NA' }}</td>
+                    <td>{{ agency.manager ? agency.manager.user.name : 'NA' }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_agency_show', {'id': agency.id}) }}">
                             <i class="fa fa-eye"></i>
