@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 #[IsGranted('ROLE_ADMIN')]
@@ -31,18 +32,18 @@ class ManagerController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/new', name: 'app_manager_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ManagerRepository $managerRepository, UserRepository $userRepository, AuthorizationCheckerInterface $authChecker): Response
+    public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRepository $managerRepository, UserRepository $userRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         $manager = new Manager();
         $form = $this->createForm(ManagerType::class, $manager);
         $form->handleRequest($request);
 
         //pega o id do user logado
-        $userClient = $this->getUser()->getId(); 
+        // $userClient = $this->getUser()->getId();
 
 
         //retorna uma lista de usuários que não são gerentes
-        $managersList = array_filter($userRepository->findAll(), function($el) {
+        $managersList = array_filter($userRepository->findAll(), function ($el) {
             return $el->getManager() == null && !$this->isGranted('ROLE_SUPER_ADMIN');
             // return $el->getManager() == null && $el->getRoles() != 'ROLE_ADMIN';
         });
@@ -52,14 +53,27 @@ class ManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //encontra no repositorio o objeto usuário selecionado no front
-            $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
+            // $formUser = $userRepository->findBy(['id' => (int)$form->getExtraData()['user']]);
 
             //atribui o objeto usuário para o cliente
-            $manager->setUser($formUser[0]);
+            $user = new User();
+            $user->setName($manager->getName());
+            $user->setEmail($form->get('email')->getData());
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $manager->setUser($user);
+
+            // dd($manager);
 
 
-            $user = $manager->getUser();
-            $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
+            // $user = $manager->getUser();
+            // $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
 
             $managerRepository->save($manager, true);
 
@@ -72,7 +86,7 @@ class ManagerController extends AbstractController
             'manager' => $manager,
             'form' => $form,
             'lista' => $managersList,
-            'userClient' => $userClient,
+            // 'userClient' => $userClient,
         ]);
     }
 
@@ -92,6 +106,7 @@ class ManagerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->getUser()->setEmail($form->getExtraData()['email']);
             $managerRepository->save($manager, true);
 
             $this->addFlash('update', 'Gerente atualizado com sucesso.');
@@ -102,6 +117,8 @@ class ManagerController extends AbstractController
         return $this->renderForm('manager/edit.html.twig', [
             'manager' => $manager,
             'form' => $form,
+            'email' => $manager->getUser()->getEmail(),
+            'password' => $manager->getUser()->getPassword(),
         ]);
     }
 
@@ -109,7 +126,7 @@ class ManagerController extends AbstractController
     #[Route('/{id}', name: 'app_manager_delete', methods: ['POST'])]
     public function delete(Request $request, Manager $manager, ManagerRepository $managerRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$manager->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $manager->getId(), $request->request->get('_token'))) {
             $managerRepository->remove($manager, true);
         }
 

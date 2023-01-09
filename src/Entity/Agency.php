@@ -12,8 +12,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: AgencyRepository::class)]
 class Agency
 {
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->account = new ArrayCollection();
@@ -27,33 +28,30 @@ class Agency
     private ?int $id = null;
 
     /**
-        * @ORM\Column(type="integer")
-        * @Assert\NotBlank(message="O valor Número da Agência não pode estar vazio.")
-        * @Assert\Length(min=4, minMessage="O valor Número da Agência deverá ser de no mínimo 4 números.")
-        * @Assert\PositiveOrZero(message="O valor Número da Agência deve ser positivo ou zero.")
-    */
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="O valor Número da Agência não pode estar vazio.")
+     * @Assert\Length(min=4, minMessage="O valor Número da Agência deverá ser de no mínimo 4 números.")
+     * @Assert\PositiveOrZero(message="O valor Número da Agência deve ser positivo ou zero.")
+     */
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
     /**
-        * @Assert\NotBlank(message="O valor Banco não pode estar vazio.")
-    */
+     * @Assert\NotBlank(message="O valor Banco não pode estar vazio.")
+     */
     #[ORM\ManyToOne(inversedBy: 'agencies')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Bank $bank = null;
 
-    /**
-        * @Assert\NotBlank(message="O valor Gerente da Agência não pode estar vazio.")
-    */
     #[ORM\OneToOne(inversedBy: 'agency', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Manager $manager = null;
 
     /**
-        * @ORM\Column(type="string")
-        * @Assert\NotBlank(message="O valor Endereço da Agência não pode estar vazio.")
-        * @Assert\Length(min=4, minMessage="O valor Endereço da Agência deverá ser de no mínimo 4 caracteres.")
-    */
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Endereço da Agência não pode estar vazio.")
+     * @Assert\Length(min=4, minMessage="O valor Endereço da Agência deverá ser de no mínimo 4 caracteres.")
+     */
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 

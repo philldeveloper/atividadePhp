@@ -10,7 +10,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: ManagerRepository::class)]
 class Manager
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }
@@ -24,21 +25,22 @@ class Manager
 
     #[ORM\Column(length: 255)]
     /**
-        * @ORM\Column(type="string")
-        * @Assert\NotBlank(message="O valor Nome do Gerente não pode estar vazio.")
-        * @Assert\Length(min=3, max=255, minMessage="O nome do Gerente precisa pelo menos 3 caracteres.")
-    */
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Nome do Gerente não pode estar vazio.")
+     * @Assert\Length(min=3, max=255, minMessage="O nome do Gerente precisa pelo menos 3 caracteres.")
+     */
     private ?string $name = null;
 
     #[ORM\OneToOne(inversedBy: 'manager', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     /**
-        * @ORM\Column(type="string")
-    */
+     * @ORM\Column(type="string")
+     */
     private ?User $user = null;
 
-    
+
     #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Agency $agency = null;
 
 
@@ -76,7 +78,8 @@ class Manager
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 
