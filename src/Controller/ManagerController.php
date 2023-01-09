@@ -44,6 +44,7 @@ class ManagerController extends AbstractController
         //retorna uma lista de usuários que não são gerentes
         $managersList = array_filter($userRepository->findAll(), function($el) {
             return $el->getManager() == null && !$this->isGranted('ROLE_SUPER_ADMIN');
+            // return $el->getManager() == null && $el->getRoles() != 'ROLE_ADMIN';
         });
 
         // dd($managersList);
@@ -61,6 +62,8 @@ class ManagerController extends AbstractController
             $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
 
             $managerRepository->save($manager, true);
+
+            $this->addFlash('success', 'Gerente criado com sucesso.');
 
             return $this->redirectToRoute('app_manager_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -91,6 +94,8 @@ class ManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $managerRepository->save($manager, true);
 
+            $this->addFlash('update', 'Gerente atualizado com sucesso.');
+
             return $this->redirectToRoute('app_manager_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -107,6 +112,8 @@ class ManagerController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$manager->getId(), $request->request->get('_token'))) {
             $managerRepository->remove($manager, true);
         }
+
+        $this->addFlash('success', 'Gerente removido com sucesso.');
 
         return $this->redirectToRoute('app_manager_index', [], Response::HTTP_SEE_OTHER);
     }

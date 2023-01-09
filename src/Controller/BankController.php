@@ -65,6 +65,7 @@ class BankController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bankRepository->save($bank, true);
 
+            $this->addFlash('update', 'Banco atualizado com sucesso.');
             return $this->redirectToRoute('app_bank_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,6 +82,7 @@ class BankController extends AbstractController
             $bankRepository->remove($bank, true);
         }
 
+        $this->addFlash('success', 'Banco removido com sucesso.');
         return $this->redirectToRoute('app_bank_index', [], Response::HTTP_SEE_OTHER);
     }
 }
