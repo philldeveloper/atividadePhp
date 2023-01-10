@@ -12,15 +12,15 @@
                 <td>{{ manager.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nome:</th>
                 <td>{{ manager.user.name }}</td>
             </tr>
             <tr>
-                <th>Agency</th>
+                <th>Agencia:</th>
                 <td>{{ manager.agency ? manager.agency.number : 'NA' }}</td>
             </tr>
             <tr>
-                <th>Bank</th>
+                <th>Banco:</th>
                 <td>{{ manager.agency and manager.agency.bank ? manager.agency.bank.name : 'NA' }}</td>
             </tr>
         </tbody>

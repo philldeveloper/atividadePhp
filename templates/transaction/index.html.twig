@@ -23,7 +23,9 @@
                     <th>Descriçao</th>
                     <th>Data da Transação</th>
                     <th>Criado Por</th>
-                    <th>Privilégios</th>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th>Privilégios</th>
+                    {% endif %}
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -37,7 +39,9 @@
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
                     <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
-                    <td>{{ transaction.client ? transaction.client.user.roles[0] : 'NA' }}</td>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td>{{ transaction.client ? transaction.client.user.roles[0] : 'NA' }}</td>
+                    {% endif %}
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_transaction_show', {'id': transaction.id}) }}">
                             <i class="fa fa-eye"></i>
