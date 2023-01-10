@@ -57,8 +57,8 @@ class ManagerController extends AbstractController
 
             //atribui o objeto usuário para o cliente
             $user = new User();
-            $user->setName($form->get('name')->getData());
-            $user->setEmail($form->get('email')->getData());
+            $user->setName($form->getExtraData()['name']);
+            $user->setEmail($form->getExtraData()['email']);
             $user->setRoles(['ROLE_ADMIN']);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -69,11 +69,7 @@ class ManagerController extends AbstractController
 
             $manager->setUser($user);
 
-            // dd($manager);
-
-
-            // $user = $manager->getUser();
-            // $user->setRoles(['ROLE_ADMIN']); //same as ROLE_MANAGER
+            dd($manager->getAgency());
 
             $managerRepository->save($manager, true);
 
@@ -86,6 +82,8 @@ class ManagerController extends AbstractController
             'manager' => $manager,
             'form' => $form,
             'lista' => $managersList,
+            'name' => [],
+            'email' => [],
             // 'userClient' => $userClient,
         ]);
     }
@@ -108,6 +106,7 @@ class ManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->getUser()->setName($form->getExtraData()['name']);
             $manager->getUser()->setEmail($form->getExtraData()['email']);
+            
             $managerRepository->save($manager, true);
 
             $this->addFlash('update', 'Gerente atualizado com sucesso.');

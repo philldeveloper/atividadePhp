@@ -19,22 +19,15 @@
     </ul>
     {%endif%}
 
-    
-    {# <div>
-        {{ form_label(form.name, 'Digite o nome', {'label_attr': {'class': 'fw-bold py-3'}}) }}
-    </div>
-    <div>
-        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-    </div> #}
     <label>Name</label>
-    {% if name %}
+    {% if name|length > 0 %}
         <input type="text" id="manager_name" name="manager[name]" class="form-control" value={{name}}>
     {% else %}
         <input type="text" id="manager_name" name="manager[name]" class="form-control">
     {% endif %}
 
     <label>Email</label>
-    {% if email %}
+    {% if email|length > 0 %}
         <input type="text" id="manager_email" name="manager[email]" class="form-control" value={{email}}>
     {% else %}
         <input type="text" id="manager_email" name="manager[email]" class="form-control">

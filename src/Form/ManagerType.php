@@ -46,6 +46,7 @@ class ManagerType extends AbstractType
             ->add('agency', null, [
                 'label' => false,
                 'required' => false,
+                'empty_data' => ''
             ]);
     }
 
