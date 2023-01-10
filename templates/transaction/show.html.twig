@@ -12,24 +12,24 @@
                 <td>{{ transaction.id }}</td>
             </tr>
             <tr>
-                <th>Operation</th>
-                <td>{{ transaction.operation }}</td>
+                <th>Tipo de Operação</th>
+                <td>{{ transaction.operation == 2 ? 'Depósito' : transaction.operation == 1 ? 'Saque' : 'Transferência'}}</td>
             </tr>
             <tr>
-                <th>Value</th>
-                <td>{{ transaction.value }}</td>
+                <th>Valor</th>
+                <td>{{ transaction.value|format_currency('BRL') }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Descrição</th>
                 <td>{{ transaction.description }}</td>
             </tr>
             <tr>
-                <th>Date</th>
+                <th>Data</th>
                 <td>{{ transaction.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
             </tr>
             <tr>
                 <th>Criado por</th>
-                <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
+                <td>{{ transaction.client ? transaction.client.user.name : 'NA' }}</td>
             </tr>
         </tbody>
     </table>

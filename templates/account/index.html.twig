@@ -44,7 +44,15 @@
                     <td>{{ account.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
                     <td>{{ account.updatedAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
                     <td>{{ account.balance|format_currency('BRL') }}</td>
-                    <td>{{ account.agency }} - {{account.agency.bank}}</td>
+                    <td class="d-flex flex-row gap-2 align-items-top flex-1">
+                        <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_agency_show', {'id': account.agency.id}) }}">
+                            {{account.agency}} -
+                        </a>
+                        <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_bank_show', {'id': account.agency.bank.id}) }}">
+                            {{account.agency.bank}}
+                        </a>
+                    </td>
+                    {# <td>{{ account.agency }} - {{account.agency.bank}}</td> #}
                     <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_account_show', {'id': account.id}) }}">

@@ -38,7 +38,7 @@
                     <td>{{ transaction.value ? transaction.value|format_currency('BRL') : '' }}</td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.createdAt|date('d/m/y H:i:s', "America/Sao_paulo") }}</td>
-                    <td>{{ transaction.client ? transaction.client.name : 'NA' }}</td>
+                    <td>{{ transaction.client ? transaction.client.user.name : 'NA' }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>{{ transaction.client ? transaction.client.user.roles[0] : 'NA' }}</td>
                     {% endif %}

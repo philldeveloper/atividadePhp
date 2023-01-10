@@ -32,15 +32,18 @@
                 <tr>
                     {# <td>{{ agency.id }}</td> #}
                     <td>{{ agency.number }}</td>
-                    <td>{{ agency.bank ? agency.bank.name : 'NA' }}</td>
+                    <td>
+                        <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_bank_show', {'id': agency.bank.id}) }}">
+                            {{ agency.bank ? agency.bank.name : 'NA' }}
+                        </a>
+                    </td>
                     <td>{{ agency.account|length }}</td>
-                    {# <td>
-                    {% for ag in agency.account %}
-                        {{ ag.clients|length }}
-                    {% endfor %}
-                    </td> #}
                     <td>{{ agency.address }}</td>
-                    <td>{{ agency.manager ? agency.manager.user.name : 'NA' }}</td>
+                    <td>
+                        <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_manager_show', {'id': agency.manager.id}) }}">
+                            {{ agency.manager ? agency.manager.user.name : 'NA' }}
+                        </a>
+                    </td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_agency_show', {'id': agency.id}) }}">
                             <i class="fa fa-eye"></i>

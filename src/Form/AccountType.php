@@ -48,7 +48,17 @@ class AccountType extends AbstractType
                     'label' => false,
                     'required' => false
                 ])
-                ->add('isActive');
+                ->add('isActive', null, [
+                    'attr' => [
+                        'class' => '',
+                        'style' => 'position:relative;bottom:100px'
+                    ],
+                    'label_attr' => [
+                        'class' => 'fw-bold me-2',
+                        'style' => 'position:relative;bottom:100px'
+                    ],
+                    'label' => 'Tornar esta conta ativa'
+                ]);
         } else {
             $builder
                 ->add('balance', IntegerType::class, [

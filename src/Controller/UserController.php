@@ -6,15 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 
-#[IsGranted('ROLE_MANAGER')]
+#[IsGranted('ROLE_USER')]
 #[Route('/user')]
 class UserController extends AbstractController
 {   
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'app_user', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {        
@@ -25,13 +28,20 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
+    public function show(User $user, AuthorizationCheckerInterface $authChecker): Response
+    {   
+        
+        if($this->isGranted('ROLE_USER')){
+            return $this->render('user/show.html.twig', [
+                'user' => $this->getUser(),
+            ]);
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
@@ -61,6 +71,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
