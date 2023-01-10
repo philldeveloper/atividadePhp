@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_MANAGER')]
 #[Route('/client')]
 class ClientController extends AbstractController
 {
@@ -40,7 +40,7 @@ class ClientController extends AbstractController
 
         // //retorna uma lista de usuários que não são clientes
         // $usersList = array_filter($userRepository->findAll(), function ($el) {
-        //     return $el->getClient() == null; //&& !$this->isGranted('ROLE_SUPER_ADMIN')
+        //     return $el->getClient() == null; //&& !$this->isGranted('ROLE_ADMIN')
         // });
 
 

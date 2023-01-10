@@ -32,7 +32,7 @@ class AgencyController extends AbstractController
         // // dd($user->getId());
         // // dd($agency->getManager()->getId());
         // dd($managerRepository->findBy(['id' => $user->getId()]));
-        // if ($authChecker->isGranted('ROLE_ADMIN')) {
+        // if ($authChecker->isGranted('ROLE_MANAGER')) {
         //     return $this->render('agency/index.html.twig', [
         //         // 'agencies' => $agencyRepository->findBy(['manager_id' => $user->getId()]),
         //         'agencies' => $agencyRepository->findBy(['manager_id' => $user->getId()]),
@@ -44,7 +44,7 @@ class AgencyController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_agency_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgencyRepository $agencyRepository): Response
     {
@@ -79,7 +79,7 @@ class AgencyController extends AbstractController
     }
 
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_agency_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Agency $agency, AgencyRepository $agencyRepository): Response
     {
@@ -98,7 +98,7 @@ class AgencyController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_agency_delete', methods: ['POST'])]
     public function delete(Request $request, Agency $agency, AgencyRepository $agencyRepository): Response
     {

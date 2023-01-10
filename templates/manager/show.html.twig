@@ -29,12 +29,12 @@
     <div class="d-flex justify-content-between align-items-center">
         <a class="btn btn-outline-dark" href="{{ path('app_manager_index') }}">Voltar para a Lista</a>
 
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-dark" href="{{ path('app_manager_edit', {'id': manager.id}) }}">Editar Gerente</a>                
         {% endif %}
     </div>
 
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') %}
         <h2 class="border-bottom py-3 my-3">Ações</h2>
         {{ include('manager/_delete_form.html.twig') }}
     {% endif %}

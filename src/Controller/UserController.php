@@ -11,7 +11,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_MANAGER')]
 #[Route('/user')]
 class UserController extends AbstractController
 {   

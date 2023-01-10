@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_MANAGER')]
 #[Route('/manager')]
 class ManagerController extends AbstractController
 {
@@ -31,7 +31,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_manager_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, ManagerRepository $managerRepository, UserRepository $userRepository, AuthorizationCheckerInterface $authChecker): Response
     {
@@ -45,8 +45,8 @@ class ManagerController extends AbstractController
 
         //retorna uma lista de usuários que não são gerentes
         $managersList = array_filter($userRepository->findAll(), function ($el) {
-            return $el->getManager() == null && !$this->isGranted('ROLE_SUPER_ADMIN');
-            // return $el->getManager() == null && $el->getRoles() != 'ROLE_ADMIN';
+            return $el->getManager() == null && !$this->isGranted('ROLE_ADMIN');
+            // return $el->getManager() == null && $el->getRoles() != 'ROLE_MANAGER';
         });
 
         // dd($managersList);
@@ -60,7 +60,7 @@ class ManagerController extends AbstractController
             $user = new User();
             $user->setName($form->getExtraData()['name']);
             $user->setEmail($form->getExtraData()['email']);
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles(['ROLE_MANAGER']);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -95,7 +95,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'app_manager_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Manager $manager, ManagerRepository $managerRepository, AgencyRepository $agencyRepository): Response
     {
@@ -131,7 +131,7 @@ class ManagerController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_manager_delete', methods: ['POST'])]
     public function delete(Request $request, Manager $manager, ManagerRepository $managerRepository): Response
     {

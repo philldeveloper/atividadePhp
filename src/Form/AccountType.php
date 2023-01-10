@@ -24,7 +24,7 @@ class AccountType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($this->auth->isGranted('ROLE_ADMIN')) {
+        if ($this->auth->isGranted('ROLE_MANAGER')) {
             $builder
                 ->add('balance', IntegerType::class, [
                     'label' => false,

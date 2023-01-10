@@ -30,15 +30,15 @@
 
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 quicksand-font text-uppercase">
 
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('app_user') }}" class="nav-link px-2 link-dark">Usuários</a></li>
                     {% endif %}
 
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('app_bank_index') }}" class="nav-link px-2 link-dark">Bancos</a></li>
                     {% endif %}
 
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_MANAGER') %}
                         <li><a href="{{ path('app_manager_index') }}" class="nav-link px-2 link-dark">Gerentes</a></li>
                         <li><a href="{{ path('app_client_index') }}" class="nav-link px-2 link-dark">Clientes</a></li>
                     {% endif %}

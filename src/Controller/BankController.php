@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_SUPER_ADMIN')]
+#[IsGranted('ROLE_ADMIN')]
 #[Route('/bank')]
 class BankController extends AbstractController
 {
@@ -27,8 +27,8 @@ class BankController extends AbstractController
     #[Route('/new', name: 'app_bank_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BankRepository $bankRepository): Response
     {
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        // $this->denyAccessUnlessGranted('ROLE_MANAGER');
+        // $this->denyAccessUnlessGranted('ROLE_MANAGER', null, 'User tried to access a page without having ROLE_MANAGER');
 
         $bank = new Bank();
         $form = $this->createForm(BankType::class, $bank);

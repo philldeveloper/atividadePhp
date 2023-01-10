@@ -24,19 +24,19 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $managerObject): void
     {
 
-        //CREATE A DEFAULT USER AS ROLE_SUPER_ADMIN
+        //CREATE A DEFAULT USER AS ROLE_ADMIN
         $userAdmin = new User();
         $userAdmin->setName('admin');
         $userAdmin->setEmail('admin@email.com');
         $userAdmin->setPassword($this->hasher->hashPassword($userAdmin, '123456'));
-        $userAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $userAdmin->setRoles(['ROLE_ADMIN']);
 
-        //CREATE A DEFAULT USER AS ROLE_ADMIN
+        //CREATE A DEFAULT USER AS ROLE_MANAGER
         $userManager = new User();
         $userManager->setName('manager');
         $userManager->setEmail('manager@email.com');
         $userManager->setPassword($this->hasher->hashPassword($userManager, '123456'));
-        $userManager->setRoles(['ROLE_ADMIN']);
+        $userManager->setRoles(['ROLE_MANAGER']);
 
         //CREATE A DEFAULT USER and CLIENT AS ROLE_USER
         $user = new User();

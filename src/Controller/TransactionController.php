@@ -37,7 +37,7 @@ class TransactionController extends AbstractController
     public function new(Request $request, TransactionRepository $transactionRepository, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
 
-        if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false !== $authChecker->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException('Unable to access this page!');
         }
 
@@ -119,7 +119,7 @@ class TransactionController extends AbstractController
     {
         throw new AccessDeniedException('Unable to access this page.');
 
-        // if (false !== $authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        // if (false !== $authChecker->isGranted('ROLE_ADMIN')) {
         //     throw new AccessDeniedException('Unable to access this page!');
         // }
 

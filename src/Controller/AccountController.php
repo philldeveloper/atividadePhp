@@ -30,7 +30,7 @@ class AccountController extends AbstractController
             $accounts = $user->getClient()->getAccounts();
         }
 
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
+        if ($authChecker->isGranted('ROLE_MANAGER')) {
             return $this->render('account/index.html.twig', [
                 'accounts' => $accountRepository->findAll(),
             ]);
@@ -108,7 +108,7 @@ class AccountController extends AbstractController
     #[Route('/{id}', name: 'app_account_delete', methods: ['POST'])]
     public function delete(Request $request, Account $account, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        if ($authChecker->isGranted('ROLE_ADMIN')) {
+        if ($authChecker->isGranted('ROLE_MANAGER')) {
             if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
                 $accountRepository->remove($account, true);
             }
