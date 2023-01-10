@@ -43,8 +43,7 @@ class Agency
     #[ORM\JoinColumn(nullable: true)]
     private ?Bank $bank = null;
 
-    #[ORM\OneToOne(inversedBy: 'agency', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OneToOne(inversedBy: 'agency')]
     private ?Manager $manager = null;
 
     /**
@@ -93,7 +92,7 @@ class Agency
         return $this->manager;
     }
 
-    public function setManager(Manager $manager): self
+    public function setManager($manager): self
     {
         $this->manager = $manager;
 

@@ -31,8 +31,11 @@ class Manager
     private ?User $user = null;
 
 
-    #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    // #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+    // #[ORM\JoinColumn(nullable: true)]
+    // private ?Agency $agency = null;
+
+    #[ORM\OneToOne(mappedBy: 'manager')]
     private ?Agency $agency = null;
 
 
@@ -46,10 +49,15 @@ class Manager
         return $this->agency;
     }
 
-    public function setAgency(Agency $agency): self
+    public function setAgency($agency): self
     {
+        // unset the owning side of the relation if necessary
+        if ($agency === null && $this->agency !== null) {
+            $this->agency->setManager(null);
+        }
+
         // set the owning side of the relation if necessary
-        if ($agency->getManager() !== $this) {
+        if ($agency !== null && $agency->getManager() !== $this) {
             $agency->setManager($this);
         }
 

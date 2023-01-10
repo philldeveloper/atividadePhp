@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\ManagerType;
 use App\Repository\ManagerRepository;
 use App\Repository\UserRepository;
+use App\Repository\AgencyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,8 +70,6 @@ class ManagerController extends AbstractController
 
             $manager->setUser($user);
 
-            dd($manager->getAgency());
-
             $managerRepository->save($manager, true);
 
             $this->addFlash('success', 'Gerente criado com sucesso.');
@@ -98,7 +97,7 @@ class ManagerController extends AbstractController
 
     #[IsGranted('ROLE_SUPER_ADMIN')]
     #[Route('/{id}/edit', name: 'app_manager_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Manager $manager, ManagerRepository $managerRepository): Response
+    public function edit(Request $request, Manager $manager, ManagerRepository $managerRepository, AgencyRepository $agencyRepository): Response
     {
         $form = $this->createForm(ManagerType::class, $manager);
         $form->handleRequest($request);
@@ -106,6 +105,14 @@ class ManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->getUser()->setName($form->getExtraData()['name']);
             $manager->getUser()->setEmail($form->getExtraData()['email']);
+            
+            // $agencySelected = $agencyRepository->findBy(['id' => (int)$form->getExtraData()['agency']]);
+            
+            // if($form->getExtraData()['agency'] == '') {
+            //     $manager->setAgency(null);
+            // }else {
+            //     $manager->setAgency($agencySelected[0]);
+            // }
             
             $managerRepository->save($manager, true);
 
@@ -120,6 +127,7 @@ class ManagerController extends AbstractController
             'name' => $manager->getUser()->getName(),
             'email' => $manager->getUser()->getEmail(),
             'password' => $manager->getUser()->getPassword(),
+            'agencies' => $agencyRepository->findAll(),
         ]);
     }
 
