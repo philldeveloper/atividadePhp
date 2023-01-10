@@ -19,25 +19,28 @@
     </ul>
     {%endif%}
 
-    <label>Name</label>
-    {% if name|length > 0 %}
-        <input type="text" id="manager_name" name="manager[name]" class="form-control" value={{name}}>
-    {% else %}
-        <input type="text" id="manager_name" name="manager[name]" class="form-control">
-    {% endif %}
+    <div class="d-flex gap-2">
+        <div class="col">
+            <label class="fw-bold py-3">Nome</label>
+            {% if name|length > 0 %}
+                <input type="text" id="manager_name" name="manager[name]" class="form-control" value={{name}}>
+            {% else %}
+                <input type="text" id="manager_name" name="manager[name]" class="form-control">
+            {% endif %}
+        </div>
+        <div class="col">
+            <label class="fw-bold py-3">Email</label>
+            {% if email|length > 0 %}
+                <input type="text" id="manager_email" name="manager[email]" class="form-control" value={{email}}>
+            {% else %}
+                <input type="text" id="manager_email" name="manager[email]" class="form-control">
+            {% endif %}
+        </div>
+    </div>
 
-    <label>Email</label>
-    {% if email|length > 0 %}
-        <input type="text" id="manager_email" name="manager[email]" class="form-control" value={{email}}>
-    {% else %}
-        <input type="text" id="manager_email" name="manager[email]" class="form-control">
-        {# {{ form_label(form.email, null, {'label': 'Email:', 'label_attr': {'class': 'fw-bold'} }) }}
-        {{ form_widget(form.email, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }} #}
-    {% endif %}
 
-    <br>
-    {{ form_label(form.plainPassword, null, {'label': 'Informe uma senha:', 'label_attr': {'class': 'fw-bold'} }) }}
-    {{ form_widget(form.plainPassword, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
+    {{ form_label(form.plainPassword, null, {'label': 'Informe uma senha:', 'label_attr': {'class': 'fw-bold py-3'} }) }}
+    {{ form_widget(form.plainPassword, {'attr': {'class': 'form-control'}}) }}
 
     <div>
         {{ form_label(form.agency, 'Selecione a Agencia (opcional):', {'label_attr': {'class': 'fw-bold py-3'}}) }}

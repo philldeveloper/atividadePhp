@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Usuário{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between py-3">
+        <h1>Editar Usuário / Cliente</h1>
+    </div>
+
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    
+    <h2 class="border-bottom py-3 my-3">Ações</h2>
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

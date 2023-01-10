@@ -29,15 +29,14 @@
                     <td>{{ user.roles|join(', ') }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.client is same as null ? 'Não' : 'Sim'}}</td>
-                    <td>-</td>
-                    {# <td>
-                        <a class="btn btn-sm" href="{{ path('app_bank_show', {'id': bank.id}) }}">
+                    <td>
+                        <a class="btn btn-sm" href="{{ path('app_user_show', {'id': user.id}) }}">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <a class="btn btn-sm" href="{{ path('app_bank_edit', {'id': bank.id}) }}">
+                        <a class="btn btn-sm" href="{{ path('app_user_edit', {'id': user.id}) }}">
                           <i class="fa fa-edit"></i>
                         </a>
-                    </td> #}
+                    </td>
                 </tr>
             {% else %}
                 <tr class="text-center">
