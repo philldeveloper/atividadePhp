@@ -58,8 +58,8 @@ class ManagerController extends AbstractController
 
             //atribui o objeto usuário para o cliente
             $user = new User();
-            $user->setName($form->getExtraData()['name']);
-            $user->setEmail($form->getExtraData()['email']);
+            $user->setName($form->get('name')->getData());
+            $user->setEmail($form->get('email')->getData());
             $user->setRoles(['ROLE_MANAGER']);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -103,16 +103,9 @@ class ManagerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->getUser()->setName($form->getExtraData()['name']);
-            $manager->getUser()->setEmail($form->getExtraData()['email']);
-            
-            // $agencySelected = $agencyRepository->findBy(['id' => (int)$form->getExtraData()['agency']]);
-            
-            // if($form->getExtraData()['agency'] == '') {
-            //     $manager->setAgency(null);
-            // }else {
-            //     $manager->setAgency($agencySelected[0]);
-            // }
+
+            $manager->getUser()->setName($form->get('name')->getData());
+            $manager->getUser()->setEmail($form->get('email')->getData());
             
             $managerRepository->save($manager, true);
 

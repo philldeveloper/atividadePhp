@@ -21,20 +21,35 @@
 
     <div class="d-flex gap-2">
         <div class="col">
-            <label class="fw-bold py-3">Nome</label>
+            {# <label class="fw-bold py-3">Nome</label>
             {% if name|length > 0 %}
                 <input type="text" id="manager_name" name="manager[name]" class="form-control" value={{name}}>
             {% else %}
                 <input type="text" id="manager_name" name="manager[name]" class="form-control">
+            {% endif %} #}
+            {{ form_label(form.name, null, {'label': 'Informe um nome:', 'label_attr': {'class': 'fw-bold py-3'} }) }}
+            
+            {% if name|length > 0 %}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': name}}) }}
+            {% else %}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
             {% endif %}
         </div>
         <div class="col">
-            <label class="fw-bold py-3">Email</label>
+            {{ form_label(form.email, null, {'label': 'Informe um email:', 'label_attr': {'class': 'fw-bold py-3'} }) }}
+
+            {% if email|length > 0 %}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'value': email}}) }}
+            {% else %}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {% endif %}
+            
+            {# <label class="fw-bold py-3">Email</label>
             {% if email|length > 0 %}
                 <input type="text" id="manager_email" name="manager[email]" class="form-control" value={{email}}>
             {% else %}
                 <input type="text" id="manager_email" name="manager[email]" class="form-control">
-            {% endif %}
+            {% endif %} #}
         </div>
     </div>
 

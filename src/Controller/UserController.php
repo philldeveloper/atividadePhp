@@ -37,8 +37,16 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $userSelected = $userRepository->find($user);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) { 
+
+            //campos para editar todos, menos admin e gerente, pois não possuem cliente.
+            if($user->getClient()){
+                $user->getClient()->setAddress($form->get('address')->getData());
+                $user->getClient()->setPhone($form->get('phone')->getData());
+            }
+
             $userRepository->save($user, true);
 
             $this->addFlash('update', 'Usuário atualizado com sucesso.');
@@ -48,6 +56,8 @@ class UserController extends AbstractController
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+            'address' => $userSelected->getClient() ? $userSelected->getClient()->getAddress() : '',
+            'phone' => $userSelected->getClient() ? $userSelected->getClient()->getPhone() : '',
         ]);
     }
 
