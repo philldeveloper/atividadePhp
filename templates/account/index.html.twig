@@ -35,6 +35,13 @@
                 </tr>
             </thead>
             <tbody>
+            
+            {# {% if is_granted('ROLE_MANAGER') and app.user.roles|length == 2 %}
+                {% for account in accounts|sort((a, b) => a.number <=> b.number) %}
+            {% else %}
+                {% for account in accounts|filter(acc => acc.status != 3)|sort((a, b) => a.number <=> b.number) %}
+            {% endif %} #}
+            
             {% for account in accounts|sort((a, b) => a.number <=> b.number) %}
                 <tr>
                     {# <td>
@@ -53,14 +60,16 @@
                         </a>
                     </td>
                     {# <td>{{ account.agency }} - {{account.agency.bank}}</td> #}
-                    <td>{{ account.isActive ? 'Ativa' : 'Inativa' }}</td>
+                    <td>{{ account.isActive ? 'Ativa' : 'Inativa' }} | {{ account.status == 2 ? 'Aguardando encerramento' : account.status }}</td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_account_show', {'id': account.id}) }}">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <a class="btn btn-sm" href="{{ path('app_account_edit', {'id': account.id}) }}">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                        {% if account.status != 3 %}
+                            <a class="btn btn-sm" href="{{ path('app_account_edit', {'id': account.id}) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

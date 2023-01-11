@@ -10,16 +10,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+enum STATUS_CONTA: int
+{
+    case INATIVO = 0;
+    case ATIVO = 1;
+    case AGUARDANDO_ENCERRAMENTO = 2;
+    case ENCERRADA = 3;
+}
+
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
 class Account
 {
-    public function __construct() {
+    public function __construct()
+    {
+        $this->status = STATUS_CONTA::ATIVO->value;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->clients = new ArrayCollection();
         $this->transactions = new ArrayCollection();
     }
-    
+
     use TimestampableEntity;
 
     #[ORM\Id]
@@ -28,37 +38,37 @@ class Account
     private ?int $id = null;
 
     /**
-        * @ORM\Column(type="integer")
-        * @Assert\NotBlank(message="O valor Número da Conta não pode estar vazio.")
-        * @Assert\Length(min=4, minMessage="O valor Número da Conta deverá ser de no mínimo 4 números.")
-        * @Assert\PositiveOrZero(message="O valor Número da Conta deve ser positivo ou zero.")
-    */
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="O valor Número da Conta não pode estar vazio.")
+     * @Assert\Length(min=4, minMessage="O valor Número da Conta deverá ser de no mínimo 4 números.")
+     * @Assert\PositiveOrZero(message="O valor Número da Conta deve ser positivo ou zero.")
+     */
     #[ORM\Column(length: 255)]
     private ?int $number = null;
 
     /**
-        * @ORM\Column(type="integer")
-        * @Assert\NotBlank(message="O valor Saldo não pode estar vazio.")
-        * @Assert\PositiveOrZero(message="O valor Saldo deve ser positivo ou zero.")
-        * @Assert\Length(min=1, max=255)
-    */
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="O valor Saldo não pode estar vazio.")
+     * @Assert\PositiveOrZero(message="O valor Saldo deve ser positivo ou zero.")
+     * @Assert\Length(min=1, max=255)
+     */
     #[ORM\Column(length: 255)]
     private ?int $balance = null;
 
     /**
-        * @ORM\Column(type="string")
-        * @Assert\NotBlank(message="O valor Tipo de Conta não pode estar vazio.")
-        * @Assert\Length(min=1, max=255)
-    */
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="O valor Tipo de Conta não pode estar vazio.")
+     * @Assert\Length(min=1, max=255)
+     */
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'account')]
     #[ORM\JoinColumn(nullable: false)]
     /**
-        * @ORM\JoinColumn(nullable="false")
-        * @Assert\NotBlank(message="O valor Agência da Conta não pode estar vazio.")
-    */
+     * @ORM\JoinColumn(nullable="false")
+     * @Assert\NotBlank(message="O valor Agência da Conta não pode estar vazio.")
+     */
     private ?Agency $agency = null;
 
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'accounts', fetch: "EAGER")] //inserir depois--> nullable: false
@@ -68,7 +78,10 @@ class Account
     private Collection $transactions;
 
     #[ORM\Column]
-    private ?bool $isActive = null;    
+    private ?bool $isActive = null;
+
+    #[ORM\Column]
+    private ?int $status = null;
 
     public function getId(): ?int
     {
@@ -209,6 +222,18 @@ class Account
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status)
+    {
+        $this->status = $status;
 
         return $this;
     }

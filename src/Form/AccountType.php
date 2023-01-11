@@ -48,6 +48,17 @@ class AccountType extends AbstractType
                     'label' => false,
                     'required' => false
                 ])
+                // ->add('status', null, [
+                //     'attr' => [
+                //         'class' => '',
+                //         'style' => 'position:relative;bottom:100px'
+                //     ],
+                //     'label_attr' => [
+                //         'class' => 'fw-bold me-2',
+                //         'style' => 'position:relative;bottom:100px'
+                //     ],
+                //     'label' => 'Mudar status da conta'
+                // ])
                 ->add('isActive', null, [
                     'attr' => [
                         'class' => '',

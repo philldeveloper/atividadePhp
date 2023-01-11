@@ -36,8 +36,12 @@ class AccountController extends AbstractController
             ]);
         }
 
+        $filteredAccounts = array_filter($accounts->getValues(), function ($acc) {
+            return $acc->getStatus() != 3;
+        });
+
         return $this->render('account/index.html.twig', [
-            'accounts' => $accounts,
+            'accounts' => $filteredAccounts,
         ]);
     }
 
@@ -55,7 +59,7 @@ class AccountController extends AbstractController
         if ($authChecker->isGranted('ROLE_USER') && count($user->getRoles()) == 1) {
 
             $client = $user->getClient();
-            
+
             $account->addClient($client);
 
             if ($client->isActive()) {
@@ -90,6 +94,10 @@ class AccountController extends AbstractController
     #[Route('/{id}/edit', name: 'app_account_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Account $account, AccountRepository $accountRepository): Response
     {
+        if ($account->getStatus() == 3) {
+            throw new AccessDeniedException('Unable to edit this account! Status: encerrada');
+        }
+
         $form = $this->createForm(AccountType::class, $account);
         $form->handleRequest($request);
 
@@ -109,13 +117,15 @@ class AccountController extends AbstractController
     public function delete(Request $request, Account $account, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         if ($authChecker->isGranted('ROLE_MANAGER')) {
-            if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
-                $accountRepository->remove($account, true);
-            }
+            // if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
+            //     $accountRepository->remove($account, true);
+            // }
+            $account->setStatus(3); // encerrada
         } else if ($authChecker->isGranted('ROLE_USER')) {
-            $account->setIsActive(0);
-            $accountRepository->save($account, true);
+            $account->setStatus(2); // aguardando encerramento
         }
+
+        $accountRepository->save($account, true);
 
         return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
     }

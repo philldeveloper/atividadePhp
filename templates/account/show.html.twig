@@ -51,7 +51,9 @@
         <a class="btn btn-dark" href="{{ path('app_account_edit', {'id': account.id}) }}">Editar Conta</a>
     </div>
 
-    <h2 class="border-bottom py-3 my-3">Ações</h2>
+    {% if account.status == 2 %}
+        <h2 class="border-bottom py-3 my-3">Ações</h2>
+        {{ include('account/_delete_form.html.twig') }}
+    {% endif %}
 
-    {{ include('account/_delete_form.html.twig') }}
 {% endblock %}
