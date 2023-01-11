@@ -63,11 +63,13 @@ class AccountController extends AbstractController
             $account->addClient($client);
 
             if ($client->isActive()) {
-                $account->setIsActive(1);
-                $form->getData()->setIsActive(1);
+                // $account->setIsActive(1);
+                // $form->getData()->setIsActive(1);
+                $account->setStatus(1);
             } else {
-                $account->setIsActive(0);
-                $form->getData()->setIsActive(0);
+                // $account->setIsActive(0);
+                // $form->getData()->setIsActive(0);
+                $account->setStatus(0);
             }
         }
 

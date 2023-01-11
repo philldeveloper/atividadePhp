@@ -100,7 +100,7 @@ class TransactionController extends AbstractController
         return $this->render('transaction/new.html.twig', [
             'transaction' => $transaction,
             'form' => $form,
-            'accounts' => $accountRepository->findBy(['isActive' => 1]),
+            'accounts' => $accountRepository->findBy(['status' => 1]),
         ]);
     }
 

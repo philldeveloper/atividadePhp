@@ -48,7 +48,8 @@ class AccountType extends AbstractType
                     'label' => false,
                     'required' => false
                 ])
-                // ->add('status', null, [
+                ->add('status')
+                // ->add('isActive', null, [
                 //     'attr' => [
                 //         'class' => '',
                 //         'style' => 'position:relative;bottom:100px'
@@ -57,19 +58,9 @@ class AccountType extends AbstractType
                 //         'class' => 'fw-bold me-2',
                 //         'style' => 'position:relative;bottom:100px'
                 //     ],
-                //     'label' => 'Mudar status da conta'
+                //     'label' => 'Tornar esta conta ativa'
                 // ])
-                ->add('isActive', null, [
-                    'attr' => [
-                        'class' => '',
-                        'style' => 'position:relative;bottom:100px'
-                    ],
-                    'label_attr' => [
-                        'class' => 'fw-bold me-2',
-                        'style' => 'position:relative;bottom:100px'
-                    ],
-                    'label' => 'Tornar esta conta ativa'
-                ]);
+            ;
         } else {
             $builder
                 ->add('balance', IntegerType::class, [

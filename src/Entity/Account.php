@@ -23,7 +23,7 @@ class Account
 {
     public function __construct()
     {
-        $this->status = STATUS_CONTA::ATIVO->value;
+        // $this->status = STATUS_CONTA::ATIVO->value;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->clients = new ArrayCollection();
@@ -77,8 +77,8 @@ class Account
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Transaction::class)]
     private Collection $transactions;
 
-    #[ORM\Column]
-    private ?bool $isActive = null;
+    // #[ORM\Column]
+    // private ?bool $isActive = null;
 
     #[ORM\Column]
     private ?int $status = null;
@@ -214,17 +214,17 @@ class Account
         return $this;
     }
 
-    public function isIsActive(): ?bool
-    {
-        return $this->isActive;
-    }
+    // public function isIsActive(): ?bool
+    // {
+    //     return $this->isActive;
+    // }
 
-    public function setIsActive(bool $isActive): self
-    {
-        $this->isActive = $isActive;
+    // public function setIsActive(bool $isActive): self
+    // {
+    //     $this->isActive = $isActive;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getStatus(): ?int
     {

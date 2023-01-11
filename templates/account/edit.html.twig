@@ -7,7 +7,7 @@
 
     {{ include('account/_form.html.twig', {'button_label': 'Atualizar'}) }}
 
-    {% if account.status == 2 %}
+    {% if account.status == 1 %}
         <h2 class="border-bottom py-3 my-3">Ações</h2>
         {{ include('account/_delete_form.html.twig') }}
     {% endif %}
