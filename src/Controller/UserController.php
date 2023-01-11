@@ -30,8 +30,8 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, AuthorizationCheckerInterface $authChecker): Response
     {   
-        
-        if($this->isGranted('ROLE_USER')){
+        // if($this->isGranted('ROLE_USER') && count()){
+        if ($authChecker->isGranted('ROLE_USER') && count($this->getUser()->getRoles()) == 1) {
             return $this->render('user/show.html.twig', [
                 'user' => $this->getUser(),
             ]);

@@ -23,7 +23,7 @@
     </table>
 
     <div class="d-flex justify-content-between align-items-center">
-        {% if is_granted('ROLE_USER') %}
+        {% if is_granted('ROLE_USER') and app.user.roles|length == 1 %}
             <a class="btn btn-outline-dark" href="{{ path('app_home') }}">Voltar para a Lista</a>
         {% else %}
             <a class="btn btn-outline-dark" href="{{ path('app_user') }}">Voltar para a Lista</a>
