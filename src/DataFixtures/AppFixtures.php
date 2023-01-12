@@ -40,8 +40,8 @@ class AppFixtures extends Fixture
 
         //CREATE A DEFAULT USER and CLIENT AS ROLE_USER
         $user = new User();
-        $user->setName('user');
-        $user->setEmail('user@email.com');
+        $user->setName('client');
+        $user->setEmail('client@email.com');
         $user->setPassword($this->hasher->hashPassword($user, '123456'));
         $user->setRoles(['ROLE_USER']);
         $client = new Client();

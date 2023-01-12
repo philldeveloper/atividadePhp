@@ -32,12 +32,12 @@
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'd-flex flex-column form-control border-dark border-bottom border-0 rounded-0 bg-white form-login'}}) }}
 
 
-                <div class="pb-5 pt-4">
+                {# <div class="pb-5 pt-4">
                     {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'd-inline-flex my-2'}}) }}
                     {{ form_label(registrationForm.agreeTerms, null, {'label': 'Eu concordo com os termos deste aplicativo.', 'label_attr': {'class': ''} }) }}
-                </div>
+                </div> #}
 
-                <div class="d-grid mt-3">
+                <div class="d-grid mt-5">
                     <button type="submit" class="btn btn-outline-dark">Registrar</button>
                 </div>
             {{ form_end(registrationForm) }}
