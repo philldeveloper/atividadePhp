@@ -40,9 +40,10 @@
                     <td>{{ agency.account|length }}</td>
                     <td>{{ agency.address }}</td>
                     <td>
-                        <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_manager_show', {'id': agency.manager.id}) }}">
+                        {# <a class="btn btn-sm text-decoration-none btn-link px-0" href="{{ path('app_manager_show', {'id': agency.manager.id}) }}">
                             {{ agency.manager ? agency.manager.user.name : 'NA' }}
-                        </a>
+                        </a> #}
+                        {{ agency.manager ? agency.manager.user.name : 'NA' }}
                     </td>
                     <td>
                         <a class="btn btn-sm" href="{{ path('app_agency_show', {'id': agency.id}) }}">
