@@ -87,6 +87,7 @@ class TransactionController extends AbstractController
                 }
             }
 
+            $this->addFlash('success', 'Transação realizada com sucesso.');
             $transactionRepository->save($transaction, true);
 
             if ($authChecker->isGranted('ROLE_USER')) {

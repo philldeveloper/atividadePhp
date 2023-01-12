@@ -60,6 +60,8 @@ class AgencyController extends AbstractController
             // $agency->setName($form->get('name')->getData());
 
             $agencyRepository->save($agency, true);
+            
+            $this->addFlash('success', 'Agencia cadastrada com sucesso.');
 
             return $this->redirectToRoute('app_agency_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -89,6 +91,8 @@ class AgencyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $agencyRepository->save($agency, true);
 
+            $this->addFlash('update', 'Agencia editada com sucesso.');
+
             return $this->redirectToRoute('app_agency_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -105,6 +109,8 @@ class AgencyController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $agency->getId(), $request->request->get('_token'))) {
             $agencyRepository->remove($agency, true);
         }
+
+        $this->addFlash('success', 'Agencia removida com sucesso.');
 
         return $this->redirectToRoute('app_agency_index', [], Response::HTTP_SEE_OTHER);
     }

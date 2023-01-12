@@ -76,6 +76,8 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $accountRepository->save($account, true);
 
+            $this->addFlash('success', 'Conta criada com sucesso.');
+
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -106,6 +108,8 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $accountRepository->save($account, true);
 
+            $this->addFlash('update', 'Conta atualizada com sucesso.');
+
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -119,12 +123,14 @@ class AccountController extends AbstractController
     public function delete(Request $request, Account $account, AccountRepository $accountRepository, AuthorizationCheckerInterface $authChecker): Response
     {
         if ($authChecker->isGranted('ROLE_MANAGER')) {
-            // if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
-            //     $accountRepository->remove($account, true);
-            // }
-            $account->setStatus(3); // encerrada
+            if ($this->isCsrfTokenValid('delete' . $account->getId(), $request->request->get('_token'))) {
+                // $accountRepository->remove($account, true);
+                $account->setStatus(3); // encerrada
+                $this->addFlash('success', 'Conta encerrada com sucesso.');
+            }
         } else if ($authChecker->isGranted('ROLE_USER')) {
             $account->setStatus(2); // aguardando encerramento
+            $this->addFlash('success', 'solicitação de conta realizada com sucesso.');
         }
 
         $accountRepository->save($account, true);

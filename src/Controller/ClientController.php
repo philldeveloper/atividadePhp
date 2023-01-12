@@ -79,9 +79,7 @@ class ClientController extends AbstractController
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
-        // dd($client);
-        // dd($form->get('active')->getData());
-        if ($form->get('status')->getData() == 1) {
+        if ($form->get('active')->getData() == 1) {
             for ($i = 0; $i < count($client->getAccounts()); $i++) {
                 // $client->getAccounts()[$i]->setIsActive(true);
                 $client->getAccounts()[$i]->setStatus(1);
