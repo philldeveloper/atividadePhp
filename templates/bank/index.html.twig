@@ -10,9 +10,9 @@
     {# <hr> #}
 
     <div class="table-responsive-sm mt-4">
-        <table class="table table-borderless table-striped">
+        <table class="table table-borderless">
             <caption class="mt-4">Lista de Bancos</caption>
-            <thead class="fs-5 border-top">
+            <thead class="fs-5 border-bottom">
                 <tr>
                     {# <th scope="col">Id</th> #}
                     <th>Nome <i class="fa-solid fa-building-columns fa-1x ms-2 text-dark-25"></i></th>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             {% for bank in banks %}
-                <tr>
+                <tr class="border-bottom">
                     {# <td>
                         <i class="badge bg-primary">{{ bank.id }}</i>
                     </td> #}

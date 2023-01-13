@@ -9,9 +9,9 @@
     {# <hr> #}
 
     <div class="table-responsive-sm mt-4">
-        <table class="table table-borderless table-striped">
+        <table class="table table-borderless">
             <caption class="mt-4">Lista de Usuários</caption>
-            <thead class="fs-5 border-top">
+            <thead class="fs-5 border-bottom">
                 <tr>
                     <th>Id</th>
                     <th class="d-flex flex-row align-items-center">Nome <i class="fa-solid fa-1x ms-2 text-dark-25 fa-user-tag"></i></th>
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             {% for user in users %}
-                <tr>
+                <tr class="border-bottom">
                     <td class="fw-bold">{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.roles|join(', ') }}</td>

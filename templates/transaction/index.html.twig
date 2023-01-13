@@ -12,9 +12,9 @@
     </div>
 
     <div class="table-responsive-sm mt-4">
-        <table class="table table-borderless table-striped">
+        <table class="table table-borderless">
             <caption class="mt-4">Lista de Transações</caption>
-            <thead class="fs-5 border-top">
+            <thead class="fs-5 border-bottom">
                 <tr>
                     {# <th>Id</th> #}
                     <th>Tipo de Operação</th>
@@ -31,7 +31,7 @@
             </thead>
             <tbody>
             {% for transaction in transactions %}
-                <tr>
+                <tr class="border-bottom">
                     {# <td>{{ transaction.id }}</td> #}
                     <td>{{ transaction.operation is same as '1' ? 'Saque' : transaction.operation is same as '2' ? 'Depósito' : 'Transferencia'}}</td>
                     <td>{{ transaction.account.number }}</td>

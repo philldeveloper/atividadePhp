@@ -13,9 +13,9 @@
     {# <hr> #}
 
     <div class="table-responsive-sm mt-4">
-        <table class="table table-borderless table-striped">
+        <table class="table table-borderless">
             <caption class="mt-4">Lista de Agencias</caption>
-            <thead class="fs-5 border-top">
+            <thead class="fs-5 border-bottom">
                 <tr>
                     {# <th>Id</th> #}
                     <th>Número</th>
@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             {% for agency in agencies %}
-                <tr>
+                <tr class="border-bottom">
                     {# <td>{{ agency.id }}</td> #}
                     <td>{{ agency.number }}</td>
                     <td>
